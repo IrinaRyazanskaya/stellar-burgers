@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { TConstructorIngredient, TOrder } from '@utils-types';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
+import { generateStringId } from '../../utils/id-generator';
 
 type TBurgerConstructorState = {
   bun: TConstructorIngredient | null;
@@ -19,11 +21,12 @@ export const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    clear: (state) => {
-      state.bun = null;
-      state.ingredients = [];
-      state.orderModalData = null;
-      state.orderRequestStatus = 'idle';
+    addIngredientToConstructor: (state, action: PayloadAction<TIngredient>) => {
+      if (action.payload.type === 'bun') {
+        state.bun = { ...action.payload, id: generateStringId() };
+      } else {
+        state.ingredients.push({ ...action.payload, id: generateStringId() });
+      }
     }
   }
 });
@@ -48,3 +51,5 @@ export const selectIsBurgerOrderPending = (state: {
 export const selectBurgerOrderModalData = (state: {
   burgerConstructor: TBurgerConstructorState;
 }) => state.burgerConstructor.orderModalData;
+
+export const { addIngredientToConstructor } = burgerConstructorSlice.actions;
