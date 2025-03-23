@@ -18,6 +18,7 @@ import { useDispatch } from '../../services/store';
 
 import '../../index.css';
 import styles from './app.module.css';
+import { ProtectedRoute } from '../protected-route';
 
 const App = () => {
   const navigate = useNavigate();
@@ -41,9 +42,24 @@ const App = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile/orders'
+          element={
+            <ProtectedRoute>
+              <ProfileOrders />
+            </ProtectedRoute>
+          }
+        />
         <Route path='*' element={<NotFound404 />} />
+
         <Route
           path='/feed/:number'
           element={
@@ -63,9 +79,11 @@ const App = () => {
         <Route
           path='/profile/orders/:number'
           element={
-            <Modal title='title' onClose={() => {}}>
-              <OrderInfo />
-            </Modal>
+            <ProtectedRoute>
+              <Modal title='title' onClose={() => {}}>
+                <OrderInfo />
+              </Modal>
+            </ProtectedRoute>
           }
         />
       </Routes>

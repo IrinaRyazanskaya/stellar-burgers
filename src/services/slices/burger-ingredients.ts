@@ -87,13 +87,7 @@ export const selectIngredientById = (
 
 export const selectBurgerIngredientsIsLoading = (state: {
   burgerIngredients: TBurgerIngredientsState;
-}) => {
-  if (state.burgerIngredients.loading === 'pending') {
-    return true;
-  }
-
-  return false;
-};
+}) => state.burgerIngredients.loading === 'pending';
 
 export const selectBurgerIngredientsRequestError = (state: {
   burgerIngredients: TBurgerIngredientsState;
