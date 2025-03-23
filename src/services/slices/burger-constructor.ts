@@ -27,6 +27,11 @@ export const burgerConstructorSlice = createSlice({
       } else {
         state.ingredients.push({ ...action.payload, id: generateStringId() });
       }
+    },
+    removeIngredientFromConstructor: (state, action: PayloadAction<string>) => {
+      state.ingredients = state.ingredients.filter(
+        (item) => item.id !== action.payload
+      );
     }
   }
 });
@@ -52,4 +57,5 @@ export const selectBurgerOrderModalData = (state: {
   burgerConstructor: TBurgerConstructorState;
 }) => state.burgerConstructor.orderModalData;
 
-export const { addIngredientToConstructor } = burgerConstructorSlice.actions;
+export const { addIngredientToConstructor, removeIngredientFromConstructor } =
+  burgerConstructorSlice.actions;
