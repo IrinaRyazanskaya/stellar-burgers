@@ -32,6 +32,26 @@ export const burgerConstructorSlice = createSlice({
       state.ingredients = state.ingredients.filter(
         (item) => item.id !== action.payload
       );
+    },
+    moveIngredientUpInConstructor: (state, action: PayloadAction<number>) => {
+      const index = action.payload;
+
+      if (index > 0 && index < state.ingredients.length) {
+        const currentIngredient = state.ingredients[index];
+
+        state.ingredients[index] = state.ingredients[index - 1];
+        state.ingredients[index - 1] = currentIngredient;
+      }
+    },
+    moveIngredientDownInConstructor: (state, action: PayloadAction<number>) => {
+      const index = action.payload;
+
+      if (index >= 0 && index < state.ingredients.length - 1) {
+        const currentIngredient = state.ingredients[index];
+
+        state.ingredients[index] = state.ingredients[index + 1];
+        state.ingredients[index + 1] = currentIngredient;
+      }
     }
   }
 });
@@ -57,5 +77,9 @@ export const selectBurgerOrderModalData = (state: {
   burgerConstructor: TBurgerConstructorState;
 }) => state.burgerConstructor.orderModalData;
 
-export const { addIngredientToConstructor, removeIngredientFromConstructor } =
-  burgerConstructorSlice.actions;
+export const {
+  addIngredientToConstructor,
+  removeIngredientFromConstructor,
+  moveIngredientUpInConstructor,
+  moveIngredientDownInConstructor
+} = burgerConstructorSlice.actions;
