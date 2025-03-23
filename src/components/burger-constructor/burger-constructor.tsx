@@ -1,19 +1,18 @@
 import { FC, useMemo } from 'react';
-import { TConstructorIngredient } from '@utils-types';
+import { useSelector } from 'react-redux';
+
+import {
+  selectBurgerConstructorItems,
+  selectIsBurgerOrderPending,
+  selectBurgerOrderModalData
+} from '@slices';
 import { BurgerConstructorUI } from '@ui';
+import { TConstructorIngredient } from '@utils-types';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const constructorItems = {
-    bun: {
-      price: 0
-    },
-    ingredients: []
-  };
-
-  const orderRequest = false;
-
-  const orderModalData = null;
+  const constructorItems = useSelector(selectBurgerConstructorItems);
+  const orderRequest = useSelector(selectIsBurgerOrderPending);
+  const orderModalData = useSelector(selectBurgerOrderModalData);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
@@ -29,8 +28,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  return null;
 
   return (
     <BurgerConstructorUI
