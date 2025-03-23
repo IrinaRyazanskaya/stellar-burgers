@@ -78,6 +78,13 @@ export const selectBurgerSauces = (state: {
   burgerIngredients: TBurgerIngredientsState;
 }) => state.burgerIngredients.items.filter((item) => item.type === 'sauce');
 
+export const selectIngredientById = (
+  state: {
+    burgerIngredients: TBurgerIngredientsState;
+  },
+  id: string
+) => state.burgerIngredients.items.find((item) => item._id === id) || null;
+
 export const selectBurgerIngredientsIsLoading = (state: {
   burgerIngredients: TBurgerIngredientsState;
 }) => {

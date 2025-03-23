@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 import { fetchBurgerIngredients } from '@slices';
@@ -20,11 +20,16 @@ import '../../index.css';
 import styles from './app.module.css';
 
 const App = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchBurgerIngredients());
   }, []);
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={styles.app}>
@@ -50,7 +55,7 @@ const App = () => {
         <Route
           path='/ingredients/:id'
           element={
-            <Modal title='title' onClose={() => {}}>
+            <Modal title='Детали ингредиента' onClose={goBack}>
               <IngredientDetails />
             </Modal>
           }
