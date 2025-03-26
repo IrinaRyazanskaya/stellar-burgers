@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
-import { fetchBurgerIngredients } from '@slices';
+import { fetchBurgerIngredients, getUser } from '@slices';
 import {
   ConstructorPage,
   Feed,
@@ -25,6 +25,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getUser());
     dispatch(fetchBurgerIngredients());
   }, []);
 

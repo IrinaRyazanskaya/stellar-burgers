@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { Preloader } from '@ui';
-import { selectUser, selectUserIsLoading } from '@slices';
+import { selectGetUserRequestStatus } from '@slices';
 import { useSelector } from '../../services/store';
 
 export type ProtectedRouteProps = {
@@ -10,14 +10,13 @@ export type ProtectedRouteProps = {
 };
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const user = useSelector(selectUser);
-  const isLoading = useSelector(selectUserIsLoading);
+  const requestStatus = useSelector(selectGetUserRequestStatus);
 
-  if (isLoading) {
+  if (requestStatus === 'pending') {
     return <Preloader />;
   }
 
-  if (!user) {
+  if (requestStatus === 'failed') {
     return <Navigate to='/login' />;
   }
 
