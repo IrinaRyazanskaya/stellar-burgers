@@ -19,10 +19,13 @@ import { useDispatch } from '../../services/store';
 import '../../index.css';
 import styles from './app.module.css';
 import { ProtectedRoute } from '../protected-route';
+import { useRedirectOnLogout } from '../../utils/redirects';
 
 const App = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useRedirectOnLogout();
 
   useEffect(() => {
     dispatch(getUser());

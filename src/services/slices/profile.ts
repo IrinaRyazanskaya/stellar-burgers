@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getUserApi, loginUserApi, registerUserApi } from '@api';
+import { getUserApi, loginUserApi, logoutApi, registerUserApi } from '@api';
 import type { TLoginData, TRegisterData } from '@api';
 import { TUser } from '@utils-types';
-import { setCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 type TProfileState = {
   user: TUser | null;
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+  userStatus: 'unknown' | 'authorized' | 'unauthorized';
+
+  getUserRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
+  getUserError: string | null;
 
   loginRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
   loginError: string | null;
@@ -18,7 +21,10 @@ type TProfileState = {
 
 const initialState: TProfileState = {
   user: null,
-  loading: 'idle',
+  userStatus: 'unknown',
+
+  getUserRequestStatus: 'idle',
+  getUserError: null,
 
   loginRequestStatus: 'idle',
   loginError: null,
@@ -61,6 +67,23 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  'profile/logoutUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      await logoutApi();
+      deleteCookie('accessToken');
+      localStorage.removeItem('refreshToken');
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error
+          ? error.message
+          : 'Произошла ошибка при выходе из аккаунта'
+      );
+    }
+  }
+);
+
 export const registerUser = createAsyncThunk(
   'profile/registerUser',
   async (registerData: TRegisterData, { rejectWithValue }) => {
@@ -93,14 +116,21 @@ export const profileSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state) => {
-        state.loading = 'pending';
+        state.getUserRequestStatus = 'pending';
+        state.getUserError = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.loading = 'succeeded';
         state.user = action.payload.user;
+        state.userStatus = 'authorized';
+
+        state.getUserRequestStatus = 'succeeded';
+        state.getUserError = null;
       })
       .addCase(getUser.rejected, (state, action) => {
-        state.loading = 'failed';
+        state.userStatus = 'unauthorized';
+
+        state.getUserRequestStatus = 'failed';
+        state.getUserError = action.payload as string;
       });
 
     builder
@@ -109,14 +139,25 @@ export const profileSlice = createSlice({
         state.loginError = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.loginRequestStatus = 'succeeded';
         state.user = action.payload.user;
+        state.userStatus = 'authorized';
+
+        state.loginRequestStatus = 'succeeded';
         state.loginError = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.userStatus = 'unauthorized';
+
         state.loginRequestStatus = 'failed';
         state.loginError = action.payload as string;
       });
+
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      state.user = null;
+      state.userStatus = 'unauthorized';
+
+      state.getUserRequestStatus = 'idle';
+    });
 
     builder
       .addCase(registerUser.pending, (state) => {
@@ -124,11 +165,15 @@ export const profileSlice = createSlice({
         state.registerError = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.registerRequestStatus = 'succeeded';
         state.user = action.payload.user;
+        state.userStatus = 'authorized';
+
+        state.registerRequestStatus = 'succeeded';
         state.registerError = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.userStatus = 'unauthorized';
+
         state.registerRequestStatus = 'failed';
         state.registerError = action.payload as string;
       });
@@ -138,8 +183,14 @@ export const profileSlice = createSlice({
 export const selectUser = (state: { profile: TProfileState }) =>
   state.profile.user;
 
+export const selectUserStatus = (state: { profile: TProfileState }) =>
+  state.profile.userStatus;
+
+export const selectGetUserError = (state: { profile: TProfileState }) =>
+  state.profile.getUserError;
+
 export const selectGetUserRequestStatus = (state: { profile: TProfileState }) =>
-  state.profile.loading;
+  state.profile.getUserRequestStatus;
 
 export const selectLoginError = (state: { profile: TProfileState }) =>
   state.profile.loginError;

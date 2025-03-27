@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { Preloader } from '@ui';
-import { selectGetUserRequestStatus } from '@slices';
+import { selectUserStatus } from '@slices';
 import { useSelector } from '../../services/store';
 
 export type ProtectedRouteProps = {
@@ -10,13 +10,13 @@ export type ProtectedRouteProps = {
 };
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const requestStatus = useSelector(selectGetUserRequestStatus);
+  const userStatus = useSelector(selectUserStatus);
 
-  if (requestStatus === 'pending') {
+  if (userStatus === 'unknown') {
     return <Preloader />;
   }
 
-  if (requestStatus === 'failed') {
+  if (userStatus === 'unauthorized') {
     return <Navigate to='/login' />;
   }
 
