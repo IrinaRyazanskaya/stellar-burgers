@@ -1,6 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getUserApi, loginUserApi, logoutApi, registerUserApi } from '@api';
+import {
+  getUserApi,
+  loginUserApi,
+  logoutApi,
+  registerUserApi,
+  updateUserApi
+} from '@api';
 import type { TLoginData, TRegisterData } from '@api';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
@@ -17,6 +23,9 @@ type TProfileState = {
 
   registerRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
   registerError: string | null;
+
+  updateRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
+  updateError: string | null;
 };
 
 const initialState: TProfileState = {
@@ -30,7 +39,10 @@ const initialState: TProfileState = {
   loginError: null,
 
   registerRequestStatus: 'idle',
-  registerError: null
+  registerError: null,
+
+  updateRequestStatus: 'idle',
+  updateError: null
 };
 
 export const getUser = createAsyncThunk(
@@ -95,6 +107,22 @@ export const registerUser = createAsyncThunk(
         error instanceof Error
           ? error.message
           : 'Произошла ошибка при регистрации пользователя'
+      );
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  'profile/updateUser',
+  async (registerData: TRegisterData, { rejectWithValue }) => {
+    try {
+      const data = await updateUserApi(registerData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error
+          ? error.message
+          : 'Произошла ошибка при обновлении данных пользователя'
       );
     }
   }
@@ -177,6 +205,22 @@ export const profileSlice = createSlice({
         state.registerRequestStatus = 'failed';
         state.registerError = action.payload as string;
       });
+
+    builder
+      .addCase(updateUser.pending, (state) => {
+        state.updateRequestStatus = 'pending';
+        state.updateError = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+
+        state.updateRequestStatus = 'succeeded';
+        state.updateError = null;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.updateRequestStatus = 'failed';
+        state.updateError = action.payload as string;
+      });
   }
 });
 
@@ -204,5 +248,11 @@ export const selectRegisterError = (state: { profile: TProfileState }) =>
 export const selectRegisterRequestStatus = (state: {
   profile: TProfileState;
 }) => state.profile.registerRequestStatus;
+
+export const selectUpdateError = (state: { profile: TProfileState }) =>
+  state.profile.updateError;
+
+export const selectUpdateRequestStatus = (state: { profile: TProfileState }) =>
+  state.profile.updateRequestStatus;
 
 export const { clearLoginStatus, clearRegisterStatus } = profileSlice.actions;
