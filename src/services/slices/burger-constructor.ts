@@ -1,20 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
+
+import type { TConstructorIngredient, TIngredient } from '@utils-types';
 import { generateStringId } from '../../utils/id-generator';
+import { createBurgerOrder } from './burger-order';
 
 type TBurgerConstructorState = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
-  orderModalData: TOrder | null;
-  orderRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
 };
 
 const initialState: TBurgerConstructorState = {
   bun: null,
-  ingredients: [],
-  orderModalData: null,
-  orderRequestStatus: 'idle'
+  ingredients: []
 };
 
 export const burgerConstructorSlice = createSlice({
@@ -53,6 +51,12 @@ export const burgerConstructorSlice = createSlice({
         state.ingredients[index + 1] = currentIngredient;
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(createBurgerOrder.fulfilled, (state, action) => {
+      state.bun = null;
+      state.ingredients = [];
+    });
   }
 });
 
@@ -62,20 +66,6 @@ export const selectBurgerConstructorItems = (state: {
   bun: state.burgerConstructor.bun,
   ingredients: state.burgerConstructor.ingredients
 });
-
-export const selectIsBurgerOrderPending = (state: {
-  burgerConstructor: TBurgerConstructorState;
-}) => {
-  if (state.burgerConstructor.orderRequestStatus === 'pending') {
-    return true;
-  }
-
-  return false;
-};
-
-export const selectBurgerOrderModalData = (state: {
-  burgerConstructor: TBurgerConstructorState;
-}) => state.burgerConstructor.orderModalData;
 
 export const {
   addIngredientToConstructor,

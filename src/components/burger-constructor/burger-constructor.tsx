@@ -1,23 +1,35 @@
 import { FC, useMemo } from 'react';
-import { useSelector } from '../../services/store';
 
 import {
   selectBurgerConstructorItems,
-  selectIsBurgerOrderPending,
-  selectBurgerOrderModalData
+  selectBurgerOrder,
+  createBurgerOrder,
+  selectBurgerOrderRequestStatus,
+  clearBurgerOrderStatus
 } from '@slices';
 import { BurgerConstructorUI } from '@ui';
 import { TConstructorIngredient } from '@utils-types';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const BurgerConstructor: FC = () => {
+  const dispatch = useDispatch();
   const constructorItems = useSelector(selectBurgerConstructorItems);
-  const orderRequest = useSelector(selectIsBurgerOrderPending);
-  const orderModalData = useSelector(selectBurgerOrderModalData);
+  const orderRequestStatus = useSelector(selectBurgerOrderRequestStatus);
+  const orderModalData = useSelector(selectBurgerOrder);
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
+    if (!constructorItems.bun || orderRequestStatus === 'pending') return;
+
+    dispatch(
+      createBurgerOrder([
+        constructorItems.bun._id,
+        ...constructorItems.ingredients.map((ingredient) => ingredient._id)
+      ])
+    );
   };
-  const closeOrderModal = () => {};
+  const closeOrderModal = () => {
+    dispatch(clearBurgerOrderStatus());
+  };
 
   const price = useMemo(
     () =>
@@ -32,7 +44,7 @@ export const BurgerConstructor: FC = () => {
   return (
     <BurgerConstructorUI
       price={price}
-      orderRequest={orderRequest}
+      orderRequest={orderRequestStatus === 'pending'}
       constructorItems={constructorItems}
       orderModalData={orderModalData}
       onOrderClick={onOrderClick}

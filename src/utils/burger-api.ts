@@ -99,12 +99,14 @@ export const getOrdersApi = () =>
     return Promise.reject(data);
   });
 
+export type TNewOrderData = string[];
+
 type TNewOrderResponse = TServerResponse<{
   order: TOrder;
   name: string;
 }>;
 
-export const orderBurgerApi = (data: string[]) =>
+export const orderBurgerApi = (data: TNewOrderData) =>
   fetchWithRefresh<TNewOrderResponse>(`${URL}/orders`, {
     method: 'POST',
     headers: {

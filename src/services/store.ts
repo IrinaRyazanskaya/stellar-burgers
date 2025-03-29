@@ -8,12 +8,14 @@ import {
 import {
   burgerConstructorSlice,
   burgerIngredientsSlice,
+  burgerOrderSlice,
   profileSlice
 } from '@slices';
 
 const rootReducer = combineSlices(
   burgerConstructorSlice,
   burgerIngredientsSlice,
+  burgerOrderSlice,
   profileSlice
 );
 
