@@ -9,6 +9,7 @@ import {
   burgerConstructorSlice,
   burgerIngredientsSlice,
   burgerOrderSlice,
+  orderInfoSlice,
   ordersFeedSlice,
   profileOrdersSlice,
   profileSlice
@@ -20,7 +21,8 @@ const rootReducer = combineSlices(
   burgerOrderSlice,
   profileSlice,
   profileOrdersSlice,
-  ordersFeedSlice
+  ordersFeedSlice,
+  orderInfoSlice
 );
 
 const store = configureStore({

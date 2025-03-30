@@ -1,23 +1,38 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+
+import {
+  clearOrderInfo,
+  getOrderInfo,
+  selectBurgerIngredients,
+  selectOrderInfo,
+  selectOrderInfoRequestStatus
+} from '@slices';
+import { TIngredient } from '@utils-types';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { useSelector, useDispatch } from '../../services/store';
+import type { OrderInfoProps } from './type';
+import { Modal } from '../modal';
 
-export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
+export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
+  const dispatch = useDispatch();
+  const routerParams = useParams<{ number: string }>();
+
+  const orderData = useSelector(selectOrderInfo);
+  const ingredients = useSelector(selectBurgerIngredients);
+  const orderRequestStatus = useSelector(selectOrderInfoRequestStatus);
+
+  const cleanAndClose = () => {
+    dispatch(clearOrderInfo());
+    onClose();
   };
 
-  const ingredients: TIngredient[] = [];
+  useEffect(() => {
+    const orderNumber = Number(routerParams.number);
+    dispatch(getOrderInfo(orderNumber));
+  }, [routerParams.number]);
 
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -59,9 +74,13 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (!orderInfo || orderRequestStatus === 'pending') {
     return <Preloader />;
   }
 
-  return <OrderInfoUI orderInfo={orderInfo} />;
+  return (
+    <Modal title={`#${orderInfo.number}`} onClose={cleanAndClose}>
+      <OrderInfoUI orderInfo={orderInfo} />
+    </Modal>
+  );
 };

@@ -32,9 +32,9 @@ const App = () => {
     dispatch(fetchBurgerIngredients());
   }, []);
 
-  const goBack = () => {
-    navigate(-1);
-  };
+  const goToConstructor = () => navigate('/');
+  const goToFeed = () => navigate('/feed');
+  const goToProfileOrders = () => navigate('/profile/orders');
 
   return (
     <div className={styles.app}>
@@ -66,27 +66,17 @@ const App = () => {
 
         <Route
           path='/feed/:number'
-          element={
-            <Modal title='title' onClose={() => {}}>
-              <OrderInfo />
-            </Modal>
-          }
+          element={<OrderInfo onClose={goToFeed} />}
         />
         <Route
           path='/ingredients/:id'
-          element={
-            <Modal title='Детали ингредиента' onClose={goBack}>
-              <IngredientDetails />
-            </Modal>
-          }
+          element={<IngredientDetails onClose={goToConstructor} />}
         />
         <Route
           path='/profile/orders/:number'
           element={
             <ProtectedRoute>
-              <Modal title='title' onClose={() => {}}>
-                <OrderInfo />
-              </Modal>
+              <OrderInfo onClose={goToProfileOrders} />
             </ProtectedRoute>
           }
         />
