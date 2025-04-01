@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-import {
-  AppHeader,
-  OrderInfo,
-  IngredientDetails,
-  ProtectedRoute,
-  AnonymousRoute
-} from '@components';
+import { AppHeader, ProtectedRoute, AnonymousRoute } from '@components';
 import { fetchBurgerIngredients, getUser } from '@slices';
 import {
   ConstructorPage,
@@ -27,7 +21,6 @@ import styles from './app.module.css';
 import { useRedirectOnLogout } from '../../utils/redirects';
 
 const App = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useRedirectOnLogout();
@@ -37,16 +30,12 @@ const App = () => {
     dispatch(fetchBurgerIngredients());
   }, []);
 
-  const goToConstructor = () => navigate('/');
-  const goToFeed = () => navigate('/feed');
-  const goToProfileOrders = () => navigate('/profile/orders');
-
   return (
     <div className={styles.app}>
       <AppHeader />
       <Routes>
-        <Route path='/' element={<ConstructorPage />} />
-        <Route path='/feed' element={<Feed />} />
+        <Route path='/*' element={<ConstructorPage />} />
+        <Route path='/feed/*' element={<Feed />} />
         <Route
           path='/login'
           element={
@@ -88,7 +77,7 @@ const App = () => {
           }
         />
         <Route
-          path='/profile/orders'
+          path='/profile/orders/*'
           element={
             <ProtectedRoute>
               <ProfileOrders />
@@ -96,23 +85,6 @@ const App = () => {
           }
         />
         <Route path='*' element={<NotFound404 />} />
-
-        <Route
-          path='/feed/:number'
-          element={<OrderInfo onClose={goToFeed} />}
-        />
-        <Route
-          path='/ingredients/:id'
-          element={<IngredientDetails onClose={goToConstructor} />}
-        />
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <ProtectedRoute>
-              <OrderInfo onClose={goToProfileOrders} />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
     </div>
   );

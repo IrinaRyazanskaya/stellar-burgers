@@ -74,13 +74,15 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo || orderRequestStatus === 'pending') {
-    return <Preloader />;
-  }
+  const isLoading = !orderInfo || orderRequestStatus === 'pending';
+
+  const modalTitle = isLoading
+    ? 'Идёт загрузка данных'
+    : `#${orderInfo.number}`;
 
   return (
-    <Modal title={`#${orderInfo.number}`} onClose={cleanAndClose}>
-      <OrderInfoUI orderInfo={orderInfo} />
+    <Modal title={modalTitle} onClose={cleanAndClose}>
+      {isLoading ? <Preloader /> : <OrderInfoUI orderInfo={orderInfo} />}
     </Modal>
   );
 };
