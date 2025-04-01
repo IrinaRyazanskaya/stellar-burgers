@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { RegisterUI } from '@ui-pages';
@@ -28,7 +28,7 @@ export const Register: FC = () => {
     }
   }, [requestStatus, navigate, dispatch]);
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
       registerUser({
