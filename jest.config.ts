@@ -17,7 +17,6 @@ const config: JestConfigWithTsJest = {
     '^@ui$': '<rootDir>/src/components/ui',
     '^@utils-types$': '<rootDir>/src/utils/types'
   },
-  collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',

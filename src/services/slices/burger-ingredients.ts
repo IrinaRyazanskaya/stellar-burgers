@@ -4,13 +4,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '@api';
 import type { TIngredient } from '@utils-types';
 
-type TBurgerIngredientsState = {
+export type TBurgerIngredientsState = {
   items: TIngredient[];
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';
   error: string | null;
 };
 
-const initialState: TBurgerIngredientsState = {
+export const burgerIngredientsInitialState: TBurgerIngredientsState = {
   items: [],
   loading: 'idle',
   error: null
@@ -34,7 +34,7 @@ export const fetchBurgerIngredients = createAsyncThunk(
 
 export const burgerIngredientsSlice = createSlice({
   name: 'burgerIngredients',
-  initialState,
+  initialState: burgerIngredientsInitialState,
   reducers: {
     resetIngredientsError: (state) => {
       state.error = null;

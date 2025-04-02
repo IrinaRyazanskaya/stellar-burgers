@@ -4,13 +4,13 @@ import type { TNewOrderData } from '@api';
 import { orderBurgerApi } from '@api';
 import type { TOrder } from '@utils-types';
 
-type TBurgerOrderState = {
+export type TBurgerOrderState = {
   order: TOrder | null;
   orderRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
   orderError: string | null;
 };
 
-const initialState: TBurgerOrderState = {
+export const burgerOrderInitialState: TBurgerOrderState = {
   order: null,
   orderRequestStatus: 'idle',
   orderError: null
@@ -34,7 +34,7 @@ export const createBurgerOrder = createAsyncThunk(
 
 export const burgerOrderSlice = createSlice({
   name: 'burgerOrder',
-  initialState,
+  initialState: burgerOrderInitialState,
   reducers: {
     clearBurgerOrderStatus(state) {
       state.order = null;

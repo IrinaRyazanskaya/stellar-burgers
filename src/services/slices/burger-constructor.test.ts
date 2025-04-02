@@ -1,6 +1,6 @@
 import {
   burgerConstructorSlice,
-  initialState,
+  burgerConstructorInitialState,
   addIngredientToConstructor,
   removeIngredientFromConstructor,
   moveIngredientUpInConstructor,
@@ -40,7 +40,7 @@ describe('burgerConstructorSlice', () => {
 
   it('adds bun to constructor', () => {
     const newState = burgerConstructorSlice.reducer(
-      initialState,
+      burgerConstructorInitialState,
       addIngredientToConstructor(bunIngredient)
     );
 
@@ -50,7 +50,7 @@ describe('burgerConstructorSlice', () => {
 
   it('adds filling to constructor', () => {
     const newState = burgerConstructorSlice.reducer(
-      initialState,
+      burgerConstructorInitialState,
       addIngredientToConstructor(fillingIngredient)
     );
 
