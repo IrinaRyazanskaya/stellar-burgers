@@ -16,7 +16,16 @@ const config: JestConfigWithTsJest = {
     '^@ui-pages$': '<rootDir>/src/components/ui/pages',
     '^@ui$': '<rootDir>/src/components/ui',
     '^@utils-types$': '<rootDir>/src/utils/types'
-  }
+  },
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/__tests__/**',
+    '!src/**/__mocks__/**'
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'html']
 };
 
 export default config;
