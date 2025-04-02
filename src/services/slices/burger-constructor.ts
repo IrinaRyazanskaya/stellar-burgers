@@ -5,12 +5,12 @@ import type { TConstructorIngredient, TIngredient } from '@utils-types';
 import { generateStringId } from '../../utils/id-generator';
 import { createBurgerOrder } from './burger-order';
 
-type TBurgerConstructorState = {
+export type TBurgerConstructorState = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 };
 
-const initialState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
   bun: null,
   ingredients: []
 };
