@@ -1,15 +1,23 @@
+import { FC } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
+import {
+  BurgerIngredients,
+  IngredientDetails,
+  BurgerConstructor
+} from '@components';
+import { Preloader } from '@ui';
+import { selectBurgerIngredientsIsLoading } from '@slices';
 import { useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';
 
-import { BurgerIngredients } from '../../components';
-import { BurgerConstructor } from '../../components';
-import { Preloader } from '../../components/ui';
-import { FC } from 'react';
-
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const navigate = useNavigate();
+
+  const goToConstructor = () => navigate('/');
+
+  const isIngredientsLoading = useSelector(selectBurgerIngredientsIsLoading);
 
   return (
     <>
@@ -26,6 +34,12 @@ export const ConstructorPage: FC = () => {
             <BurgerIngredients />
             <BurgerConstructor />
           </div>
+          <Routes>
+            <Route
+              path='ingredients/:id'
+              element={<IngredientDetails onClose={goToConstructor} />}
+            />
+          </Routes>
         </main>
       )}
     </>

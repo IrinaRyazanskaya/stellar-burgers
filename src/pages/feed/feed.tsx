@@ -1,15 +1,41 @@
+import { useEffect } from 'react';
+import { type FC } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
+import { OrderInfo } from '@components';
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
-import { TOrder } from '@utils-types';
-import { FC } from 'react';
+import {
+  getOrdersFeed,
+  selectOrdersFeed,
+  selectOrdersFeedRequestStatus
+} from '@slices';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Feed: FC = () => {
-  /** TODO: взять переменную из стора */
-  const orders: TOrder[] = [];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  if (!orders.length) {
+  const orders = useSelector(selectOrdersFeed);
+  const requestStatus = useSelector(selectOrdersFeedRequestStatus);
+
+  const goToFeed = () => navigate('/feed');
+  const refreshFeed = () => dispatch(getOrdersFeed());
+
+  useEffect(() => {
+    dispatch(getOrdersFeed());
+  }, []);
+
+  if (requestStatus === 'pending') {
     return <Preloader />;
   }
 
-  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  return (
+    <>
+      <FeedUI orders={orders} handleGetFeeds={refreshFeed} />
+      <Routes>
+        <Route path=':number' element={<OrderInfo onClose={goToFeed} />} />
+      </Routes>
+    </>
+  );
 };

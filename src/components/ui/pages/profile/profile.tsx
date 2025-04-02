@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, SyntheticEvent } from 'react';
 
 import { Button, Input } from '@zlden/react-developer-burger-ui-components';
 import styles from './profile.module.css';
@@ -6,6 +6,8 @@ import commonStyles from '../common.module.css';
 
 import { ProfileUIProps } from './type';
 import { ProfileMenu } from '@components';
+
+type ButtonClick = (e: SyntheticEvent) => void;
 
 export const ProfileUI: FC<ProfileUIProps> = ({
   formValue,
@@ -35,6 +37,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            autoComplete='name'
           />
         </div>
         <div className='pb-6'>
@@ -48,6 +51,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            autoComplete='email'
           />
         </div>
         <div className='pb-6'>
@@ -61,6 +65,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            autoComplete='new-password'
           />
         </div>
         {isFormChanged && (
@@ -69,7 +74,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
               type='secondary'
               htmlType='button'
               size='medium'
-              onClick={handleCancel}
+              onClick={handleCancel as ButtonClick}
             >
               Отменить
             </Button>
