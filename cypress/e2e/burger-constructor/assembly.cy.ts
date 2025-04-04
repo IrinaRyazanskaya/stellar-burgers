@@ -1,4 +1,4 @@
-describe('Burger constructor', function () {
+describe('Burger constructor', () => {
   beforeEach(() => {
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
       fixture: 'ingredients.json'

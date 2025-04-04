@@ -1,4 +1,4 @@
-describe('Modal with ingredient details', function () {
+describe('Modal with ingredient details', () => {
   beforeEach(() => {
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
       fixture: 'ingredients.json'
