@@ -1,5 +1,8 @@
 describe('Modal with ingredient details', () => {
   beforeEach(() => {
+    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+      fixture: 'user.json'
+    }).as('getUser');
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
       fixture: 'ingredients.json'
     }).as('getIngredients');

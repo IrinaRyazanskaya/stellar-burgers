@@ -13,6 +13,10 @@ describe('Burger order', () => {
 
   context('Unauthenticated user', () => {
     beforeEach(() => {
+      cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+        fixture: 'no-user.json',
+        statusCode: 401
+      }).as('getUser');
       cy.clearCookies();
       cy.clearLocalStorage();
     });
