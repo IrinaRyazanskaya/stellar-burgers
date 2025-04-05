@@ -1,9 +1,11 @@
+import { BURGER_API_URL } from '../../support/constants';
+
 describe('Modal with ingredient details', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+    cy.intercept('GET', `${BURGER_API_URL}/api/auth/user`, {
       fixture: 'user.json'
     }).as('getUser');
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', `${BURGER_API_URL}/api/ingredients`, {
       fixture: 'ingredients.json'
     }).as('getIngredients');
 

@@ -1,6 +1,8 @@
+import { BURGER_API_URL } from '../../support/constants';
+
 describe('Burger order', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', `${BURGER_API_URL}/api/ingredients`, {
       fixture: 'ingredients.json'
     }).as('getIngredients');
 
@@ -13,7 +15,7 @@ describe('Burger order', () => {
 
   context('Unauthenticated user', () => {
     beforeEach(() => {
-      cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+      cy.intercept('GET', `${BURGER_API_URL}/api/auth/user`, {
         fixture: 'no-user.json',
         statusCode: 401
       }).as('getUser');
@@ -37,7 +39,7 @@ describe('Burger order', () => {
         win.localStorage.setItem('refreshToken', 'fake-refresh-token');
       });
 
-      cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+      cy.intercept('GET', `${BURGER_API_URL}/api/auth/user`, {
         fixture: 'user.json'
       }).as('getUser');
       cy.wait('@getIngredients');
@@ -65,7 +67,7 @@ describe('Burger order', () => {
       addIngredientButton1.click();
       addIngredientButton2.click();
 
-      cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+      cy.intercept('POST', `${BURGER_API_URL}/api/orders`, {
         fixture: 'orders.json'
       }).as('createOrder');
 
