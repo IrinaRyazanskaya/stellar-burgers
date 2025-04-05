@@ -7,7 +7,7 @@ describe('Modal with ingredient details', () => {
       fixture: 'ingredients.json'
     }).as('getIngredients');
 
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
 
     cy.wait('@getIngredients');
 
@@ -17,9 +17,9 @@ describe('Modal with ingredient details', () => {
   it('should be opened when clicking on an ingredient', () => {
     cy.contains('Флюоресцентная булка R2-D3').click();
 
-    cy.url().should(
-      'eq',
-      'http://localhost:4000/ingredients/643d69a5c3f7b9001cfa093d'
+    cy.location('pathname').should(
+      'equal',
+      '/ingredients/643d69a5c3f7b9001cfa093d'
     );
 
     cy.get('[data-cy="modal"]').should('be.visible');
@@ -50,7 +50,7 @@ describe('Modal with ingredient details', () => {
 
     cy.get('[data-cy="modal"]').should('not.exist');
 
-    cy.url().should('eq', 'http://localhost:4000/');
+    cy.location('pathname').should('equal', '/');
   });
 
   it('should be closed when clicking outside the modal window', () => {
@@ -62,6 +62,6 @@ describe('Modal with ingredient details', () => {
 
     cy.get('[data-cy="modal"]').should('not.exist');
 
-    cy.url().should('eq', 'http://localhost:4000/');
+    cy.location('pathname').should('equal', '/');
   });
 });
