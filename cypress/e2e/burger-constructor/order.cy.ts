@@ -15,22 +15,24 @@ describe('Burger order', () => {
     cy.intercept('GET', API_ENDPOINTS.GET_INGREDIENTS, {
       fixture: FIXTURES.GET_INGREDIENTS
     }).as('getIngredients');
-
-    cy.visit(UI_ROUTES.HOME);
-
-    cy.wait('@getIngredients');
-
-    cy.get(DATA_SELECTORS.BURGER_INGREDIENTS).should('be.visible');
   });
 
   context('Unauthenticated user', () => {
     beforeEach(() => {
+      cy.clearCookies();
+      cy.clearLocalStorage();
+
       cy.intercept('GET', API_ENDPOINTS.GET_USER, {
         fixture: FIXTURES.GET_NO_USER,
         statusCode: 401
       }).as('getUser');
-      cy.clearCookies();
-      cy.clearLocalStorage();
+
+      cy.visit(UI_ROUTES.HOME);
+
+      cy.wait('@getUser');
+      cy.wait('@getIngredients');
+
+      cy.get(DATA_SELECTORS.BURGER_INGREDIENTS).should('be.visible');
     });
 
     it('should redirect to login page after order button click', () => {
@@ -52,7 +54,13 @@ describe('Burger order', () => {
       cy.intercept('GET', API_ENDPOINTS.GET_USER, {
         fixture: FIXTURES.GET_USER
       }).as('getUser');
+
+      cy.visit(UI_ROUTES.HOME);
+
+      cy.wait('@getUser');
       cy.wait('@getIngredients');
+
+      cy.get(DATA_SELECTORS.BURGER_INGREDIENTS).should('be.visible');
     });
 
     it('should create order after order button click', () => {
