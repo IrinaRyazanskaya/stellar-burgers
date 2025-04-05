@@ -1,22 +1,32 @@
-import { BURGER_API_URL } from '../../support/constants';
+import {
+  API_ENDPOINTS,
+  BUTTON_TEXTS,
+  DATA_SELECTORS,
+  DUMMY_TEXTS,
+  FIXTURES,
+  INGREDIENTS_TEXTS,
+  SUCCESS_ORDER_TEXTS,
+  TOKENS,
+  UI_ROUTES
+} from '../../support/constants';
 
 describe('Burger order', () => {
   beforeEach(() => {
-    cy.intercept('GET', `${BURGER_API_URL}/api/ingredients`, {
-      fixture: 'ingredients.json'
+    cy.intercept('GET', API_ENDPOINTS.GET_INGREDIENTS, {
+      fixture: FIXTURES.GET_INGREDIENTS
     }).as('getIngredients');
 
-    cy.visit('/');
+    cy.visit(UI_ROUTES.HOME);
 
     cy.wait('@getIngredients');
 
-    cy.get('[data-cy="burger-ingredients"]').should('be.visible');
+    cy.get(DATA_SELECTORS.BURGER_INGREDIENTS).should('be.visible');
   });
 
   context('Unauthenticated user', () => {
     beforeEach(() => {
-      cy.intercept('GET', `${BURGER_API_URL}/api/auth/user`, {
-        fixture: 'no-user.json',
+      cy.intercept('GET', API_ENDPOINTS.GET_USER, {
+        fixture: FIXTURES.GET_NO_USER,
         statusCode: 401
       }).as('getUser');
       cy.clearCookies();
@@ -24,73 +34,85 @@ describe('Burger order', () => {
     });
 
     it('should redirect to login page after order button click', () => {
-      cy.get('[data-cy="burger-constructor"]')
-        .contains('button', 'Оформить заказ')
+      cy.get(DATA_SELECTORS.BURGER_CONSTRUCTOR)
+        .contains('button', BUTTON_TEXTS.ORDER_BUTTON)
         .click();
 
-      cy.location('pathname').should('equal', '/login');
+      cy.location('pathname').should('equal', UI_ROUTES.LOGIN);
     });
   });
 
   context('Authenticated user', () => {
     beforeEach(() => {
-      cy.setCookie('accessToken', 'fake-access-token');
+      cy.setCookie('accessToken', TOKENS.ACCESS);
       cy.window().then((win) => {
-        win.localStorage.setItem('refreshToken', 'fake-refresh-token');
+        win.localStorage.setItem('refreshToken', TOKENS.REFRESH);
       });
 
-      cy.intercept('GET', `${BURGER_API_URL}/api/auth/user`, {
-        fixture: 'user.json'
+      cy.intercept('GET', API_ENDPOINTS.GET_USER, {
+        fixture: FIXTURES.GET_USER
       }).as('getUser');
       cy.wait('@getIngredients');
     });
 
     it('should create order after order button click', () => {
-      const bunItem = cy.contains('Флюоресцентная булка R2-D3').parent('li');
-      const addBunButton = bunItem.find('button').contains('Добавить');
+      const bunItem = cy
+        .contains(INGREDIENTS_TEXTS.BUN_FLUORESCENT)
+        .parent('li');
+      const addBunButton = bunItem
+        .find('button')
+        .contains(BUTTON_TEXTS.ADD_BUTTON);
 
       const ingredientItem1 = cy
-        .contains('Филе Люминесцентного тетраодонтимформа')
+        .contains(INGREDIENTS_TEXTS.INGREDIENT_TETRAODONT)
         .parent('li');
       const addIngredientButton1 = ingredientItem1
         .find('button')
-        .contains('Добавить');
+        .contains(BUTTON_TEXTS.ADD_BUTTON);
 
       const ingredientItem2 = cy
-        .contains('Плоды Фалленианского дерева')
+        .contains(INGREDIENTS_TEXTS.INGREDIENT_TREE)
         .parent('li');
       const addIngredientButton2 = ingredientItem2
         .find('button')
-        .contains('Добавить');
+        .contains(BUTTON_TEXTS.ADD_BUTTON);
 
       addBunButton.click();
       addIngredientButton1.click();
       addIngredientButton2.click();
 
-      cy.intercept('POST', `${BURGER_API_URL}/api/orders`, {
-        fixture: 'orders.json'
+      cy.intercept('POST', API_ENDPOINTS.CREATE_ORDER, {
+        fixture: FIXTURES.CREATE_ORDER
       }).as('createOrder');
 
-      cy.get('[data-cy="burger-constructor"]')
+      cy.get(DATA_SELECTORS.BURGER_CONSTRUCTOR)
         .find('button')
-        .contains('Оформить заказ')
+        .contains(BUTTON_TEXTS.ORDER_BUTTON)
         .click();
 
       cy.wait('@createOrder');
 
-      cy.get('[data-cy="modal"]')
+      cy.get(DATA_SELECTORS.MODAL)
         .should('be.visible')
         .within(() => {
-          cy.get('h2').should('have.text', '73486'); // "73486" - номер заказа
-          cy.get('p').contains('идентификатор заказа').should('exist');
+          cy.get('h2').should('have.text', SUCCESS_ORDER_TEXTS.ORDER_NUMBER);
+          cy.get('p')
+            .contains(SUCCESS_ORDER_TEXTS.ORDER_NUMBER_CAPTION)
+            .should('exist');
         });
 
-      cy.get('[data-cy="modal-close"]').click();
-      cy.get('[data-cy="modal"]').should('not.exist');
+      cy.get(DATA_SELECTORS.MODAL_CLOSE).click();
+      cy.get(DATA_SELECTORS.MODAL).should('not.exist');
 
-      cy.get('[data-cy="burger-constructor"]').within(() => {
-        cy.get('div:contains("Выберите булки")').should('have.length', 2);
-        cy.get('ul > :contains("Выберите начинку")').should('have.length', 1);
+      cy.get(DATA_SELECTORS.BURGER_CONSTRUCTOR).within(() => {
+        cy.get(`div:contains("${DUMMY_TEXTS.CHOOSE_BUNS}")`).should(
+          'have.length',
+          2
+        );
+        cy.get(`ul > :contains("${DUMMY_TEXTS.CHOOSE_INGREDIENT}")`).should(
+          'have.length',
+          1
+        );
       });
     });
   });
