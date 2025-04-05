@@ -1,4 +1,4 @@
-export const BURGER_API_URL = 'https://norma.nomoreparties.space';
+export const BURGER_API_URL = Cypress.env('BURGER_API_URL');
 
 export const TOKENS = {
   ACCESS: 'fake-access-token',
@@ -12,9 +12,9 @@ export const UI_ROUTES = {
 };
 
 export const API_ENDPOINTS = {
-  GET_USER: `${BURGER_API_URL}/api/auth/user`,
-  CREATE_ORDER: `${BURGER_API_URL}/api/orders`,
-  GET_INGREDIENTS: `${BURGER_API_URL}/api/ingredients`
+  GET_USER: `${BURGER_API_URL}/auth/user`,
+  CREATE_ORDER: `${BURGER_API_URL}/orders`,
+  GET_INGREDIENTS: `${BURGER_API_URL}/ingredients`
 };
 
 export const FIXTURES = {
