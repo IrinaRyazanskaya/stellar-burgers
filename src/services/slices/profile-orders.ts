@@ -3,13 +3,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getOrdersApi } from '@api';
 import type { TOrder } from '@utils-types';
 
-type TProfileOrdersState = {
+export type TProfileOrdersState = {
   orders: TOrder[];
   requestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
   requestError: string | null;
 };
 
-const initialState: TProfileOrdersState = {
+export const profileOrdersInitialState: TProfileOrdersState = {
   orders: [],
   requestStatus: 'idle',
   requestError: null
@@ -33,7 +33,7 @@ export const getProfileOrders = createAsyncThunk(
 
 export const profileOrdersSlice = createSlice({
   name: 'profileOrders',
-  initialState,
+  initialState: profileOrdersInitialState,
   reducers: {},
   extraReducers: (builder) => {
     builder

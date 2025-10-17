@@ -5,19 +5,19 @@ import type { TConstructorIngredient, TIngredient } from '@utils-types';
 import { generateStringId } from '../../utils/id-generator';
 import { createBurgerOrder } from './burger-order';
 
-type TBurgerConstructorState = {
+export type TBurgerConstructorState = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 };
 
-const initialState: TBurgerConstructorState = {
+export const burgerConstructorInitialState: TBurgerConstructorState = {
   bun: null,
   ingredients: []
 };
 
 export const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
-  initialState,
+  initialState: burgerConstructorInitialState,
   reducers: {
     addIngredientToConstructor: (state, action: PayloadAction<TIngredient>) => {
       if (action.payload.type === 'bun') {

@@ -11,7 +11,7 @@ import type { TLoginData, TRegisterData } from '@api';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 
-type TProfileState = {
+export type TProfileState = {
   user: TUser | null;
   userStatus: 'unknown' | 'authorized' | 'unauthorized';
 
@@ -28,7 +28,7 @@ type TProfileState = {
   updateError: string | null;
 };
 
-const initialState: TProfileState = {
+export const profileInitialState: TProfileState = {
   user: null,
   userStatus: 'unknown',
 
@@ -130,7 +130,7 @@ export const updateUser = createAsyncThunk(
 
 export const profileSlice = createSlice({
   name: 'profile',
-  initialState,
+  initialState: profileInitialState,
   reducers: {
     clearLoginStatus(state) {
       state.loginRequestStatus = 'idle';

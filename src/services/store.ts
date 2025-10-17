@@ -15,7 +15,7 @@ import {
   profileSlice
 } from '@slices';
 
-const rootReducer = combineSlices(
+export const rootReducer = combineSlices(
   burgerConstructorSlice,
   burgerIngredientsSlice,
   burgerOrderSlice,

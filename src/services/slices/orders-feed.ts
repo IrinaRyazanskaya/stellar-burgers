@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getFeedsApi } from '@api';
 import type { TOrder } from '@utils-types';
 
-type TOrdersFeedState = {
+export type TOrdersFeedState = {
   orders: TOrder[];
   stats: {
     total: number;
@@ -13,7 +13,7 @@ type TOrdersFeedState = {
   requestError: string | null;
 };
 
-const initialState: TOrdersFeedState = {
+export const ordersFeedInitialState: TOrdersFeedState = {
   orders: [],
   stats: {
     total: 0,
@@ -41,7 +41,7 @@ export const getOrdersFeed = createAsyncThunk(
 
 export const ordersFeedSlice = createSlice({
   name: 'ordersFeed',
-  initialState,
+  initialState: ordersFeedInitialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
