@@ -19,8 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@ui": ["src/components/ui"],
-      "@utils-types": ["src/utils/types"],
-      "@selectors": ["src/services/selectors"]
+      "@utils-types": ["src/utils/types"]
     }
   },
   "include": ["src"]

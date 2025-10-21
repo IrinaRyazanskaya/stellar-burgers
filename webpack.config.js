@@ -80,8 +80,7 @@ module.exports = {
     ],
     alias: {
       '@ui': path.resolve(__dirname, './src/components/ui'),
-      '@utils-types': path.resolve(__dirname, './src/utils/types'),
-      '@selectors': path.resolve(__dirname, './src/services/selectors')
+      '@utils-types': path.resolve(__dirname, './src/utils/types')
     }
   },
 
