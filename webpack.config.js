@@ -79,8 +79,7 @@ module.exports = {
       '.jpg'
     ],
     alias: {
-      '@ui': path.resolve(__dirname, './src/components/ui'),
-      '@utils-types': path.resolve(__dirname, './src/utils/types')
+      '@ui': path.resolve(__dirname, './src/components/ui')
     }
   },
 

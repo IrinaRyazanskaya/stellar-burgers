@@ -7,8 +7,8 @@ import {
   selectBurgerMains,
   selectBurgerSauces
 } from '../../services/slices/burger-ingredients';
+import type { TTabMode } from '../../utils/types';
 import { useSelector } from '../../services/store';
-import { TTabMode } from '@utils-types';
 
 export const BurgerIngredients: FC = () => {
   const buns = useSelector(selectBurgerBuns);

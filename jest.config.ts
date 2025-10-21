@@ -8,8 +8,7 @@ const config: JestConfigWithTsJest = {
     '^.+\\.tsx?$': ['ts-jest', {}]
   },
   moduleNameMapper: {
-    '^@ui$': '<rootDir>/src/components/ui',
-    '^@utils-types$': '<rootDir>/src/utils/types'
+    '^@ui$': '<rootDir>/src/components/ui'
   },
   collectCoverageFrom: [
     '!src/**/*.d.ts',

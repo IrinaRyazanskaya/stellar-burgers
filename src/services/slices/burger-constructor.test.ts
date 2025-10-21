@@ -1,3 +1,4 @@
+import type { TIngredient, TConstructorIngredient } from '../../utils/types';
 import {
   burgerConstructorSlice,
   burgerConstructorInitialState,
@@ -7,7 +8,6 @@ import {
   moveIngredientDownInConstructor
 } from './burger-constructor';
 import type { TBurgerConstructorState } from './burger-constructor';
-import type { TIngredient, TConstructorIngredient } from '@utils-types';
 
 describe('burgerConstructorSlice', () => {
   const bunIngredient: TIngredient = {

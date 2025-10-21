@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { TConstructorIngredient, TIngredient } from '@utils-types';
 import { generateStringId } from '../../utils/id-generator';
+import type { TConstructorIngredient, TIngredient } from '../../utils/types';
 import { createBurgerOrder } from './burger-order';
 
 export type TBurgerConstructorState = {

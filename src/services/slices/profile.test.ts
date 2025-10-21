@@ -12,7 +12,7 @@ import type {
   TLoginData,
   TRegisterData
 } from '../../clients/burger-api';
-import type { TUser } from '@utils-types';
+import type { TUser } from '../../utils/types';
 import {
   profileSlice,
   profileInitialState,

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { getFeedsApi } from '../../clients/burger-api';
-import type { TOrder } from '@utils-types';
+import type { TOrder } from '../../utils/types';
 import {
   ordersFeedSlice,
   getOrdersFeed,

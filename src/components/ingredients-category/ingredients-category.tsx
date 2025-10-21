@@ -3,8 +3,8 @@ import { forwardRef, useMemo } from 'react';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
 import { selectBurgerConstructorItems } from '../../services/slices/burger-constructor';
 import { useSelector } from '../../services/store';
+import type { TIngredient } from '../../utils/types';
 import { TIngredientsCategoryProps } from './type';
-import { TIngredient } from '@utils-types';
 
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,

@@ -11,7 +11,7 @@ import {
 } from '../../services/slices/burger-order';
 import { selectUser } from '../../services/slices/profile';
 import { useDispatch, useSelector } from '../../services/store';
-import { TConstructorIngredient } from '@utils-types';
+import type { TConstructorIngredient } from '../../utils/types';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();

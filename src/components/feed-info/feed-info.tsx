@@ -5,8 +5,8 @@ import {
   selectOrdersFeed,
   selectOrdersStats
 } from '../../services/slices/orders-feed';
+import type { TOrder } from '../../utils/types';
 import { useSelector } from '../../services/store';
-import { TOrder } from '@utils-types';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders

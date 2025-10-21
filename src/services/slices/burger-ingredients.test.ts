@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { getIngredientsApi } from '../../clients/burger-api';
-import type { TIngredient } from '@utils-types';
+import type { TIngredient } from '../../utils/types';
 import {
   burgerIngredientsSlice,
   fetchBurgerIngredients,

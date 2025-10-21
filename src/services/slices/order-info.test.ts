@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { getOrderByNumberApi } from '../../clients/burger-api';
-import type { TOrder } from '@utils-types';
+import type { TOrder } from '../../utils/types';
 import {
   orderInfoSlice,
   getOrderInfo,

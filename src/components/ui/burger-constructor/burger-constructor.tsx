@@ -6,9 +6,9 @@ import {
 } from '@zlden/react-developer-burger-ui-components';
 
 import { BurgerConstructorElement } from '../../burger-constructor-element';
+import type { TConstructorIngredient } from '../../../utils/types';
 import { Modal } from '../../modal';
 import { BurgerConstructorUIProps } from './type';
-import { TConstructorIngredient } from '@utils-types';
 import { Preloader, OrderDetailsUI } from '@ui';
 
 import styles from './burger-constructor.module.css';

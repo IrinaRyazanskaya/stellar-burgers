@@ -1,5 +1,5 @@
 import { setCookie, getCookie } from '../../utils/cookie';
-import { TIngredient, TOrder, TUser } from '../../utils/types';
+import type { TIngredient, TOrder, TUser } from '../../utils/types';
 
 type TServerResponse<T> = {
   success: boolean;

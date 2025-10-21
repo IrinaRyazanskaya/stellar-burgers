@@ -8,8 +8,8 @@ import {
   updateUserApi
 } from '../../clients/burger-api';
 import type { TLoginData, TRegisterData } from '../../clients/burger-api';
-import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
+import type { TUser } from '../../utils/types';
 
 export type TProfileState = {
   user: TUser | null;
