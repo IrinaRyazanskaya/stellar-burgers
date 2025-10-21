@@ -1,11 +1,6 @@
 import { setCookie, getCookie } from './cookie';
 import { TIngredient, TOrder, TUser } from './types';
 
-const URL = process.env.BURGER_API_URL;
-
-const checkResponse = <T>(res: Response): Promise<T> =>
-  res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-
 type TServerResponse<T> = {
   success: boolean;
 } & T;
@@ -15,123 +10,7 @@ type TRefreshResponse = TServerResponse<{
   accessToken: string;
 }>;
 
-export const refreshToken = (): Promise<TRefreshResponse> =>
-  fetch(`${URL}/auth/token`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify({
-      token: localStorage.getItem('refreshToken')
-    })
-  })
-    .then((res) => checkResponse<TRefreshResponse>(res))
-    .then((refreshData) => {
-      if (!refreshData.success) {
-        return Promise.reject(refreshData);
-      }
-      localStorage.setItem('refreshToken', refreshData.refreshToken);
-      setCookie('accessToken', refreshData.accessToken);
-      return refreshData;
-    });
-
-export const fetchWithRefresh = async <T>(
-  url: RequestInfo,
-  options: RequestInit
-) => {
-  try {
-    const res = await fetch(url, options);
-    return await checkResponse<T>(res);
-  } catch (err) {
-    if ((err as { message: string }).message === 'jwt expired') {
-      const refreshData = await refreshToken();
-      if (options.headers) {
-        (options.headers as { [key: string]: string }).authorization =
-          refreshData.accessToken;
-      }
-      const res = await fetch(url, options);
-      return await checkResponse<T>(res);
-    } else {
-      return Promise.reject(err);
-    }
-  }
-};
-
-type TIngredientsResponse = TServerResponse<{
-  data: TIngredient[];
-}>;
-
-type TFeedsResponse = TServerResponse<{
-  orders: TOrder[];
-  total: number;
-  totalToday: number;
-}>;
-
-type TOrdersResponse = TServerResponse<{
-  data: TOrder[];
-}>;
-
-export const getIngredientsApi = () =>
-  fetch(`${URL}/ingredients`)
-    .then((res) => checkResponse<TIngredientsResponse>(res))
-    .then((data) => {
-      if (data?.success) return data.data;
-      return Promise.reject(data);
-    });
-
-export const getFeedsApi = () =>
-  fetch(`${URL}/orders/all`)
-    .then((res) => checkResponse<TFeedsResponse>(res))
-    .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
-    });
-
-export const getOrdersApi = () =>
-  fetchWithRefresh<TFeedsResponse>(`${URL}/orders`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      authorization: getCookie('accessToken')
-    } as HeadersInit
-  }).then((data) => {
-    if (data?.success) return data.orders;
-    return Promise.reject(data);
-  });
-
 export type TNewOrderData = string[];
-
-type TNewOrderResponse = TServerResponse<{
-  order: TOrder;
-  name: string;
-}>;
-
-export const orderBurgerApi = (data: TNewOrderData) =>
-  fetchWithRefresh<TNewOrderResponse>(`${URL}/orders`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      authorization: getCookie('accessToken')
-    } as HeadersInit,
-    body: JSON.stringify({
-      ingredients: data
-    })
-  }).then((data) => {
-    if (data?.success) return data;
-    return Promise.reject(data);
-  });
-
-type TOrderResponse = TServerResponse<{
-  orders: TOrder[];
-}>;
-
-export const getOrderByNumberApi = (number: number) =>
-  fetch(`${URL}/orders/${number}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then((res) => checkResponse<TOrderResponse>(res));
 
 export type TRegisterData = {
   email: string;
@@ -145,93 +24,455 @@ export type TAuthResponse = TServerResponse<{
   user: TUser;
 }>;
 
-export const registerUserApi = (data: TRegisterData) =>
-  fetch(`${URL}/auth/register`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
-    .then((res) => checkResponse<TAuthResponse>(res))
-    .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
-    });
-
 export type TLoginData = {
   email: string;
   password: string;
 };
 
-export const loginUserApi = (data: TLoginData) =>
-  fetch(`${URL}/auth/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
-    .then((res) => checkResponse<TAuthResponse>(res))
-    .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
-    });
+const MOCK_DELAY_MS = 250;
+const MOCK_ACCESS_TOKEN = 'Bearer mock-access-token';
+const MOCK_REFRESH_TOKEN = 'mock-refresh-token';
 
-export const forgotPasswordApi = (data: { email: string }) =>
-  fetch(`${URL}/password-reset`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
-    .then((res) => checkResponse<TServerResponse<{}>>(res))
-    .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
-    });
+const withDelay = <T>(factory: () => T, ms = MOCK_DELAY_MS): Promise<T> =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        resolve(factory());
+      } catch (error) {
+        reject(error);
+      }
+    }, ms);
+  });
 
-export const resetPasswordApi = (data: { password: string; token: string }) =>
-  fetch(`${URL}/password-reset/reset`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
-    .then((res) => checkResponse<TServerResponse<{}>>(res))
-    .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
-    });
+const cloneIngredient = (ingredient: TIngredient): TIngredient => {
+  return {
+    ...ingredient
+  };
+};
+
+const cloneOrder = (order: TOrder): TOrder => {
+  return {
+    ...order,
+    ingredients: [...order.ingredients]
+  };
+};
+
+const mockIngredients: TIngredient[] = [
+  {
+    _id: 'bun-galaxy',
+    name: 'Galaxy Bun',
+    type: 'bun',
+    proteins: 15,
+    fat: 6,
+    carbohydrates: 32,
+    calories: 340,
+    price: 125,
+    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
+  },
+  {
+    _id: 'bun-moon',
+    name: 'Moon Bun',
+    type: 'bun',
+    proteins: 13,
+    fat: 5,
+    carbohydrates: 28,
+    calories: 310,
+    price: 110,
+    image: 'https://code.s3.yandex.net/react/code/bun-01.png',
+    image_large: 'https://code.s3.yandex.net/react/code/bun-01-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/bun-01-mobile.png'
+  },
+  {
+    _id: 'sauce-mars',
+    name: 'Mars Chili Sauce',
+    type: 'sauce',
+    proteins: 2,
+    fat: 4,
+    carbohydrates: 12,
+    calories: 80,
+    price: 90,
+    image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
+    image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png'
+  },
+  {
+    _id: 'sauce-nebula',
+    name: 'Nebula Mayo',
+    type: 'sauce',
+    proteins: 1,
+    fat: 7,
+    carbohydrates: 5,
+    calories: 120,
+    price: 70,
+    image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
+    image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png'
+  },
+  {
+    _id: 'sauce-stardust',
+    name: 'Stardust BBQ',
+    type: 'sauce',
+    proteins: 3,
+    fat: 6,
+    carbohydrates: 15,
+    calories: 140,
+    price: 85,
+    image: 'https://code.s3.yandex.net/react/code/sauce-03.png',
+    image_large: 'https://code.s3.yandex.net/react/code/sauce-03-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-03-mobile.png'
+  },
+  {
+    _id: 'main-meteor',
+    name: 'Meteor Steak',
+    type: 'main',
+    proteins: 34,
+    fat: 17,
+    carbohydrates: 5,
+    calories: 450,
+    price: 560,
+    image: 'https://code.s3.yandex.net/react/code/meat-02.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-02-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-02-mobile.png'
+  },
+  {
+    _id: 'main-comet',
+    name: 'Comet Fillet',
+    type: 'main',
+    proteins: 28,
+    fat: 9,
+    carbohydrates: 8,
+    calories: 320,
+    price: 415,
+    image: 'https://code.s3.yandex.net/react/code/meat-05.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-05-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-05-mobile.png'
+  },
+  {
+    _id: 'main-vega',
+    name: 'Vega Cutlet',
+    type: 'main',
+    proteins: 22,
+    fat: 11,
+    carbohydrates: 20,
+    calories: 290,
+    price: 330,
+    image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png'
+  }
+];
+
+const initialOrders: TOrder[] = [
+  {
+    _id: 'order-10001',
+    status: 'done',
+    name: 'Galaxy Special',
+    createdAt: new Date('2024-05-05T14:21:00.000Z').toISOString(),
+    updatedAt: new Date('2024-05-05T14:21:00.000Z').toISOString(),
+    number: 10001,
+    ingredients: ['bun-galaxy', 'main-meteor', 'sauce-mars']
+  },
+  {
+    _id: 'order-10002',
+    status: 'pending',
+    name: 'Nebula Combo',
+    createdAt: new Date('2024-05-06T09:10:00.000Z').toISOString(),
+    updatedAt: new Date('2024-05-06T09:10:00.000Z').toISOString(),
+    number: 10002,
+    ingredients: ['bun-moon', 'main-comet', 'sauce-nebula']
+  },
+  {
+    _id: 'order-10003',
+    status: 'created',
+    name: 'Stardust Veggie',
+    createdAt: new Date('2024-05-06T12:45:00.000Z').toISOString(),
+    updatedAt: new Date('2024-05-06T12:45:00.000Z').toISOString(),
+    number: 10003,
+    ingredients: ['bun-moon', 'main-vega', 'sauce-stardust']
+  }
+];
+
+let ordersFeed: TOrder[] = [...initialOrders];
+let profileOrders: TOrder[] = initialOrders.slice(0, 2);
+let lastOrderNumber = Math.max(...initialOrders.map((order) => order.number));
+const feedStats = {
+  total: 5840,
+  totalToday: 34
+};
+
+type TStoredUser = TUser & { password: string };
+
+const defaultUserEmail = 'space.cook@example.com';
+const users = new Map<string, TStoredUser>([
+  [
+    defaultUserEmail,
+    { email: defaultUserEmail, name: 'Space Cook', password: 'space-123' }
+  ]
+]);
+let activeUserEmail: string | null = null;
+
+const setRefreshTokenToStorage = (token: string) => {
+  localStorage.setItem('refreshToken', token);
+};
+
+const deriveNameFromEmail = (email: string) => {
+  const [localPart] = email.split('@');
+
+  if (!localPart) {
+    return 'Guest';
+  }
+
+  return localPart.charAt(0).toUpperCase() + localPart.slice(1);
+};
+
+const ensureAuthorized = () => {
+  const accessToken = getCookie('accessToken');
+
+  return accessToken === MOCK_ACCESS_TOKEN && activeUserEmail !== null;
+};
+
+const getActiveUser = (): TStoredUser | null => {
+  if (!activeUserEmail) {
+    return null;
+  }
+
+  return users.get(activeUserEmail) ?? null;
+};
+
+export const refreshToken = (): Promise<TRefreshResponse> => {
+  return withDelay(() => {
+    if (!activeUserEmail) {
+      throw new Error('Session expired');
+    }
+
+    const refreshData: TRefreshResponse = {
+      success: true,
+      refreshToken: MOCK_REFRESH_TOKEN,
+      accessToken: MOCK_ACCESS_TOKEN
+    };
+
+    setRefreshTokenToStorage(refreshData.refreshToken);
+    setCookie('accessToken', refreshData.accessToken);
+
+    return refreshData;
+  });
+};
+
+export const getIngredientsApi = () => {
+  return withDelay(() => mockIngredients.map(cloneIngredient));
+};
+
+export const getFeedsApi = () => {
+  return withDelay(() => ({
+    orders: ordersFeed.map(cloneOrder),
+    total: feedStats.total,
+    totalToday: feedStats.totalToday
+  }));
+};
+
+export const getOrdersApi = () => {
+  return withDelay(() => {
+    if (!ensureAuthorized()) {
+      throw new Error('Not authorized');
+    }
+
+    return profileOrders.map(cloneOrder);
+  });
+};
+
+export const orderBurgerApi = (data: TNewOrderData) => {
+  return withDelay(() => {
+    if (!data.length) {
+      throw new Error('Order must contain at least one ingredient');
+    }
+
+    lastOrderNumber += 1;
+
+    const now = new Date().toISOString();
+    const order: TOrder = {
+      _id: `order-${lastOrderNumber}`,
+      status: 'done',
+      name: `Custom Stellar Burger #${lastOrderNumber}`,
+      createdAt: now,
+      updatedAt: now,
+      number: lastOrderNumber,
+      ingredients: [...data]
+    };
+
+    ordersFeed = [order, ...ordersFeed].slice(0, 20);
+
+    if (ensureAuthorized()) {
+      profileOrders = [order, ...profileOrders].slice(0, 20);
+    }
+
+    feedStats.total += 1;
+    feedStats.totalToday += 1;
+
+    return {
+      success: true,
+      order: cloneOrder(order),
+      name: order.name
+    };
+  });
+};
+
+export const getOrderByNumberApi = (number: number) => {
+  return withDelay(() => {
+    const order =
+      ordersFeed.find((item) => item.number === number) ??
+      profileOrders.find((item) => item.number === number);
+
+    if (!order) {
+      throw new Error('Order not found');
+    }
+
+    return {
+      success: true,
+      orders: [cloneOrder(order)]
+    };
+  });
+};
+
+export const registerUserApi = (data: TRegisterData) => {
+  return withDelay(() => {
+    if (users.has(data.email)) {
+      throw new Error('User already exists');
+    }
+
+    const user: TUser = {
+      email: data.email,
+      name: data.name || deriveNameFromEmail(data.email)
+    };
+
+    users.set(data.email, { ...user, password: data.password });
+    activeUserEmail = data.email;
+
+    return {
+      user,
+      success: true,
+      accessToken: MOCK_ACCESS_TOKEN,
+      refreshToken: MOCK_REFRESH_TOKEN
+    };
+  });
+};
+
+export const loginUserApi = (data: TLoginData) => {
+  return withDelay(() => {
+    const existingUser = users.get(data.email);
+
+    const userRecord: TStoredUser = existingUser
+      ? { ...existingUser, password: data.password || existingUser.password }
+      : {
+          email: data.email,
+          name: deriveNameFromEmail(data.email),
+          password: data.password
+        };
+
+    users.set(userRecord.email, userRecord);
+    activeUserEmail = userRecord.email;
+
+    return {
+      success: true,
+      user: {
+        name: userRecord.name,
+        email: userRecord.email
+      },
+      accessToken: MOCK_ACCESS_TOKEN,
+      refreshToken: MOCK_REFRESH_TOKEN
+    };
+  });
+};
+
+export const forgotPasswordApi = (data: { email: string }) => {
+  return withDelay<TServerResponse<{}>>(() => {
+    if (data.email !== defaultUserEmail) {
+      return { success: false };
+    }
+
+    return { success: true };
+  });
+};
+
+export const resetPasswordApi = (data: { password: string; token: string }) => {
+  return withDelay<TServerResponse<{}>>(() => {
+    if (activeUserEmail) {
+      const activeUser = users.get(activeUserEmail);
+
+      if (activeUser) {
+        users.set(activeUserEmail, { ...activeUser, password: data.password });
+      }
+    }
+
+    return { success: true };
+  });
+};
 
 type TUserResponse = TServerResponse<{ user: TUser }>;
 
-export const getUserApi = () =>
-  fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
-    headers: {
-      authorization: getCookie('accessToken')
-    } as HeadersInit
-  });
+export const getUserApi = () => {
+  return withDelay<TUserResponse>(() => {
+    if (!ensureAuthorized()) {
+      throw new Error('Not authorized');
+    }
 
-export const updateUserApi = (user: Partial<TRegisterData>) =>
-  fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      authorization: getCookie('accessToken')
-    } as HeadersInit,
-    body: JSON.stringify(user)
-  });
+    const activeUser = getActiveUser();
 
-export const logoutApi = () =>
-  fetch(`${URL}/auth/logout`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify({
-      token: localStorage.getItem('refreshToken')
-    })
-  }).then((res) => checkResponse<TServerResponse<{}>>(res));
+    if (!activeUser) {
+      throw new Error('User not found');
+    }
+
+    return {
+      success: true,
+      user: {
+        name: activeUser.name,
+        email: activeUser.email
+      }
+    };
+  });
+};
+
+export const updateUserApi = (user: Partial<TRegisterData>) => {
+  return withDelay<TUserResponse>(() => {
+    if (!ensureAuthorized()) {
+      throw new Error('Not authorized');
+    }
+
+    const activeUser = getActiveUser();
+
+    if (!activeUser) {
+      throw new Error('User not found');
+    }
+
+    const updatedEmail = user.email ?? activeUser.email;
+    const updatedRecord: TStoredUser = {
+      email: updatedEmail,
+      name: user.name ?? activeUser.name,
+      password: user.password ?? activeUser.password
+    };
+
+    if (updatedEmail !== activeUser.email) {
+      users.delete(activeUser.email);
+    }
+
+    users.set(updatedRecord.email, updatedRecord);
+    activeUserEmail = updatedRecord.email;
+
+    return {
+      success: true,
+      user: {
+        name: updatedRecord.name,
+        email: updatedRecord.email
+      }
+    };
+  });
+};
+
+export const logoutApi = () => {
+  return withDelay<TServerResponse<{}>>(() => {
+    activeUserEmail = null;
+
+    return { success: true };
+  });
+};
