@@ -1,10 +1,15 @@
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: path.resolve(__dirname, './src/index.tsx'),
+
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, './dist')
+  },
+
   module: {
     rules: [
       {
@@ -49,15 +54,16 @@ module.exports = {
       }
     ]
   },
+
   plugins: [
     new ESLintPlugin({
       extensions: ['.js', '.jsx', '.ts', '.tsx']
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html'
-    }),
-    new Dotenv()
+    })
   ],
+
   resolve: {
     extensions: [
       '*',
@@ -83,14 +89,11 @@ module.exports = {
       '@selectors': path.resolve(__dirname, './src/services/selectors')
     }
   },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js'
-  },
+
   devServer: {
-    static: path.join(__dirname, './dist'),
+    port: 4000,
     compress: true,
     historyApiFallback: true,
-    port: 4000
+    static: path.join(__dirname, './dist')
   }
 };

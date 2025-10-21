@@ -54,8 +54,6 @@
     "css-loader": "^7.0.0",
     "cypress": "^15.0.0",
     "cypress-dotenv": "^3.0.0",
-    "dotenv": "^17.0.0",
-    "dotenv-webpack": "^8.0.0",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
