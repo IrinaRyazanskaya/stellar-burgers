@@ -5,11 +5,12 @@ import {
   CurrencyIcon
 } from '@zlden/react-developer-burger-ui-components';
 
+import { Modal } from '../../modal';
 import { BurgerConstructorElement } from '../../burger-constructor-element';
 import type { TConstructorIngredient } from '../../../utils/types';
-import { Modal } from '../../modal';
+import { OrderDetailsUI } from '../order-details';
+import { Preloader } from '../preloader';
 import { BurgerConstructorUIProps } from './type';
-import { Preloader, OrderDetailsUI } from '@ui';
 
 import styles from './burger-constructor.module.css';
 

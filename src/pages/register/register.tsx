@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RegisterUI } from '../../components/ui/pages';
+import { RegisterUI } from '../../components/ui/pages/register';
 import {
   clearRegisterStatus,
   registerUser,

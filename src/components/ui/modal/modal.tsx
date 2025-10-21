@@ -1,10 +1,10 @@
 import { FC, memo } from 'react';
+import { CloseIcon } from '@zlden/react-developer-burger-ui-components';
+
+import { ModalOverlayUI } from '../modal-overlay';
+import { TModalUIProps } from './type';
 
 import styles from './modal.module.css';
-
-import { CloseIcon } from '@zlden/react-developer-burger-ui-components';
-import { TModalUIProps } from './type';
-import { ModalOverlayUI } from '@ui';
 
 export const ModalUI: FC<TModalUIProps> = memo(
   ({ title, onClose, children }) => (

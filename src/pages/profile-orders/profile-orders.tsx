@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import type { FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { Preloader } from '@ui';
+import { Preloader } from '../../components/ui/preloader';
 import { OrderInfo } from '../../components/order-info';
-import { ProfileOrdersUI } from '../../components/ui/pages';
+import { ProfileOrdersUI } from '../../components/ui/pages/profile-orders';
 import {
   getProfileOrders,
   selectProfileOrders,

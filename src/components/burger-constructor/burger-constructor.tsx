@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { BurgerConstructorUI } from '@ui';
+import { BurgerConstructorUI } from '../../components/ui/burger-constructor';
 import { selectBurgerConstructorItems } from '../../services/slices/burger-constructor';
 import {
   clearBurgerOrderStatus,

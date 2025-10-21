@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { Preloader } from '@ui';
+import { Preloader } from '../../components/ui/preloader';
 import { selectUserStatus } from '../../services/slices/profile';
 import { useSelector } from '../../services/store';
 

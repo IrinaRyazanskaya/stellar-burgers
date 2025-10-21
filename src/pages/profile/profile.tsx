@@ -1,6 +1,6 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 
-import { ProfileUI } from '../../components/ui/pages';
+import { ProfileUI } from '../../components/ui/pages/profile';
 import {
   selectUpdateError,
   selectUser,

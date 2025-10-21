@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { Preloader } from '@ui';
+import { Preloader } from '../../components/ui/preloader';
 import { IngredientDetails } from '../../components/ingredient-details';
 import { BurgerConstructor } from '../../components/burger-constructor';
 import { BurgerIngredients } from '../../components/burger-ingredients';

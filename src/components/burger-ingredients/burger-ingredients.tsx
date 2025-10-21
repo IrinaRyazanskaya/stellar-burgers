@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, FC } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { BurgerIngredientsUI } from '@ui';
+import { BurgerIngredientsUI } from '../../components/ui/burger-ingredients';
 import {
   selectBurgerBuns,
   selectBurgerMains,

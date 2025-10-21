@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { LoginUI } from '../../components/ui/pages';
+import { LoginUI } from '../../components/ui/pages/login';
 import {
   clearLoginStatus,
   loginUser,

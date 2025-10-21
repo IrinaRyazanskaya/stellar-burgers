@@ -2,8 +2,8 @@ import { FC } from 'react';
 
 import { BurgerConstructor } from '../../../burger-constructor';
 import { BurgerIngredients } from '../../../burger-ingredients';
+import { Preloader } from '../../preloader';
 import { ConstructorPageUIProps } from './type';
-import { Preloader } from '@ui';
 
 import styles from './constructor-page.module.css';
 

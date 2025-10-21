@@ -2,7 +2,7 @@ import { FC, useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { forgotPasswordApi } from '../../clients/burger-api';
-import { ForgotPasswordUI } from '../../components/ui/pages';
+import { ForgotPasswordUI } from '../../components/ui/pages/forgot-password';
 
 export const ForgotPassword: FC = () => {
   const [email, setEmail] = useState('');

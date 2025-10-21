@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { type FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { Preloader } from '@ui';
+import { Preloader } from '../../components/ui/preloader';
 import { OrderInfo } from '../../components/order-info';
 import { FeedUI } from '../../components/ui/pages/feed';
 import {

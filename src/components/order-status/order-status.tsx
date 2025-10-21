@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+
+import { OrderStatusUI } from '../../components/ui/order-status';
 import { OrderStatusProps } from './type';
-import { OrderStatusUI } from '@ui';
 
 const statusText: { [key: string]: string } = {
   pending: 'Готовится',

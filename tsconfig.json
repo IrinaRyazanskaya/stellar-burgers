@@ -17,9 +17,6 @@
     "jsx": "react-jsx",
     "types": ["node", "jest"],
     "baseUrl": ".",
-    "paths": {
-      "@ui": ["src/components/ui"]
-    }
   },
   "include": ["src"]
 }

@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 
-import { BurgerConstructorElementUI } from '@ui';
+import { BurgerConstructorElementUI } from '../../components/ui/burger-constructor-element';
 import {
   moveIngredientDownInConstructor,
   moveIngredientUpInConstructor,

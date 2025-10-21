@@ -77,10 +77,7 @@ module.exports = {
       '.png',
       '.svg',
       '.jpg'
-    ],
-    alias: {
-      '@ui': path.resolve(__dirname, './src/components/ui')
-    }
+    ]
   },
 
   devServer: {
