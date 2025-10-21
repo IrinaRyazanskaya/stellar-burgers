@@ -21,7 +21,6 @@
       "@ui": ["src/components/ui"],
       "@slices": ["src/services/slices"],
       "@utils-types": ["src/utils/types"],
-      "@ui-pages": ["src/components/ui/pages"],
       "@selectors": ["src/services/selectors"]
     }
   },

@@ -8,8 +8,8 @@ import {
   selectProfileOrdersRequestStatus
 } from '@slices';
 import { Preloader } from '@ui';
-import { ProfileOrdersUI } from '@ui-pages';
 import { OrderInfo } from '../../components/order-info';
+import { ProfileOrdersUI } from '../../components/ui/pages';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const ProfileOrders: FC = () => {

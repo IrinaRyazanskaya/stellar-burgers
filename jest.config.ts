@@ -11,8 +11,7 @@ const config: JestConfigWithTsJest = {
     '^@ui$': '<rootDir>/src/components/ui',
     '^@slices$': '<rootDir>/src/services/slices',
     '^@utils-types$': '<rootDir>/src/utils/types',
-    '^@selectors$': '<rootDir>/src/services/selectors',
-    '^@ui-pages$': '<rootDir>/src/components/ui/pages'
+    '^@selectors$': '<rootDir>/src/services/selectors'
   },
   collectCoverageFrom: [
     '!src/**/*.d.ts',

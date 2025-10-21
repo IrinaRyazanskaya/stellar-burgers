@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RegisterUI } from '@ui-pages';
+import { RegisterUI } from '../../components/ui/pages';
 import { useDispatch, useSelector } from '../../services/store';
 import {
   clearRegisterStatus,
