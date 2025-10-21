@@ -1,26 +1,24 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import { AppHeader } from '../app-header';
 import { AnonymousRoute } from '../anonymous-route';
-import { ProtectedRoute } from '../protected-route';
+import { AppHeader } from '../app-header';
+import { ConstructorPage } from '../../pages/constructor-page';
+import { Feed } from '../../pages/feed';
 import { fetchBurgerIngredients, getUser } from '@slices';
-import {
-  ConstructorPage,
-  Feed,
-  Login,
-  Register,
-  ForgotPassword,
-  ResetPassword,
-  Profile,
-  ProfileOrders,
-  NotFound404
-} from '@pages';
+import { ForgotPassword } from '../../pages/forgot-password';
+import { Login } from '../../pages/login';
+import { NotFound404 } from '../../pages/not-fount-404';
+import { Profile } from '../../pages/profile';
+import { ProfileOrders } from '../../pages/profile-orders';
+import { ProtectedRoute } from '../protected-route';
+import { Register } from '../../pages/register';
+import { ResetPassword } from '../../pages/reset-password';
 import { useDispatch } from '../../services/store';
+import { useRedirectOnLogout } from '../../utils/redirects';
 
 import '../../index.css';
 import styles from './app.module.css';
-import { useRedirectOnLogout } from '../../utils/redirects';
 
 const App = () => {
   const dispatch = useDispatch();
