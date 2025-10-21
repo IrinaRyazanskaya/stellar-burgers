@@ -30,7 +30,6 @@ export const ProfileUI: FC<ProfileUIProps> = ({
           <Input
             type={'text'}
             placeholder={'Имя'}
-            onChange={handleInputChange}
             value={formValue.name}
             name={'name'}
             error={false}
@@ -38,13 +37,15 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             size={'default'}
             icon={'EditIcon'}
             autoComplete='name'
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+            onChange={handleInputChange}
           />
         </div>
         <div className='pb-6'>
           <Input
             type={'email'}
             placeholder={'E-mail'}
-            onChange={handleInputChange}
             value={formValue.email}
             name={'email'}
             error={false}
@@ -52,13 +53,15 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             size={'default'}
             icon={'EditIcon'}
             autoComplete='email'
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+            onChange={handleInputChange}
           />
         </div>
         <div className='pb-6'>
           <Input
             type={'password'}
             placeholder={'Пароль'}
-            onChange={handleInputChange}
             value={formValue.password}
             name={'password'}
             error={false}
@@ -66,6 +69,9 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             size={'default'}
             icon={'EditIcon'}
             autoComplete='new-password'
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+            onChange={handleInputChange}
           />
         </div>
         {isFormChanged && (
