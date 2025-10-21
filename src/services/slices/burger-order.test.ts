@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { orderBurgerApi } from '@clients';
+import { orderBurgerApi } from '../../clients/burger-api';
 import type { TOrder } from '@utils-types';
 import {
   burgerOrderSlice,
@@ -10,7 +10,7 @@ import {
   TBurgerOrderState
 } from './burger-order';
 
-jest.mock('@clients');
+jest.mock('../../clients/burger-api');
 
 const mockOrder: TOrder = {
   _id: '1',

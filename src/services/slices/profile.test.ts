@@ -6,8 +6,12 @@ import {
   logoutApi,
   registerUserApi,
   updateUserApi
-} from '@clients';
-import type { TAuthResponse, TLoginData, TRegisterData } from '@clients';
+} from '../../clients/burger-api';
+import type {
+  TAuthResponse,
+  TLoginData,
+  TRegisterData
+} from '../../clients/burger-api';
 import type { TUser } from '@utils-types';
 import {
   profileSlice,
@@ -22,7 +26,7 @@ import {
 } from './profile';
 import type { TProfileState } from './profile';
 
-jest.mock('@clients');
+jest.mock('../../clients/burger-api');
 jest.mock('../../utils/cookie', () => ({
   setCookie: jest.fn(),
   deleteCookie: jest.fn()

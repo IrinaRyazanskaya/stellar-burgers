@@ -13,7 +13,6 @@ const config: StorybookConfig = {
     config.resolve
       ? (config.resolve.alias = {
           ...config.resolve.alias,
-          '@clients': path.resolve(__dirname, '../src/clients'),
           '@pages': path.resolve(__dirname, '../src/pages'),
           '@ui': path.resolve(__dirname, '../src/components/ui'),
           '@components': path.resolve(__dirname, '../src/components'),

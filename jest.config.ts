@@ -8,7 +8,6 @@ const config: JestConfigWithTsJest = {
     '^.+\\.tsx?$': ['ts-jest', {}]
   },
   moduleNameMapper: {
-    '^@clients$': '<rootDir>/src/clients',
     '^@pages$': '<rootDir>/src/pages',
     '^@ui$': '<rootDir>/src/components/ui',
     '^@components$': '<rootDir>/src/components',

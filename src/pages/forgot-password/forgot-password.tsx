@@ -1,7 +1,7 @@
 import { FC, useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { forgotPasswordApi } from '@clients';
+import { forgotPasswordApi } from '../../clients/burger-api';
 import { ForgotPasswordUI } from '@ui-pages';
 
 export const ForgotPassword: FC = () => {
