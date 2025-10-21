@@ -1,11 +1,11 @@
 import { FC, SyntheticEvent } from 'react';
-
 import { Button, Input } from '@zlden/react-developer-burger-ui-components';
-import styles from './profile.module.css';
-import commonStyles from '../common.module.css';
 
+import { ProfileMenu } from '../../../profile-menu';
 import { ProfileUIProps } from './type';
-import { ProfileMenu } from '@components';
+
+import commonStyles from '../common.module.css';
+import styles from './profile.module.css';
 
 type ButtonClick = (e: SyntheticEvent) => void;
 

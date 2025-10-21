@@ -9,7 +9,7 @@ import {
 } from '@slices';
 import { Preloader } from '@ui';
 import { ProfileOrdersUI } from '@ui-pages';
-import { OrderInfo } from '@components';
+import { OrderInfo } from '../../components/order-info';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const ProfileOrders: FC = () => {

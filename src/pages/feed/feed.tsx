@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { type FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { OrderInfo } from '@components';
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import {
@@ -11,6 +10,7 @@ import {
   selectOrdersFeedRequestStatus
 } from '@slices';
 import { useDispatch, useSelector } from '../../services/store';
+import { OrderInfo } from '../../components/order-info';
 
 export const Feed: FC = () => {
   const navigate = useNavigate();

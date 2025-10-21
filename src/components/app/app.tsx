@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import { AppHeader, ProtectedRoute, AnonymousRoute } from '@components';
+import { AppHeader } from '../app-header';
+import { AnonymousRoute } from '../anonymous-route';
+import { ProtectedRoute } from '../protected-route';
 import { fetchBurgerIngredients, getUser } from '@slices';
 import {
   ConstructorPage,

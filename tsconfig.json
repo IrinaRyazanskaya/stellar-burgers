@@ -20,7 +20,6 @@
     "paths": {
       "@pages": ["src/pages"],
       "@ui": ["src/components/ui"],
-      "@components": ["src/components"],
       "@slices": ["src/services/slices"],
       "@utils-types": ["src/utils/types"],
       "@ui-pages": ["src/components/ui/pages"],

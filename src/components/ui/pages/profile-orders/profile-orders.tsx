@@ -1,9 +1,10 @@
 import { FC } from 'react';
 
-import styles from './profile-orders.module.css';
-
+import { ProfileMenu } from '../../../profile-menu';
+import { OrdersList } from '../../../orders-list';
 import { ProfileOrdersUIProps } from './type';
-import { ProfileMenu, OrdersList } from '@components';
+
+import styles from './profile-orders.module.css';
 
 export const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({ orders }) => (
   <main className={`${styles.main}`}>

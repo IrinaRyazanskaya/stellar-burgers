@@ -10,7 +10,6 @@ const config: JestConfigWithTsJest = {
   moduleNameMapper: {
     '^@pages$': '<rootDir>/src/pages',
     '^@ui$': '<rootDir>/src/components/ui',
-    '^@components$': '<rootDir>/src/components',
     '^@slices$': '<rootDir>/src/services/slices',
     '^@utils-types$': '<rootDir>/src/utils/types',
     '^@selectors$': '<rootDir>/src/services/selectors',

@@ -1,7 +1,9 @@
-import styles from './ingredients-category.module.css';
 import { forwardRef } from 'react';
+
+import { BurgerIngredient } from '../../burger-ingredient';
 import { TIngredientsCategoryUIProps } from './type';
-import { BurgerIngredient } from '@components';
+
+import styles from './ingredients-category.module.css';
 
 export const IngredientsCategoryUI = forwardRef<
   HTMLUListElement,

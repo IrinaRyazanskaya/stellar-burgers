@@ -1,22 +1,18 @@
 import { FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import {
-  BurgerIngredients,
-  IngredientDetails,
-  BurgerConstructor
-} from '@components';
-import { Preloader } from '@ui';
-import { selectBurgerIngredientsIsLoading } from '@slices';
+import { IngredientDetails } from '../../components/ingredient-details';
+import { BurgerConstructor } from '../../components/burger-constructor';
+import { BurgerIngredients } from '../../components/burger-ingredients';
 import { useSelector } from '../../services/store';
+import { selectBurgerIngredientsIsLoading } from '@slices';
+import { Preloader } from '@ui';
 
 import styles from './constructor-page.module.css';
 
 export const ConstructorPage: FC = () => {
   const navigate = useNavigate();
-
   const goToConstructor = () => navigate('/');
-
   const isIngredientsLoading = useSelector(selectBurgerIngredientsIsLoading);
 
   return (
