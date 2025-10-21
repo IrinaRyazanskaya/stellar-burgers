@@ -5,15 +5,13 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 
-import {
-  burgerConstructorSlice,
-  burgerIngredientsSlice,
-  burgerOrderSlice,
-  orderInfoSlice,
-  ordersFeedSlice,
-  profileOrdersSlice,
-  profileSlice
-} from '@slices';
+import { burgerConstructorSlice } from './slices/burger-constructor';
+import { burgerIngredientsSlice } from './slices/burger-ingredients';
+import { burgerOrderSlice } from './slices/burger-order';
+import { profileSlice } from './slices/profile';
+import { profileOrdersSlice } from './slices/profile-orders';
+import { ordersFeedSlice } from './slices/orders-feed';
+import { orderInfoSlice } from './slices/order-info';
 
 export const rootReducer = combineSlices(
   burgerConstructorSlice,

@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
+import { Preloader } from '@ui';
 import { IngredientDetails } from '../../components/ingredient-details';
 import { BurgerConstructor } from '../../components/burger-constructor';
 import { BurgerIngredients } from '../../components/burger-ingredients';
+import { selectBurgerIngredientsIsLoading } from '../../services/slices/burger-ingredients';
 import { useSelector } from '../../services/store';
-import { selectBurgerIngredientsIsLoading } from '@slices';
-import { Preloader } from '@ui';
 
 import styles from './constructor-page.module.css';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { selectUserStatus } from '@slices';
+import { selectUserStatus } from '../../services/slices/profile';
 import { useSelector } from '../../services/store';
 
 export type AnonymousRouteProps = {

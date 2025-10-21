@@ -1,13 +1,11 @@
+import { burgerConstructorSlice } from './slices/burger-constructor';
+import { burgerIngredientsSlice } from './slices/burger-ingredients';
+import { burgerOrderSlice } from './slices/burger-order';
+import { orderInfoSlice } from './slices/order-info';
+import { ordersFeedSlice } from './slices/orders-feed';
+import { profileSlice } from './slices/profile';
+import { profileOrdersSlice } from './slices/profile-orders';
 import { rootReducer } from './store';
-import {
-  burgerConstructorSlice,
-  burgerIngredientsSlice,
-  burgerOrderSlice,
-  profileSlice,
-  profileOrdersSlice,
-  ordersFeedSlice,
-  orderInfoSlice
-} from '@slices';
 
 describe('rootReducer', () => {
   test('should return the correct initial state', () => {

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { selectUserStatus } from '@slices';
+import { selectUserStatus } from '../services/slices/profile';
 import { useSelector } from '../services/store';
 
 export const useRedirectOnLogout = (redirectPath = '/login') => {

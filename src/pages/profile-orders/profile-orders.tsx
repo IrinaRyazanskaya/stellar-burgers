@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import type { FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
+import { Preloader } from '@ui';
+import { OrderInfo } from '../../components/order-info';
+import { ProfileOrdersUI } from '../../components/ui/pages';
 import {
   getProfileOrders,
   selectProfileOrders,
   selectProfileOrdersRequestStatus
-} from '@slices';
-import { Preloader } from '@ui';
-import { OrderInfo } from '../../components/order-info';
-import { ProfileOrdersUI } from '../../components/ui/pages';
+} from '../../services/slices/profile-orders';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const ProfileOrders: FC = () => {

@@ -3,14 +3,14 @@ import { type FC } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { Preloader } from '@ui';
+import { OrderInfo } from '../../components/order-info';
+import { FeedUI } from '../../components/ui/pages/feed';
 import {
   getOrdersFeed,
   selectOrdersFeed,
   selectOrdersFeedRequestStatus
-} from '@slices';
-import { FeedUI } from '../../components/ui/pages/feed';
+} from '../../services/slices/orders-feed';
 import { useDispatch, useSelector } from '../../services/store';
-import { OrderInfo } from '../../components/order-info';
 
 export const Feed: FC = () => {
   const navigate = useNavigate();

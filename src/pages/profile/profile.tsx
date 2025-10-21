@@ -1,8 +1,12 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 
 import { ProfileUI } from '../../components/ui/pages';
+import {
+  selectUpdateError,
+  selectUser,
+  updateUser
+} from '../../services/slices/profile';
 import { useDispatch, useSelector } from '../../services/store';
-import { selectUpdateError, selectUser, updateUser } from '@slices';
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();

@@ -1,13 +1,13 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { LoginUI } from '../../components/ui/pages';
 import {
   clearLoginStatus,
   loginUser,
   selectLoginError,
   selectLoginRequestStatus
-} from '@slices';
-import { LoginUI } from '../../components/ui/pages';
+} from '../../services/slices/profile';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const Login: FC = () => {

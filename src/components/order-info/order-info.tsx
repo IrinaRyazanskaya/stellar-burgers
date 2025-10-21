@@ -1,17 +1,17 @@
 import { FC, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Preloader } from '../ui/preloader';
+import { OrderInfoUI } from '../ui/order-info';
 import {
   clearOrderInfo,
   getOrderInfo,
-  selectBurgerIngredients,
   selectOrderInfo,
   selectOrderInfoRequestStatus
-} from '@slices';
-import { TIngredient } from '@utils-types';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
+} from '../../services/slices/order-info';
+import { selectBurgerIngredients } from '../../services/slices/burger-ingredients';
 import { useSelector, useDispatch } from '../../services/store';
+import { TIngredient } from '@utils-types';
 import type { OrderInfoProps } from './type';
 import { Modal } from '../modal';
 

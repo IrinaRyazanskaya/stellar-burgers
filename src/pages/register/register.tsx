@@ -2,13 +2,13 @@ import { FC, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { RegisterUI } from '../../components/ui/pages';
-import { useDispatch, useSelector } from '../../services/store';
 import {
   clearRegisterStatus,
   registerUser,
   selectRegisterError,
   selectRegisterRequestStatus
-} from '@slices';
+} from '../../services/slices/profile';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Register: FC = () => {
   const dispatch = useDispatch();

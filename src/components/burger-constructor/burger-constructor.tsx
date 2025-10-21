@@ -1,17 +1,17 @@
 import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-  selectBurgerConstructorItems,
-  selectBurgerOrder,
-  createBurgerOrder,
-  selectBurgerOrderRequestStatus,
-  clearBurgerOrderStatus,
-  selectUser
-} from '@slices';
 import { BurgerConstructorUI } from '@ui';
-import { TConstructorIngredient } from '@utils-types';
+import { selectBurgerConstructorItems } from '../../services/slices/burger-constructor';
+import {
+  clearBurgerOrderStatus,
+  createBurgerOrder,
+  selectBurgerOrder,
+  selectBurgerOrderRequestStatus
+} from '../../services/slices/burger-order';
+import { selectUser } from '../../services/slices/profile';
 import { useDispatch, useSelector } from '../../services/store';
+import { TConstructorIngredient } from '@utils-types';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
