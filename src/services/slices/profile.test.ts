@@ -6,8 +6,8 @@ import {
   logoutApi,
   registerUserApi,
   updateUserApi
-} from '@api';
-import type { TAuthResponse, TLoginData, TRegisterData } from '@api';
+} from '@clients';
+import type { TAuthResponse, TLoginData, TRegisterData } from '@clients';
 import type { TUser } from '@utils-types';
 import {
   profileSlice,
@@ -22,7 +22,7 @@ import {
 } from './profile';
 import type { TProfileState } from './profile';
 
-jest.mock('@api');
+jest.mock('@clients');
 jest.mock('../../utils/cookie', () => ({
   setCookie: jest.fn(),
   deleteCookie: jest.fn()

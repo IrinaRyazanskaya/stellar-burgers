@@ -6,8 +6,8 @@ import {
   logoutApi,
   registerUserApi,
   updateUserApi
-} from '@api';
-import type { TLoginData, TRegisterData } from '@api';
+} from '@clients';
+import type { TLoginData, TRegisterData } from '@clients';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 

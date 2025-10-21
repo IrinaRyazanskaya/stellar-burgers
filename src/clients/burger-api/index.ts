@@ -1,5 +1,5 @@
-import { setCookie, getCookie } from './cookie';
-import { TIngredient, TOrder, TUser } from './types';
+import { setCookie, getCookie } from '../../utils/cookie';
+import { TIngredient, TOrder, TUser } from '../../utils/types';
 
 type TServerResponse<T> = {
   success: boolean;
@@ -59,19 +59,6 @@ const cloneOrder = (order: TOrder): TOrder => {
 
 const mockIngredients: TIngredient[] = [
   {
-    _id: 'bun-galaxy',
-    name: 'Galaxy Bun',
-    type: 'bun',
-    proteins: 15,
-    fat: 6,
-    carbohydrates: 32,
-    calories: 340,
-    price: 125,
-    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
-  },
-  {
     _id: 'bun-moon',
     name: 'Moon Bun',
     type: 'bun',
@@ -85,6 +72,19 @@ const mockIngredients: TIngredient[] = [
     image_mobile: 'https://code.s3.yandex.net/react/code/bun-01-mobile.png'
   },
   {
+    _id: 'bun-galaxy',
+    name: 'Galaxy Bun',
+    type: 'bun',
+    proteins: 15,
+    fat: 6,
+    carbohydrates: 32,
+    calories: 340,
+    price: 125,
+    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
+  },
+  {
     _id: 'sauce-mars',
     name: 'Mars Chili Sauce',
     type: 'sauce',
@@ -93,9 +93,9 @@ const mockIngredients: TIngredient[] = [
     carbohydrates: 12,
     calories: 80,
     price: 90,
-    image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png'
+    image: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+    image_large: 'https://code.s3.yandex.net/react/code/sauce-01-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-01-mobile.png'
   },
   {
     _id: 'sauce-nebula',

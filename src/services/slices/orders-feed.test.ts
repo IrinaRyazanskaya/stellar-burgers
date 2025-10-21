@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { getFeedsApi } from '@api';
+import { getFeedsApi } from '@clients';
 import type { TOrder } from '@utils-types';
 import {
   ordersFeedSlice,
@@ -8,7 +8,7 @@ import {
   ordersFeedInitialState
 } from './orders-feed';
 
-jest.mock('@api');
+jest.mock('@clients');
 
 const mockOrders: TOrder[] = [
   {

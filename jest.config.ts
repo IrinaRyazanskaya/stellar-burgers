@@ -8,18 +8,18 @@ const config: JestConfigWithTsJest = {
     '^.+\\.tsx?$': ['ts-jest', {}]
   },
   moduleNameMapper: {
-    '^@api$': '<rootDir>/src/utils/burger-api.ts',
-    '^@components$': '<rootDir>/src/components',
+    '^@clients$': '<rootDir>/src/clients',
     '^@pages$': '<rootDir>/src/pages',
-    '^@selectors$': '<rootDir>/src/services/selectors',
-    '^@slices$': '<rootDir>/src/services/slices',
-    '^@ui-pages$': '<rootDir>/src/components/ui/pages',
     '^@ui$': '<rootDir>/src/components/ui',
-    '^@utils-types$': '<rootDir>/src/utils/types'
+    '^@components$': '<rootDir>/src/components',
+    '^@slices$': '<rootDir>/src/services/slices',
+    '^@utils-types$': '<rootDir>/src/utils/types',
+    '^@selectors$': '<rootDir>/src/services/selectors',
+    '^@ui-pages$': '<rootDir>/src/components/ui/pages'
   },
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
+    'src/**/*.{ts,tsx}',
     '!src/**/__tests__/**',
     '!src/**/__mocks__/**'
   ],

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getOrdersApi } from '@api';
+import { getOrdersApi } from '@clients';
 import type { TOrder } from '@utils-types';
 
 export type TProfileOrdersState = {

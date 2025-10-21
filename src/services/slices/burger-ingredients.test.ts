@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { getIngredientsApi } from '@api';
+import { getIngredientsApi } from '@clients';
 import type { TIngredient } from '@utils-types';
 import {
   burgerIngredientsSlice,
@@ -10,7 +10,7 @@ import {
   burgerIngredientsInitialState
 } from './burger-ingredients';
 
-jest.mock('@api');
+jest.mock('@clients');
 
 const mockIngredients: TIngredient[] = [
   {

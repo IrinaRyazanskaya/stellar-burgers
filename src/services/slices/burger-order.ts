@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import type { TNewOrderData } from '@api';
-import { orderBurgerApi } from '@api';
+import type { TNewOrderData } from '@clients';
+import { orderBurgerApi } from '@clients';
 import type { TOrder } from '@utils-types';
 
 export type TBurgerOrderState = {

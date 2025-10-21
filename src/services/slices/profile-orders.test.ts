@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { getOrdersApi } from '@api';
+import { getOrdersApi } from '@clients';
 import type { TOrder } from '@utils-types';
 import {
   profileOrdersSlice,
@@ -8,7 +8,7 @@ import {
   profileOrdersInitialState
 } from './profile-orders';
 
-jest.mock('@api');
+jest.mock('@clients');
 
 const mockProfileOrders: TOrder[] = [
   {
