@@ -5,6 +5,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: path.resolve(__dirname, './src/index.tsx'),
 
+  resolve: {
+    extensions: [
+      '*',
+      '.js',
+      '.jsx',
+      '.ts',
+      '.tsx',
+      '.json',
+      '.css',
+      '.scss',
+      '.png',
+      '.svg',
+      '.jpg'
+    ]
+  },
+
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './dist')
@@ -63,22 +79,6 @@ module.exports = {
       template: './public/index.html'
     })
   ],
-
-  resolve: {
-    extensions: [
-      '*',
-      '.js',
-      '.jsx',
-      '.ts',
-      '.tsx',
-      '.json',
-      '.css',
-      '.scss',
-      '.png',
-      '.svg',
-      '.jpg'
-    ]
-  },
 
   devServer: {
     port: 4000,
