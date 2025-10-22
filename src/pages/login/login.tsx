@@ -1,4 +1,5 @@
-import { FC, FormEvent, useEffect, useState } from 'react';
+import type { FC, FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { LoginUI } from '../../components/ui/pages/login';

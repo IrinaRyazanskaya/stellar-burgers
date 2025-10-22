@@ -1,4 +1,5 @@
-import { FC, useState, FormEvent } from 'react';
+import type { FC } from 'react';
+import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { forgotPasswordApi } from '../../clients/burger-api';

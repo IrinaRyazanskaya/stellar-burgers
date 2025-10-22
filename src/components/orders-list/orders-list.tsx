@@ -1,4 +1,5 @@
-import { FC, memo } from 'react';
+import { memo } from 'react';
+import type { FC } from 'react';
 
 import { OrdersListUI } from '../../components/ui/orders-list';
 import { OrdersListProps } from './type';

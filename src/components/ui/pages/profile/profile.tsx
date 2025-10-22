@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent } from 'react';
+import type { FC, SyntheticEvent } from 'react';
 import { Button, Input } from '@zlden/react-developer-burger-ui-components';
 
 import { ProfileMenu } from '../../../profile-menu';

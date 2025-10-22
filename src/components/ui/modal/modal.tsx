@@ -1,4 +1,5 @@
-import { FC, memo } from 'react';
+import { memo } from 'react';
+import type { FC } from 'react';
 import { CloseIcon } from '@zlden/react-developer-burger-ui-components';
 
 import { ModalOverlayUI } from '../modal-overlay';

@@ -1,5 +1,6 @@
-import { FC, memo, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import type { FC } from 'react';
+import { memo, useEffect } from 'react';
 
 import { ModalUI } from '../../components/ui/modal';
 import { TModalProps } from './type';

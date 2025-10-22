@@ -1,4 +1,5 @@
-import { FC, memo, useMemo } from 'react';
+import type { FC } from 'react';
+import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { OrderCardUI } from '../ui/order-card';

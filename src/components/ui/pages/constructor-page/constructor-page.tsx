@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import { BurgerConstructor } from '../../../burger-constructor';
 import { BurgerIngredients } from '../../../burger-ingredients';

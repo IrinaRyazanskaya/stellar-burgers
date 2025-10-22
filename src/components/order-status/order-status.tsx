@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import { OrderStatusUI } from '../../components/ui/order-status';
 import { OrderStatusProps } from './type';

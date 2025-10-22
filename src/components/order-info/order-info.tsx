@@ -1,4 +1,5 @@
-import { FC, useEffect, useMemo } from 'react';
+import type { FC } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Modal } from '../modal';

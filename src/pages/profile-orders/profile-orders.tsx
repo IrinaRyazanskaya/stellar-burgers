@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import type { FC } from 'react';
+import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { Preloader } from '../../components/ui/preloader';

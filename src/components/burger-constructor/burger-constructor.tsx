@@ -1,4 +1,5 @@
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
+import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BurgerConstructorUI } from '../../components/ui/burger-constructor';

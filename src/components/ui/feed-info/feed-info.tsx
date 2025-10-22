@@ -1,4 +1,5 @@
-import React, { FC, memo } from 'react';
+import { memo } from 'react';
+import type { FC } from 'react';
 
 import styles from './feed-info.module.css';
 

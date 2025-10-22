@@ -1,12 +1,14 @@
-import { FC, useState } from 'react';
+import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Input,
   Button,
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
-import styles from '../common.module.css';
-import { Link } from 'react-router-dom';
+
 import { LoginUIProps } from './type';
+
+import styles from '../common.module.css';
 
 export const LoginUI: FC<LoginUIProps> = ({
   email,

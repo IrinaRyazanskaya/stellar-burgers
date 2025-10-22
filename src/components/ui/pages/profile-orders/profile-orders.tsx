@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import { ProfileMenu } from '../../../profile-menu';
 import { OrdersList } from '../../../orders-list';

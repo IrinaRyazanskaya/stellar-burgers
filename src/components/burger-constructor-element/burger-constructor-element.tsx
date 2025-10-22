@@ -1,4 +1,5 @@
-import { FC, memo } from 'react';
+import { memo } from 'react';
+import type { FC } from 'react';
 
 import { BurgerConstructorElementUI } from '../../components/ui/burger-constructor-element';
 import {

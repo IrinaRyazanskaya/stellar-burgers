@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import { OrderCard } from '../../order-card';
 import { OrdersListUIProps } from './type';
