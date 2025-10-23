@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import {
-  getUserApi,
-  loginUserApi,
-  logoutApi,
-  registerUserApi,
-  updateUserApi
-} from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TLoginData, TRegisterData } from '../../clients/burger-api';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 import type { TUser } from '../../utils/types';
@@ -49,7 +43,7 @@ export const getUser = createAsyncThunk(
   'profile/getUser',
   async (_, { rejectWithValue }) => {
     try {
-      const user = await getUserApi();
+      const user = await burgerAPIClient.getUser();
       return user;
     } catch (error) {
       return rejectWithValue(
@@ -65,7 +59,7 @@ export const loginUser = createAsyncThunk(
   'profile/loginUser',
   async (loginData: TLoginData, { rejectWithValue }) => {
     try {
-      const data = await loginUserApi(loginData);
+      const data = await burgerAPIClient.loginUser(loginData);
       setCookie('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
       return data;
@@ -83,7 +77,7 @@ export const logoutUser = createAsyncThunk(
   'profile/logoutUser',
   async (_, { rejectWithValue }) => {
     try {
-      await logoutApi();
+      await logoutUser();
       deleteCookie('accessToken');
       localStorage.removeItem('refreshToken');
     } catch (error) {
@@ -100,7 +94,7 @@ export const registerUser = createAsyncThunk(
   'profile/registerUser',
   async (registerData: TRegisterData, { rejectWithValue }) => {
     try {
-      const data = await registerUserApi(registerData);
+      const data = await burgerAPIClient.registerUser(registerData);
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -116,7 +110,7 @@ export const updateUser = createAsyncThunk(
   'profile/updateUser',
   async (registerData: TRegisterData, { rejectWithValue }) => {
     try {
-      const data = await updateUserApi(registerData);
+      const data = await burgerAPIClient.updateUser(registerData);
       return data;
     } catch (error) {
       return rejectWithValue(

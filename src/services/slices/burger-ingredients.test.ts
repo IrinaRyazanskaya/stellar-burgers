@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { getIngredientsApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TIngredient } from '../../utils/types';
 import {
   burgerIngredientsSlice,
@@ -79,7 +79,9 @@ describe('burgerIngredientsSlice', () => {
   });
 
   it('should handle fetchBurgerIngredients fulfilled', async () => {
-    (getIngredientsApi as jest.Mock).mockResolvedValue(mockIngredients);
+    (burgerAPIClient.getIngredients as jest.Mock).mockResolvedValue(
+      mockIngredients
+    );
 
     const store = configureStore({ reducer: burgerIngredientsSlice.reducer });
 
@@ -93,7 +95,9 @@ describe('burgerIngredientsSlice', () => {
   });
 
   it('should handle fetchBurgerIngredients rejected', async () => {
-    (getIngredientsApi as jest.Mock).mockRejectedValue(new Error('API Error'));
+    (burgerAPIClient.getIngredients as jest.Mock).mockRejectedValue(
+      new Error('API Error')
+    );
 
     const store = configureStore({ reducer: burgerIngredientsSlice.reducer });
 

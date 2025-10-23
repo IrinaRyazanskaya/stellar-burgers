@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { getFeedsApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TOrder } from '../../utils/types';
 import {
   ordersFeedSlice,
@@ -50,7 +50,7 @@ describe('ordersFeedSlice', () => {
       totalToday: 25
     };
 
-    (getFeedsApi as jest.Mock).mockResolvedValue(payload);
+    (burgerAPIClient.getFeeds as jest.Mock).mockResolvedValue(payload);
 
     const store = configureStore({ reducer: ordersFeedSlice.reducer });
 
@@ -65,7 +65,9 @@ describe('ordersFeedSlice', () => {
   });
 
   it('should handle getOrdersFeed rejected', async () => {
-    (getFeedsApi as jest.Mock).mockRejectedValue(new Error('API Error'));
+    (burgerAPIClient.getFeeds as jest.Mock).mockRejectedValue(
+      new Error('API Error')
+    );
 
     const store = configureStore({ reducer: ordersFeedSlice.reducer });
 

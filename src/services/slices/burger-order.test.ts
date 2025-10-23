@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { orderBurgerApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TOrder } from '../../utils/types';
 import {
   burgerOrderSlice,
@@ -46,7 +46,7 @@ describe('burgerOrderSlice', () => {
   });
 
   it('should handle createBurgerOrder fulfilled', async () => {
-    (orderBurgerApi as jest.Mock).mockResolvedValue({ order: mockOrder });
+    (burgerAPIClient.orderBurger as jest.Mock).mockResolvedValue({ order: mockOrder });
 
     const store = configureStore({ reducer: burgerOrderSlice.reducer });
 
@@ -60,7 +60,7 @@ describe('burgerOrderSlice', () => {
   });
 
   it('should handle createBurgerOrder rejected', async () => {
-    (orderBurgerApi as jest.Mock).mockRejectedValue(new Error('API Error'));
+    (burgerAPIClient.orderBurger as jest.Mock).mockRejectedValue(new Error('API Error'));
 
     const store = configureStore({ reducer: burgerOrderSlice.reducer });
 

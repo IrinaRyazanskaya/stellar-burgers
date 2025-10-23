@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getOrdersApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TOrder } from '../../utils/types';
 
 export type TProfileOrdersState = {
@@ -19,7 +19,7 @@ export const getProfileOrders = createAsyncThunk(
   'profileOrders/getProfileOrders',
   async (_, { rejectWithValue }) => {
     try {
-      const orders = await getOrdersApi();
+      const orders = await burgerAPIClient.getOrders();
       return orders;
     } catch (error) {
       return rejectWithValue(

@@ -1,12 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import {
-  getUserApi,
-  loginUserApi,
-  logoutApi,
-  registerUserApi,
-  updateUserApi
-} from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type {
   TAuthResponse,
   TLoginData,
@@ -96,7 +90,9 @@ describe('profileSlice', () => {
     });
 
     it('should handle getUser fulfilled', async () => {
-      (getUserApi as jest.Mock).mockResolvedValue({ user: mockUser });
+      (burgerAPIClient.getUser as jest.Mock).mockResolvedValue({
+        user: mockUser
+      });
 
       const store = configureStore({ reducer: profileSlice.reducer });
       await store.dispatch(getUser());
@@ -110,7 +106,9 @@ describe('profileSlice', () => {
     });
 
     it('should handle getUser rejected', async () => {
-      (getUserApi as jest.Mock).mockRejectedValue(new Error('API Error'));
+      (burgerAPIClient.getUser as jest.Mock).mockRejectedValue(
+        new Error('API Error')
+      );
 
       const store = configureStore({ reducer: profileSlice.reducer });
       await store.dispatch(getUser());
@@ -133,7 +131,9 @@ describe('profileSlice', () => {
     });
 
     it('should handle loginUser fulfilled', async () => {
-      (loginUserApi as jest.Mock).mockResolvedValue(mockAuthResponse);
+      (burgerAPIClient.loginUser as jest.Mock).mockResolvedValue(
+        mockAuthResponse
+      );
 
       const store = configureStore({ reducer: profileSlice.reducer });
       await store.dispatch(loginUser(mockLoginData));
@@ -147,7 +147,9 @@ describe('profileSlice', () => {
     });
 
     it('should handle loginUser rejected', async () => {
-      (loginUserApi as jest.Mock).mockRejectedValue(new Error('Login Error'));
+      (burgerAPIClient.loginUser as jest.Mock).mockRejectedValue(
+        new Error('Login Error')
+      );
 
       const store = configureStore({ reducer: profileSlice.reducer });
       await store.dispatch(loginUser(mockLoginData));
@@ -162,7 +164,7 @@ describe('profileSlice', () => {
 
   describe('logoutUser async thunk', () => {
     it('should handle logoutUser fulfilled', async () => {
-      (logoutApi as jest.Mock).mockResolvedValue(undefined);
+      (burgerAPIClient.logoutUser as jest.Mock).mockResolvedValue(undefined);
 
       const initialState: TProfileState = {
         ...profileInitialState,
@@ -195,7 +197,9 @@ describe('profileSlice', () => {
     });
 
     it('should handle registerUser fulfilled', async () => {
-      (registerUserApi as jest.Mock).mockResolvedValue({ user: mockUser });
+      (burgerAPIClient.registerUser as jest.Mock).mockResolvedValue({
+        user: mockUser
+      });
 
       const store = configureStore({ reducer: profileSlice.reducer });
       await store.dispatch(registerUser(mockRegisterData));
@@ -209,7 +213,7 @@ describe('profileSlice', () => {
     });
 
     it('should handle registerUser rejected', async () => {
-      (registerUserApi as jest.Mock).mockRejectedValue(
+      (burgerAPIClient.registerUser as jest.Mock).mockRejectedValue(
         new Error('Register Error')
       );
 
@@ -235,7 +239,9 @@ describe('profileSlice', () => {
 
     it('should handle updateUser fulfilled', async () => {
       const updatedUser = { ...mockUser, name: 'Updated Name' };
-      (updateUserApi as jest.Mock).mockResolvedValue({ user: updatedUser });
+      (burgerAPIClient.updateUser as jest.Mock).mockResolvedValue({
+        user: updatedUser
+      });
 
       const initialState: TProfileState = {
         ...profileInitialState,
@@ -257,7 +263,9 @@ describe('profileSlice', () => {
     });
 
     it('should handle updateUser rejected', async () => {
-      (updateUserApi as jest.Mock).mockRejectedValue(new Error('Update Error'));
+      (burgerAPIClient.updateUser as jest.Mock).mockRejectedValue(
+        new Error('Update Error')
+      );
 
       const store = configureStore({ reducer: profileSlice.reducer });
       await store.dispatch(updateUser(mockRegisterData));

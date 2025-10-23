@@ -25,7 +25,7 @@ export const rootReducer = combineSlices(
 
 const store = configureStore({
   reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production'
+  devTools: __MODE__ === 'development'
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

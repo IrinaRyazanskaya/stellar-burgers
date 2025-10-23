@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { getOrdersApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TOrder } from '../../utils/types';
 import {
   profileOrdersSlice,
@@ -46,7 +46,9 @@ describe('profileOrdersSlice', () => {
   });
 
   it('should handle getProfileOrders fulfilled', async () => {
-    (getOrdersApi as jest.Mock).mockResolvedValue(mockProfileOrders);
+    (burgerAPIClient.getOrders as jest.Mock).mockResolvedValue(
+      mockProfileOrders
+    );
 
     const store = configureStore({ reducer: profileOrdersSlice.reducer });
 
@@ -60,7 +62,7 @@ describe('profileOrdersSlice', () => {
   });
 
   it('should handle getProfileOrders rejected', async () => {
-    (getOrdersApi as jest.Mock).mockRejectedValue(
+    (burgerAPIClient.getOrders as jest.Mock).mockRejectedValue(
       new Error('Profile API Error')
     );
 

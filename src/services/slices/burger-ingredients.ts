@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { getIngredientsApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TIngredient } from '../../utils/types';
 
 export type TBurgerIngredientsState = {
@@ -20,7 +20,7 @@ export const fetchBurgerIngredients = createAsyncThunk(
   'ingredients/fetchBurgerIngredients',
   async (_, { rejectWithValue }) => {
     try {
-      const data = await getIngredientsApi();
+      const data = await burgerAPIClient.getIngredients();
       return data;
     } catch (error) {
       return rejectWithValue(

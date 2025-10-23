@@ -2,7 +2,7 @@ import type { FC, FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { resetPasswordApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import { ResetPasswordUI } from '../../components/ui/pages/reset-password';
 
 export const ResetPassword: FC = () => {
@@ -14,7 +14,8 @@ export const ResetPassword: FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    resetPasswordApi({ password, token })
+    burgerAPIClient
+      .resetPassword({ password, token })
       .then(() => {
         localStorage.removeItem('resetPassword');
         navigate('/login');

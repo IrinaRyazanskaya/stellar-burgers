@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { getOrderByNumberApi } from '../../clients/burger-api';
+import { burgerAPIClient } from '../../clients/burger-api';
 import type { TOrder } from '../../utils/types';
 import {
   orderInfoSlice,
@@ -46,7 +46,7 @@ describe('orderInfoSlice', () => {
   });
 
   it('should handle getOrderInfo fulfilled', async () => {
-    (getOrderByNumberApi as jest.Mock).mockResolvedValue({
+    (burgerAPIClient.getOrder as jest.Mock).mockResolvedValue({
       orders: [mockOrder]
     });
 
@@ -62,7 +62,7 @@ describe('orderInfoSlice', () => {
   });
 
   it('should handle getOrderInfo rejected', async () => {
-    (getOrderByNumberApi as jest.Mock).mockRejectedValue(
+    (burgerAPIClient.getOrder as jest.Mock).mockRejectedValue(
       new Error('API Error')
     );
 
