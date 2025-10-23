@@ -1,28 +1,28 @@
-import type { JestConfigWithTsJest } from 'ts-jest';
+import type { JestConfigWithTsJest } from "ts-jest";
 
 const config: JestConfigWithTsJest = {
-  preset: 'ts-jest',
+  preset: "ts-jest",
   clearMocks: true,
-  testEnvironment: 'jsdom',
+  testEnvironment: "jsdom",
 
   globals: {
-    __MODE__: 'unit-tests',
-    __BURGER_API_CLIENT__: 'mock',
-    __BURGER_API_BASE_URL__: ''
+    __MODE__: "unit-tests",
+    __BURGER_API_CLIENT__: "mock",
+    __BURGER_API_BASE_URL__: "",
   },
 
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', {}]
+    "^.+\\.tsx?$": ["ts-jest", {}],
   },
 
   collectCoverageFrom: [
-    '!src/**/*.d.ts',
-    'src/**/*.{ts,tsx}',
-    '!src/**/__tests__/**',
-    '!src/**/__mocks__/**'
+    "!src/**/*.d.ts",
+    "src/**/*.{ts,tsx}",
+    "!src/**/__tests__/**",
+    "!src/**/__mocks__/**",
   ],
-  coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'html']
+  coverageDirectory: "coverage",
+  coverageReporters: ["text", "html"],
 };
 
 export default config;

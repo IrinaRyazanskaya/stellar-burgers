@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { FeedInfoUI } from '../components/ui/feed-info';
+import { FeedInfoUI } from "../components/ui/feed-info";
 
 const meta = {
-  title: 'Example/FeedInfo',
+  title: "Example/FeedInfo",
   component: FeedInfoUI,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen'
-  }
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof FeedInfoUI>;
 
 export default meta;
@@ -20,21 +20,21 @@ export const DefaultFeedInfo: Story = {
     feed: {
       orders: [
         {
-          _id: '11111',
-          status: 'ready',
-          name: 'Burger',
-          createdAt: '',
-          updatedAt: '',
+          _id: "11111",
+          status: "ready",
+          name: "Burger",
+          createdAt: "",
+          updatedAt: "",
           number: 123,
-          ingredients: ['Булка', 'Начинка']
-        }
+          ingredients: ["Булка", "Начинка"],
+        },
       ],
       total: 12,
       totalToday: 2,
       isLoading: false,
-      error: null
+      error: null,
     },
     readyOrders: [123, 124, 125],
-    pendingOrders: [126, 127]
-  }
+    pendingOrders: [126, 127],
+  },
 };

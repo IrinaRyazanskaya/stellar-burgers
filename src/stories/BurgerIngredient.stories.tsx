@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { BurgerIngredientUI } from '../components/ui/burger-ingredient';
+import { BurgerIngredientUI } from "../components/ui/burger-ingredient";
 
 const meta = {
-  title: 'Example/BurgerIngredient',
+  title: "Example/BurgerIngredient",
   component: BurgerIngredientUI,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen'
+    layout: "fullscreen",
   },
   decorators: [
     (Story) => (
-      <div style={{ width: 'fit-content', margin: 20 }}>
+      <div style={{ width: "fit-content", margin: 20 }}>
         <Story />
       </div>
-    )
-  ]
+    ),
+  ],
 } satisfies Meta<typeof BurgerIngredientUI>;
 
 export default meta;
@@ -25,28 +25,28 @@ type Story = StoryObj<typeof meta>;
 export const DefaultIngredient: Story = {
   args: {
     ingredient: {
-      _id: '111',
-      name: 'Булка',
-      type: 'top',
+      _id: "111",
+      name: "Булка",
+      type: "top",
       proteins: 12,
       fat: 33,
       carbohydrates: 22,
       calories: 33,
       price: 123,
-      image: '',
-      image_large: '',
-      image_mobile: ''
+      image: "",
+      image_large: "",
+      image_mobile: "",
     },
     count: 2,
     locationState: {
       background: {
-        hash: '',
-        key: 'eitkep27',
-        pathname: '/',
-        search: '',
-        state: null
-      }
+        hash: "",
+        key: "eitkep27",
+        pathname: "/",
+        search: "",
+        state: null,
+      },
     },
-    handleAdd: () => {}
-  }
+    handleAdd: () => {},
+  },
 };

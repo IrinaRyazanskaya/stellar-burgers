@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { OrderDetailsUI } from '../components/ui/order-details';
+import { OrderDetailsUI } from "../components/ui/order-details";
 
 const meta = {
-  title: 'Example/OrderDetails',
+  title: "Example/OrderDetails",
   component: OrderDetailsUI,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen'
+    layout: "fullscreen",
   },
   decorators: [
     (Story) => (
       <div
         style={{
-          width: 'fit-content',
+          width: "fit-content",
           margin: 20,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Story />
       </div>
-    )
-  ]
+    ),
+  ],
 } satisfies Meta<typeof OrderDetailsUI>;
 
 export default meta;
@@ -32,6 +32,6 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultOrderDetails: Story = {
   args: {
-    orderNumber: 12
-  }
+    orderNumber: 12,
+  },
 };

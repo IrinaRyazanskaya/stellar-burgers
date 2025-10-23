@@ -37,4 +37,4 @@ export type TUser = {
   name: string;
 };
 
-export type TTabMode = 'bun' | 'sauce' | 'main';
+export type TTabMode = "bun" | "sauce" | "main";

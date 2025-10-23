@@ -1,18 +1,18 @@
-import { useMemo } from 'react';
-import type { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useMemo } from "react";
+import type { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { BurgerConstructorUI } from '../../components/ui/burger-constructor';
-import { selectBurgerConstructorItems } from '../../services/slices/burger-constructor';
+import { BurgerConstructorUI } from "../../components/ui/burger-constructor";
+import { selectBurgerConstructorItems } from "../../services/slices/burger-constructor";
 import {
   clearBurgerOrderStatus,
   createBurgerOrder,
   selectBurgerOrder,
-  selectBurgerOrderRequestStatus
-} from '../../services/slices/burger-order';
-import { selectUser } from '../../services/slices/profile';
-import { useDispatch, useSelector } from '../../services/store';
-import type { TConstructorIngredient } from '../../utils/types';
+  selectBurgerOrderRequestStatus,
+} from "../../services/slices/burger-order";
+import { selectUser } from "../../services/slices/profile";
+import { useDispatch, useSelector } from "../../services/store";
+import type { TConstructorIngredient } from "../../utils/types";
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
@@ -25,19 +25,19 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
 
-    if (!constructorItems.bun || orderRequestStatus === 'pending') {
+    if (!constructorItems.bun || orderRequestStatus === "pending") {
       return;
     }
 
     dispatch(
       createBurgerOrder([
         constructorItems.bun._id,
-        ...constructorItems.ingredients.map((ingredient) => ingredient._id)
-      ])
+        ...constructorItems.ingredients.map((ingredient) => ingredient._id),
+      ]),
     );
   };
   const closeOrderModal = () => {
@@ -47,17 +47,14 @@ export const BurgerConstructor: FC = () => {
   const price = useMemo(
     () =>
       (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +
-      constructorItems.ingredients.reduce(
-        (s: number, v: TConstructorIngredient) => s + v.price,
-        0
-      ),
-    [constructorItems]
+      constructorItems.ingredients.reduce((s: number, v: TConstructorIngredient) => s + v.price, 0),
+    [constructorItems],
   );
 
   return (
     <BurgerConstructorUI
       price={price}
-      orderRequest={orderRequestStatus === 'pending'}
+      orderRequest={orderRequestStatus === "pending"}
       constructorItems={constructorItems}
       orderModalData={orderModalData}
       onOrderClick={onOrderClick}

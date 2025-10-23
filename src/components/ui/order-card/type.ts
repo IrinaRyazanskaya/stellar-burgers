@@ -1,6 +1,6 @@
-import { Location } from 'react-router-dom';
+import { Location } from "react-router-dom";
 
-import type { TIngredient } from '../../../utils/types';
+import type { TIngredient } from "../../../utils/types";
 
 export type OrderCardUIProps = {
   orderInfo: TOrderInfo;

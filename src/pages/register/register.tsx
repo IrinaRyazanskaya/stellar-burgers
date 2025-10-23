@@ -1,30 +1,30 @@
-import type { FC, FormEvent } from 'react';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import type { FC, FormEvent } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { RegisterUI } from '../../components/ui/pages/register';
+import { RegisterUI } from "../../components/ui/pages/register";
 import {
   clearRegisterStatus,
   registerUser,
   selectRegisterError,
-  selectRegisterRequestStatus
-} from '../../services/slices/profile';
-import { useDispatch, useSelector } from '../../services/store';
+  selectRegisterRequestStatus,
+} from "../../services/slices/profile";
+import { useDispatch, useSelector } from "../../services/store";
 
 export const Register: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const registerError = useSelector(selectRegisterError) || undefined;
   const requestStatus = useSelector(selectRegisterRequestStatus);
 
   useEffect(() => {
-    if (requestStatus === 'succeeded') {
-      navigate('/');
+    if (requestStatus === "succeeded") {
+      navigate("/");
       dispatch(clearRegisterStatus());
     }
   }, [requestStatus, navigate, dispatch]);
@@ -35,8 +35,8 @@ export const Register: FC = () => {
       registerUser({
         name: userName,
         email,
-        password
-      })
+        password,
+      }),
     );
   };
 

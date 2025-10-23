@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { AppHeaderUI } from '../components/ui/app-header';
+import { AppHeaderUI } from "../components/ui/app-header";
 
 const meta = {
-  title: 'Example/Header',
+  title: "Example/Header",
   component: AppHeaderUI,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen'
-  }
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof AppHeaderUI>;
 
 export default meta;
@@ -17,12 +17,12 @@ type Story = StoryObj<typeof meta>;
 
 export const LoggedIn: Story = {
   args: {
-    userName: 'John Doe'
-  }
+    userName: "John Doe",
+  },
 };
 
 export const LoggedOut: Story = {
   args: {
-    userName: undefined
-  }
+    userName: undefined,
+  },
 };

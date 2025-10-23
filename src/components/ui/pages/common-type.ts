@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, SetStateAction } from 'react';
+import { Dispatch, FormEvent, SetStateAction } from "react";
 
 export type PageUIProps = {
   errorText: string | undefined;

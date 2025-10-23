@@ -1,14 +1,14 @@
-import type { BurgerAPIClient } from './types';
-import { mockBurgerAPIClient } from './mock';
-import { realBurgerAPIClient } from './real';
+import type { BurgerAPIClient } from "./types";
+import { mockBurgerAPIClient } from "./mock";
+import { realBurgerAPIClient } from "./real";
 
 let burgerAPIClient: BurgerAPIClient;
 
 switch (__BURGER_API_CLIENT__) {
-  case 'mock':
+  case "mock":
     burgerAPIClient = mockBurgerAPIClient;
     break;
-  case 'real':
+  case "real":
     burgerAPIClient = realBurgerAPIClient;
     break;
   default:
@@ -30,7 +30,7 @@ export type {
   TRegisterData,
   TResetPasswordRequest,
   TServerResponse,
-  TUserResponse
-} from './types';
+  TUserResponse,
+} from "./types";
 
 export { burgerAPIClient };

@@ -1,4 +1,4 @@
-import type { TIngredient, TOrder, TUser } from '../../utils/types';
+import type { TIngredient, TOrder, TUser } from "../../utils/types";
 
 export type TServerResponse<T> = {
   success: boolean;
@@ -75,9 +75,7 @@ export type BurgerAPIClient = {
   getOrder: (number: number) => Promise<TOrderResponse>;
   registerUser: (data: TRegisterData) => Promise<TAuthResponse>;
   loginUser: (data: TLoginData) => Promise<TAuthResponse>;
-  forgotPassword: (
-    data: TForgotPasswordRequest
-  ) => Promise<TEmptyServerResponse>;
+  forgotPassword: (data: TForgotPasswordRequest) => Promise<TEmptyServerResponse>;
   resetPassword: (data: TResetPasswordRequest) => Promise<TEmptyServerResponse>;
   getUser: () => Promise<TUserResponse>;
   updateUser: (user: Partial<TRegisterData>) => Promise<TUserResponse>;

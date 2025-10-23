@@ -1,11 +1,11 @@
-import { memo } from 'react';
-import type { FC } from 'react';
-import { Tab } from '@zlden/react-developer-burger-ui-components';
+import { memo } from "react";
+import type { FC } from "react";
+import { Tab } from "@zlden/react-developer-burger-ui-components";
 
-import { IngredientsCategory } from '../../ingredients-category';
-import { BurgerIngredientsUIProps } from './type';
+import { IngredientsCategory } from "../../ingredients-category";
+import { BurgerIngredientsUIProps } from "./type";
 
-import styles from './burger-ingredients.module.css';
+import styles from "./burger-ingredients.module.css";
 
 export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
   ({
@@ -19,49 +19,38 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
     bunsRef,
     mainsRef,
     saucesRef,
-    onTabClick
+    onTabClick,
   }) => (
     <>
-      <section
-        className={styles.burger_ingredients}
-        data-cy='burger-ingredients'
-      >
+      <section className={styles.burger_ingredients} data-cy="burger-ingredients">
         <nav>
           <ul className={styles.menu}>
-            <Tab value='bun' active={currentTab === 'bun'} onClick={onTabClick}>
+            <Tab value="bun" active={currentTab === "bun"} onClick={onTabClick}>
               Булки
             </Tab>
-            <Tab
-              value='main'
-              active={currentTab === 'main'}
-              onClick={onTabClick}
-            >
+            <Tab value="main" active={currentTab === "main"} onClick={onTabClick}>
               Начинки
             </Tab>
-            <Tab
-              value='sauce'
-              active={currentTab === 'sauce'}
-              onClick={onTabClick}
-            >
+            <Tab value="sauce" active={currentTab === "sauce"} onClick={onTabClick}>
               Соусы
             </Tab>
           </ul>
         </nav>
         <div className={styles.content}>
           <IngredientsCategory
-            title='Булки'
+            title="Булки"
             titleRef={titleBunRef}
             ingredients={buns}
             ref={bunsRef}
           />
           <IngredientsCategory
-            title='Начинки'
+            title="Начинки"
             titleRef={titleMainRef}
             ingredients={mains}
             ref={mainsRef}
           />
           <IngredientsCategory
-            title='Соусы'
+            title="Соусы"
             titleRef={titleSaucesRef}
             ingredients={sauces}
             ref={saucesRef}
@@ -69,5 +58,5 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
         </div>
       </section>
     </>
-  )
+  ),
 );

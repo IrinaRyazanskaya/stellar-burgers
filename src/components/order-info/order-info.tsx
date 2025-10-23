@@ -1,20 +1,20 @@
-import type { FC } from 'react';
-import { useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import type { FC } from "react";
+import { useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
 
-import { Modal } from '../modal';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
+import { Modal } from "../modal";
+import { Preloader } from "../ui/preloader";
+import { OrderInfoUI } from "../ui/order-info";
 import {
   clearOrderInfo,
   getOrderInfo,
   selectOrderInfo,
-  selectOrderInfoRequestStatus
-} from '../../services/slices/order-info';
-import { selectBurgerIngredients } from '../../services/slices/burger-ingredients';
-import { useSelector, useDispatch } from '../../services/store';
-import type { TIngredient } from '../../utils/types';
-import type { OrderInfoProps } from './type';
+  selectOrderInfoRequestStatus,
+} from "../../services/slices/order-info";
+import { selectBurgerIngredients } from "../../services/slices/burger-ingredients";
+import { useSelector, useDispatch } from "../../services/store";
+import type { TIngredient } from "../../utils/types";
+import type { OrderInfoProps } from "./type";
 
 export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -43,43 +43,38 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
       [key: string]: TIngredient & { count: number };
     };
 
-    const ingredientsInfo = orderData.ingredients.reduce(
-      (acc: TIngredientsWithCount, item) => {
-        if (!acc[item]) {
-          const ingredient = ingredients.find((ing) => ing._id === item);
-          if (ingredient) {
-            acc[item] = {
-              ...ingredient,
-              count: 1
-            };
-          }
-        } else {
-          acc[item].count++;
+    const ingredientsInfo = orderData.ingredients.reduce((acc: TIngredientsWithCount, item) => {
+      if (!acc[item]) {
+        const ingredient = ingredients.find((ing) => ing._id === item);
+        if (ingredient) {
+          acc[item] = {
+            ...ingredient,
+            count: 1,
+          };
         }
+      } else {
+        acc[item].count++;
+      }
 
-        return acc;
-      },
-      {}
-    );
+      return acc;
+    }, {});
 
     const total = Object.values(ingredientsInfo).reduce(
       (acc, item) => acc + item.price * item.count,
-      0
+      0,
     );
 
     return {
       ...orderData,
       ingredientsInfo,
       date,
-      total
+      total,
     };
   }, [orderData, ingredients]);
 
-  const isLoading = !orderInfo || orderRequestStatus === 'pending';
+  const isLoading = !orderInfo || orderRequestStatus === "pending";
 
-  const modalTitle = isLoading
-    ? 'Идёт загрузка данных'
-    : `#${orderInfo.number}`;
+  const modalTitle = isLoading ? "Идёт загрузка данных" : `#${orderInfo.number}`;
 
   return (
     <Modal title={modalTitle} onClose={cleanAndClose}>

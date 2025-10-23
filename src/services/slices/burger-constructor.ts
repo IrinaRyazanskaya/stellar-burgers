@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { generateStringId } from '../../utils/id-generator';
-import type { TConstructorIngredient, TIngredient } from '../../utils/types';
-import { createBurgerOrder } from './burger-order';
+import { generateStringId } from "../../utils/id-generator";
+import type { TConstructorIngredient, TIngredient } from "../../utils/types";
+import { createBurgerOrder } from "./burger-order";
 
 export type TBurgerConstructorState = {
   bun: TConstructorIngredient | null;
@@ -12,24 +12,22 @@ export type TBurgerConstructorState = {
 
 export const burgerConstructorInitialState: TBurgerConstructorState = {
   bun: null,
-  ingredients: []
+  ingredients: [],
 };
 
 export const burgerConstructorSlice = createSlice({
-  name: 'burgerConstructor',
+  name: "burgerConstructor",
   initialState: burgerConstructorInitialState,
   reducers: {
     addIngredientToConstructor: (state, action: PayloadAction<TIngredient>) => {
-      if (action.payload.type === 'bun') {
+      if (action.payload.type === "bun") {
         state.bun = { ...action.payload, id: generateStringId() };
       } else {
         state.ingredients.push({ ...action.payload, id: generateStringId() });
       }
     },
     removeIngredientFromConstructor: (state, action: PayloadAction<string>) => {
-      state.ingredients = state.ingredients.filter(
-        (item) => item.id !== action.payload
-      );
+      state.ingredients = state.ingredients.filter((item) => item.id !== action.payload);
     },
     moveIngredientUpInConstructor: (state, action: PayloadAction<number>) => {
       const index = action.payload;
@@ -50,26 +48,26 @@ export const burgerConstructorSlice = createSlice({
         state.ingredients[index] = state.ingredients[index + 1];
         state.ingredients[index + 1] = currentIngredient;
       }
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createBurgerOrder.fulfilled, (state, action) => {
       state.bun = null;
       state.ingredients = [];
     });
-  }
+  },
 });
 
 export const selectBurgerConstructorItems = (state: {
   burgerConstructor: TBurgerConstructorState;
 }) => ({
   bun: state.burgerConstructor.bun,
-  ingredients: state.burgerConstructor.ingredients
+  ingredients: state.burgerConstructor.ingredients,
 });
 
 export const {
   addIngredientToConstructor,
   removeIngredientFromConstructor,
   moveIngredientUpInConstructor,
-  moveIngredientDownInConstructor
+  moveIngredientDownInConstructor,
 } = burgerConstructorSlice.actions;

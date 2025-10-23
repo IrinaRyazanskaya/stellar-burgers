@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Preloader } from '../components/ui/preloader';
+import { Preloader } from "../components/ui/preloader";
 
 const meta = {
-  title: 'Example/Preloader',
+  title: "Example/Preloader",
   component: Preloader,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen'
-  }
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof Preloader>;
 
 export default meta;
@@ -16,5 +16,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const DefaultPreloader: Story = {
-  args: {}
+  args: {},
 };

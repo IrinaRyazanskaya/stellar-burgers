@@ -1,1 +1,1 @@
-export * from './anonymous-route';
+export * from "./anonymous-route";

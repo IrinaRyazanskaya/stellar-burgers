@@ -1,14 +1,14 @@
-import { memo } from 'react';
-import type { FC } from 'react';
+import { memo } from "react";
+import type { FC } from "react";
 
-import { BurgerConstructorElementUI } from '../../components/ui/burger-constructor-element';
+import { BurgerConstructorElementUI } from "../../components/ui/burger-constructor-element";
 import {
   moveIngredientDownInConstructor,
   moveIngredientUpInConstructor,
-  removeIngredientFromConstructor
-} from '../../services/slices/burger-constructor';
-import { useDispatch } from '../../services/store';
-import { BurgerConstructorElementProps } from './type';
+  removeIngredientFromConstructor,
+} from "../../services/slices/burger-constructor";
+import { useDispatch } from "../../services/store";
+import { BurgerConstructorElementProps } from "./type";
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
@@ -36,5 +36,5 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
         handleClose={handleClose}
       />
     );
-  }
+  },
 );

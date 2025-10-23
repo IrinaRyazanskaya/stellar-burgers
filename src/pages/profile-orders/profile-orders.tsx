@@ -1,16 +1,16 @@
-import type { FC } from 'react';
-import { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import type { FC } from "react";
+import { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
-import { Preloader } from '../../components/ui/preloader';
-import { OrderInfo } from '../../components/order-info';
-import { ProfileOrdersUI } from '../../components/ui/pages/profile-orders';
+import { Preloader } from "../../components/ui/preloader";
+import { OrderInfo } from "../../components/order-info";
+import { ProfileOrdersUI } from "../../components/ui/pages/profile-orders";
 import {
   getProfileOrders,
   selectProfileOrders,
-  selectProfileOrdersRequestStatus
-} from '../../services/slices/profile-orders';
-import { useDispatch, useSelector } from '../../services/store';
+  selectProfileOrdersRequestStatus,
+} from "../../services/slices/profile-orders";
+import { useDispatch, useSelector } from "../../services/store";
 
 export const ProfileOrders: FC = () => {
   const navigate = useNavigate();
@@ -19,13 +19,13 @@ export const ProfileOrders: FC = () => {
   const orders = useSelector(selectProfileOrders);
   const requestStatus = useSelector(selectProfileOrdersRequestStatus);
 
-  const goToProfileOrders = () => navigate('/profile/orders');
+  const goToProfileOrders = () => navigate("/profile/orders");
 
   useEffect(() => {
     dispatch(getProfileOrders());
   }, []);
 
-  if (requestStatus === 'pending') {
+  if (requestStatus === "pending") {
     return <Preloader />;
   }
 
@@ -33,10 +33,7 @@ export const ProfileOrders: FC = () => {
     <>
       <ProfileOrdersUI orders={orders} />
       <Routes>
-        <Route
-          path=':number'
-          element={<OrderInfo onClose={goToProfileOrders} />}
-        />
+        <Route path=":number" element={<OrderInfo onClose={goToProfileOrders} />} />
       </Routes>
     </>
   );

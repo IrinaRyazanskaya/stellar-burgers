@@ -1,12 +1,9 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 
-import { FeedInfoUI } from '../ui/feed-info';
-import {
-  selectOrdersFeed,
-  selectOrdersStats
-} from '../../services/slices/orders-feed';
-import type { TOrder } from '../../utils/types';
-import { useSelector } from '../../services/store';
+import { FeedInfoUI } from "../ui/feed-info";
+import { selectOrdersFeed, selectOrdersStats } from "../../services/slices/orders-feed";
+import type { TOrder } from "../../utils/types";
+import { useSelector } from "../../services/store";
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
@@ -19,15 +16,9 @@ export const FeedInfo: FC = () => {
 
   const feed = useSelector(selectOrdersStats);
 
-  const readyOrders = getOrders(orders, 'done');
+  const readyOrders = getOrders(orders, "done");
 
-  const pendingOrders = getOrders(orders, 'pending');
+  const pendingOrders = getOrders(orders, "pending");
 
-  return (
-    <FeedInfoUI
-      readyOrders={readyOrders}
-      pendingOrders={pendingOrders}
-      feed={feed}
-    />
-  );
+  return <FeedInfoUI readyOrders={readyOrders} pendingOrders={pendingOrders} feed={feed} />;
 };

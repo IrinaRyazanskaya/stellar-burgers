@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { BurgerConstructorUI } from '../components/ui/burger-constructor';
+import { BurgerConstructorUI } from "../components/ui/burger-constructor";
 
 const meta = {
-  title: 'Example/BurgerConstructor',
+  title: "Example/BurgerConstructor",
   component: BurgerConstructorUI,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen'
-  }
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof BurgerConstructorUI>;
 
 export default meta;
@@ -22,6 +22,6 @@ export const DefaultConstructor: Story = {
     price: 0,
     orderModalData: null,
     onOrderClick: () => {},
-    closeOrderModal: () => {}
-  }
+    closeOrderModal: () => {},
+  },
 };

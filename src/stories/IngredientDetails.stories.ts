@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { IngredientDetailsUI } from '../components/ui/ingredient-details';
+import { IngredientDetailsUI } from "../components/ui/ingredient-details";
 
 const meta = {
-  title: 'Example/IngredientDetails',
+  title: "Example/IngredientDetails",
   component: IngredientDetailsUI,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen'
-  }
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof IngredientDetailsUI>;
 
 export default meta;
@@ -18,17 +18,17 @@ type Story = StoryObj<typeof meta>;
 export const DefaultIngredientDetails: Story = {
   args: {
     ingredientData: {
-      _id: '111',
-      name: 'Начинка',
-      type: 'main',
+      _id: "111",
+      name: "Начинка",
+      type: "main",
       proteins: 23,
       fat: 34,
       carbohydrates: 45,
       calories: 56,
       price: 67,
-      image: '',
-      image_large: '',
-      image_mobile: ''
-    }
-  }
+      image: "",
+      image_large: "",
+      image_mobile: "",
+    },
+  },
 };

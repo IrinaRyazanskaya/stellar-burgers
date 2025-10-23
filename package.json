@@ -10,7 +10,7 @@
     "cypress:open": "cypress open",
     "storybook:start": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "format": "prettier ./src --write",
+    "format": "prettier --write .",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -72,8 +72,6 @@
     "jest-environment-jsdom": "^30.0.0",
     "jsdom": "^27.0.0",
     "prettier": "^3.0.0",
-    "prettier-eslint": "^16.0.0",
-    "prettier-eslint-cli": "^8.0.0",
     "react-test-renderer": "^18.0.0",
     "storybook": "^7.6.10",
     "storybook-addon-react-router-v6": "^2.0.10",
