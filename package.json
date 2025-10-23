@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "build": "webpack --mode=production",
     "start": "webpack serve --mode=development",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "lint:fix": "npm run lint -- --fix",
+    "cypress:open": "cypress open",
+    "storybook:start": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
     "format": "prettier ./src --write",
-    "test": "jest",
-    "test-coverage": "jest --coverage",
-    "cypress:open": "cypress open"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.0",
