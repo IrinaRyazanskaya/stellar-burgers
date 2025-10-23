@@ -6,8 +6,6 @@ import type {
   TEmptyServerResponse,
   TForgotPasswordRequest,
   TFeedsResponse,
-  TNewOrderResponse,
-  TOrderResponse,
   TRefreshResponse,
   TResetPasswordRequest,
   TUserResponse
@@ -90,9 +88,9 @@ const mockIngredients: TIngredient[] = [
     carbohydrates: 5,
     calories: 120,
     price: 70,
-    image: 'https://code.s3.yandex.net/react/code/sauce-04.png',
-    image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png'
+    image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
+    image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png'
   },
   {
     _id: 'sauce-stardust',
@@ -116,9 +114,9 @@ const mockIngredients: TIngredient[] = [
     carbohydrates: 5,
     calories: 450,
     price: 560,
-    image: 'https://code.s3.yandex.net/react/code/meat-02.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-02-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-02-mobile.png'
+    image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png'
   },
   {
     _id: 'main-comet',
@@ -129,9 +127,9 @@ const mockIngredients: TIngredient[] = [
     carbohydrates: 8,
     calories: 320,
     price: 415,
-    image: 'https://code.s3.yandex.net/react/code/meat-05.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-05-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-05-mobile.png'
+    image: 'https://code.s3.yandex.net/react/code/meat-02.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-02-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-02-mobile.png'
   },
   {
     _id: 'main-vega',
@@ -142,9 +140,22 @@ const mockIngredients: TIngredient[] = [
     carbohydrates: 20,
     calories: 290,
     price: 330,
-    image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png'
+    image: 'https://code.s3.yandex.net/react/code/meat-03.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png'
+  },
+  {
+    _id: 'main-asteroid',
+    name: 'Asteroid Patty',
+    type: 'main',
+    proteins: 30,
+    fat: 14,
+    carbohydrates: 6,
+    calories: 400,
+    price: 470,
+    image: 'https://code.s3.yandex.net/react/code/meat-04.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-04-large.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-04-mobile.png'
   }
 ];
 
