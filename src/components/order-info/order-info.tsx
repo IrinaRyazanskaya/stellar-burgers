@@ -32,7 +32,7 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
   useEffect(() => {
     const orderNumber = Number(routerParams.number);
     dispatch(getOrderInfo(orderNumber));
-  }, [routerParams.number]);
+  }, [dispatch, routerParams.number]);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

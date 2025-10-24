@@ -7,7 +7,7 @@ import { TModalUIProps } from "./type";
 
 import styles from "./modal.module.css";
 
-export const ModalUI: FC<TModalUIProps> = memo(({ title, onClose, children }) => (
+const ModalUI: FC<TModalUIProps> = memo(({ title, onClose, children }) => (
   <>
     <div className={styles.modal} data-cy="modal">
       <div className={styles.header}>
@@ -21,3 +21,7 @@ export const ModalUI: FC<TModalUIProps> = memo(({ title, onClose, children }) =>
     <ModalOverlayUI onClick={onClose} />
   </>
 ));
+
+ModalUI.displayName = "ModalUI";
+
+export { ModalUI };

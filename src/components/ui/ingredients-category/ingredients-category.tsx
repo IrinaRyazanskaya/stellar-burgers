@@ -5,7 +5,7 @@ import { TIngredientsCategoryUIProps } from "./type";
 
 import styles from "./ingredients-category.module.css";
 
-export const IngredientsCategoryUI = forwardRef<HTMLUListElement, TIngredientsCategoryUIProps>(
+const IngredientsCategoryUI = forwardRef<HTMLUListElement, TIngredientsCategoryUIProps>(
   ({ title, titleRef, ingredients, ingredientsCounters }, ref) => (
     <>
       <h3 className="text text_type_main-medium mt-10 mb-6" ref={titleRef}>
@@ -23,3 +23,7 @@ export const IngredientsCategoryUI = forwardRef<HTMLUListElement, TIngredientsCa
     </>
   ),
 );
+
+IngredientsCategoryUI.displayName = "IngredientsCategoryUI";
+
+export { IngredientsCategoryUI };

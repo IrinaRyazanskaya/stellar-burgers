@@ -11,7 +11,7 @@ import {
 } from "../../services/slices/profile";
 import { useDispatch, useSelector } from "../../services/store";
 
-export const Register: FC = () => {
+const Register: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,3 +53,7 @@ export const Register: FC = () => {
     />
   );
 };
+
+Register.displayName = "Register";
+
+export { Register };

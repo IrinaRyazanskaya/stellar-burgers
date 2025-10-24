@@ -7,7 +7,7 @@ import { BurgerConstructorElementUIProps } from "./type";
 
 import styles from "./burger-constructor-element.module.css";
 
-export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> = memo(
+const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> = memo(
   ({ ingredient, index, totalItems, handleMoveUp, handleMoveDown, handleClose }) => (
     <li className={`${styles.element} mb-4 mr-2`}>
       <MoveButton
@@ -27,3 +27,7 @@ export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> = m
     </li>
   ),
 );
+
+BurgerConstructorElementUI.displayName = "BurgerConstructorElementUI";
+
+export { BurgerConstructorElementUI };

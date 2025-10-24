@@ -5,7 +5,7 @@ import styles from "./feed-info.module.css";
 
 import { FeedInfoUIProps, HalfColumnProps, TColumnProps } from "./type";
 
-export const FeedInfoUI: FC<FeedInfoUIProps> = memo(({ feed, readyOrders, pendingOrders }) => {
+const FeedInfoUI: FC<FeedInfoUIProps> = memo(({ feed, readyOrders, pendingOrders }) => {
   const { total, totalToday } = feed;
 
   return (
@@ -19,6 +19,8 @@ export const FeedInfoUI: FC<FeedInfoUIProps> = memo(({ feed, readyOrders, pendin
     </section>
   );
 });
+
+FeedInfoUI.displayName = "FeedInfoUI";
 
 const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
   <div className={`pr-6 ${styles.column}`}>
@@ -37,9 +39,15 @@ const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
   </div>
 );
 
+HalfColumn.displayName = "HalfColumn";
+
 const Column: FC<TColumnProps> = ({ title, content }) => (
   <>
     <h3 className={`pt-15 text text_type_main-medium ${styles.title}`}>{title}:</h3>
     <p className={`text text_type_digits-large ${styles.content}`}>{content}</p>
   </>
 );
+
+Column.displayName = "Column";
+
+export { FeedInfoUI };

@@ -7,7 +7,7 @@ import { TBurgerIngredientUIProps } from "./type";
 
 import styles from "./burger-ingredient.module.css";
 
-export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
+const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
     const { image, price, name, _id } = ingredient;
 
@@ -27,3 +27,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
     );
   },
 );
+
+BurgerIngredientUI.displayName = "BurgerIngredientUI";
+
+export { BurgerIngredientUI };

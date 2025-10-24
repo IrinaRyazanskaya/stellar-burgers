@@ -12,7 +12,7 @@ import {
 } from "../../services/slices/orders-feed";
 import { useDispatch, useSelector } from "../../services/store";
 
-export const Feed: FC = () => {
+const Feed: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,3 +39,7 @@ export const Feed: FC = () => {
     </>
   );
 };
+
+Feed.displayName = "Feed";
+
+export { Feed };

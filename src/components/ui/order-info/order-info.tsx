@@ -7,7 +7,7 @@ import { OrderInfoUIProps } from "./type";
 
 import styles from "./order-info.module.css";
 
-export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
+const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
   <div className={styles.wrap}>
     <h3 className={`text text_type_main-medium  pb-3 pt-10 ${styles.header}`}>{orderInfo.name}</h3>
     <OrderStatus status={orderInfo.status} />
@@ -39,3 +39,7 @@ export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
     </div>
   </div>
 ));
+
+OrderInfoUI.displayName = "OrderInfoUI";
+
+export { OrderInfoUI };

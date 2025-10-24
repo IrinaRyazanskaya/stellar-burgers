@@ -11,7 +11,7 @@ import {
 } from "../../services/slices/profile";
 import { useDispatch, useSelector } from "../../services/store";
 
-export const Login: FC = () => {
+const Login: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -49,3 +49,7 @@ export const Login: FC = () => {
     />
   );
 };
+
+Login.displayName = "Login";
+
+export { Login };

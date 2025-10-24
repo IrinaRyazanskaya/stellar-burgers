@@ -5,7 +5,7 @@ import { ProfileUI } from "../../components/ui/pages/profile";
 import { selectUpdateError, selectUser, updateUser } from "../../services/slices/profile";
 import { useDispatch, useSelector } from "../../services/store";
 
-export const Profile: FC = () => {
+const Profile: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser) || { name: "", email: "" };
   const updateUserError = useSelector(selectUpdateError) || undefined;
@@ -66,3 +66,7 @@ export const Profile: FC = () => {
     />
   );
 };
+
+Profile.displayName = "Profile";
+
+export { Profile };

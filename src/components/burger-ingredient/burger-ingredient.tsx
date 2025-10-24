@@ -7,7 +7,7 @@ import { addIngredientToConstructor } from "../../services/slices/burger-constru
 import { useDispatch } from "../../services/store";
 import { TBurgerIngredientProps } from "./type";
 
-export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(({ ingredient, count }) => {
+const BurgerIngredient: FC<TBurgerIngredientProps> = memo(({ ingredient, count }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -24,3 +24,7 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(({ ingredient, 
     />
   );
 });
+
+BurgerIngredient.displayName = "BurgerIngredient";
+
+export { BurgerIngredient };

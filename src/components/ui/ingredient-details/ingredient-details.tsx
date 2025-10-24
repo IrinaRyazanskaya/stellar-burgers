@@ -5,7 +5,7 @@ import { IngredientDetailsUIProps } from "./type";
 
 import styles from "./ingredient-details.module.css";
 
-export const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(({ ingredientData }) => {
+const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(({ ingredientData }) => {
   const { name, image_large, calories, proteins, fat, carbohydrates } = ingredientData;
 
   return (
@@ -33,3 +33,7 @@ export const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(({ ingredi
     </div>
   );
 });
+
+IngredientDetailsUI.displayName = "IngredientDetailsUI";
+
+export { IngredientDetailsUI };

@@ -6,7 +6,7 @@ import { useSelector } from "../../services/store";
 import type { Ingredient } from "../../utils/types";
 import { TIngredientsCategoryProps } from "./type";
 
-export const IngredientsCategory = forwardRef<HTMLUListElement, TIngredientsCategoryProps>(
+const IngredientsCategory = forwardRef<HTMLUListElement, TIngredientsCategoryProps>(
   ({ title, titleRef, ingredients }, ref) => {
     const burgerConstructor = useSelector(selectBurgerConstructorItems);
 
@@ -32,3 +32,7 @@ export const IngredientsCategory = forwardRef<HTMLUListElement, TIngredientsCate
     );
   },
 );
+
+IngredientsCategory.displayName = "IngredientsCategory";
+
+export { IngredientsCategory };

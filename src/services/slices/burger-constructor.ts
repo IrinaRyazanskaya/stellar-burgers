@@ -51,7 +51,7 @@ export const burgerConstructorSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(createBurgerOrder.fulfilled, (state, action) => {
+    builder.addCase(createBurgerOrder.fulfilled, (state) => {
       state.bun = null;
       state.ingredients = [];
     });

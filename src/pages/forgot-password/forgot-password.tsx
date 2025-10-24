@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { burgerAPIClient } from "../../clients/burger-api";
 import { ForgotPasswordUI } from "../../components/ui/pages/forgot-password";
 
-export const ForgotPassword: FC = () => {
+const ForgotPassword: FC = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<Error | null>(null);
 
@@ -33,3 +33,7 @@ export const ForgotPassword: FC = () => {
     />
   );
 };
+
+ForgotPassword.displayName = "ForgotPassword";
+
+export { ForgotPassword };

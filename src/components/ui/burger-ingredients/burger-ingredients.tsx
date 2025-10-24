@@ -7,7 +7,7 @@ import { BurgerIngredientsUIProps } from "./type";
 
 import styles from "./burger-ingredients.module.css";
 
-export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
+const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
   ({
     currentTab,
     buns,
@@ -60,3 +60,7 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
     </>
   ),
 );
+
+BurgerIngredientsUI.displayName = "BurgerIngredientsUI";
+
+export { BurgerIngredientsUI };

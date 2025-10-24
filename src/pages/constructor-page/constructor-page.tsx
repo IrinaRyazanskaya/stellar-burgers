@@ -10,7 +10,7 @@ import { useSelector } from "../../services/store";
 
 import styles from "./constructor-page.module.css";
 
-export const ConstructorPage: FC = () => {
+const ConstructorPage: FC = () => {
   const navigate = useNavigate();
   const goToConstructor = () => navigate("/");
   const isIngredientsLoading = useSelector(selectBurgerIngredientsIsLoading);
@@ -39,3 +39,7 @@ export const ConstructorPage: FC = () => {
     </>
   );
 };
+
+ConstructorPage.displayName = "ConstructorPage";
+
+export { ConstructorPage };

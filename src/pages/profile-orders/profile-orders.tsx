@@ -12,7 +12,7 @@ import {
 } from "../../services/slices/profile-orders";
 import { useDispatch, useSelector } from "../../services/store";
 
-export const ProfileOrders: FC = () => {
+const ProfileOrders: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,3 +38,7 @@ export const ProfileOrders: FC = () => {
     </>
   );
 };
+
+ProfileOrders.displayName = "ProfileOrders";
+
+export { ProfileOrders };

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { burgerAPIClient } from "../../clients/burger-api";
 import { ResetPasswordUI } from "../../components/ui/pages/reset-password";
 
-export const ResetPassword: FC = () => {
+const ResetPassword: FC = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
@@ -40,3 +40,7 @@ export const ResetPassword: FC = () => {
     />
   );
 };
+
+ResetPassword.displayName = "ResetPassword";
+
+export { ResetPassword };

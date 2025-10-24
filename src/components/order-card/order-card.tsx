@@ -10,7 +10,7 @@ import { OrderCardProps } from "./type";
 
 const maxIngredients = 6;
 
-export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
+const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
 
   const ingredients = useSelector(selectBurgerIngredients);
@@ -52,3 +52,7 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
     />
   );
 });
+
+OrderCard.displayName = "OrderCard";
+
+export { OrderCard };

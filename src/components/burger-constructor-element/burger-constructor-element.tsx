@@ -10,7 +10,7 @@ import {
 import { useDispatch } from "../../services/store";
 import { BurgerConstructorElementProps } from "./type";
 
-export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
+const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
     const dispatch = useDispatch();
 
@@ -38,3 +38,7 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
     );
   },
 );
+
+BurgerConstructorElement.displayName = "BurgerConstructorElement";
+
+export { BurgerConstructorElement };

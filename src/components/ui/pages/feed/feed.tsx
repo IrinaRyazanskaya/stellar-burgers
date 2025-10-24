@@ -8,7 +8,7 @@ import { FeedUIProps } from "./type";
 
 import styles from "./feed.module.css";
 
-export const FeedUI: FC<FeedUIProps> = memo(({ orders, handleGetFeeds }) => (
+const FeedUI: FC<FeedUIProps> = memo(({ orders, handleGetFeeds }) => (
   <main className={styles.containerMain}>
     <div className={`${styles.titleBox} mt-10 mb-5`}>
       <h1 className={`${styles.title} text text_type_main-large`}>Лента заказов</h1>
@@ -24,3 +24,7 @@ export const FeedUI: FC<FeedUIProps> = memo(({ orders, handleGetFeeds }) => (
     </div>
   </main>
 ));
+
+FeedUI.displayName = "FeedUI";
+
+export { FeedUI };
