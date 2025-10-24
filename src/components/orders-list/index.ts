@@ -1,1 +1,1 @@
-export { OrdersList } from "./orders-list";
+export * from "./orders-list";

@@ -8,7 +8,13 @@ import {
   removeIngredientFromConstructor,
 } from "../../services/slices/burger-constructor";
 import { useDispatch } from "../../services/store";
-import { BurgerConstructorElementProps } from "./type";
+import type { ConstructorIngredient } from "../../utils/types";
+
+type BurgerConstructorElementProps = {
+  index: number;
+  totalItems: number;
+  ingredient: ConstructorIngredient;
+};
 
 const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
@@ -42,3 +48,4 @@ const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
 BurgerConstructorElement.displayName = "BurgerConstructorElement";
 
 export { BurgerConstructorElement };
+export type { BurgerConstructorElementProps };

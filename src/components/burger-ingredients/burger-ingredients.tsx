@@ -11,7 +11,7 @@ import {
 import type { TTabMode } from "../../utils/types";
 import { useSelector } from "../../services/store";
 
-export const BurgerIngredients: FC = () => {
+const BurgerIngredients: FC = () => {
   const buns = useSelector(selectBurgerBuns);
   const mains = useSelector(selectBurgerMains);
   const sauces = useSelector(selectBurgerSauces);
@@ -66,3 +66,7 @@ export const BurgerIngredients: FC = () => {
     />
   );
 };
+
+BurgerIngredients.displayName = "BurgerIngredients";
+
+export { BurgerIngredients };

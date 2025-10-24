@@ -5,9 +5,14 @@ import { useLocation } from "react-router-dom";
 import { BurgerIngredientUI } from "../../components/ui/burger-ingredient";
 import { addIngredientToConstructor } from "../../services/slices/burger-constructor";
 import { useDispatch } from "../../services/store";
-import { TBurgerIngredientProps } from "./type";
+import type { Ingredient } from "../../utils/types";
 
-const BurgerIngredient: FC<TBurgerIngredientProps> = memo(({ ingredient, count }) => {
+type BurgerIngredientProps = {
+  count: number;
+  ingredient: Ingredient;
+};
+
+const BurgerIngredient: FC<BurgerIngredientProps> = memo(({ ingredient, count }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -28,3 +33,4 @@ const BurgerIngredient: FC<TBurgerIngredientProps> = memo(({ ingredient, count }
 BurgerIngredient.displayName = "BurgerIngredient";
 
 export { BurgerIngredient };
+export type { BurgerIngredientProps };

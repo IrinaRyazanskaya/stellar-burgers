@@ -1,1 +1,1 @@
-export { OrderStatus } from "./order-status";
+export * from "./order-status";

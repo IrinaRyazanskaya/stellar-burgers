@@ -7,7 +7,7 @@ import {
 
 import { Modal } from "../../modal";
 import { BurgerConstructorElement } from "../../burger-constructor-element";
-import type { TConstructorIngredient } from "../../../utils/types";
+import type { ConstructorIngredient } from "../../../utils/types";
 import { OrderDetailsUI } from "../order-details";
 import { Preloader } from "../preloader";
 import { BurgerConstructorUIProps } from "./type";
@@ -42,7 +42,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
     )}
     <ul className={styles.elements}>
       {constructorItems.ingredients.length > 0 ? (
-        constructorItems.ingredients.map((item: TConstructorIngredient, index: number) => (
+        constructorItems.ingredients.map((item: ConstructorIngredient, index: number) => (
           <BurgerConstructorElement
             ingredient={item}
             index={index}

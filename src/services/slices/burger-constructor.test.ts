@@ -1,4 +1,4 @@
-import type { Ingredient, TConstructorIngredient } from "../../utils/types";
+import type { Ingredient, ConstructorIngredient } from "../../utils/types";
 import {
   burgerConstructorSlice,
   burgerConstructorInitialState,
@@ -75,7 +75,7 @@ describe("burgerConstructorSlice", () => {
   });
 
   it("moves ingredient up in constructor", () => {
-    const ingredients: TConstructorIngredient[] = [
+    const ingredients: ConstructorIngredient[] = [
       { ...fillingIngredient, id: "id1" },
       { ...fillingIngredient, id: "id2" },
       { ...fillingIngredient, id: "id3" },
@@ -96,7 +96,7 @@ describe("burgerConstructorSlice", () => {
   });
 
   it("moves ingredient down in constructor", () => {
-    const ingredients: TConstructorIngredient[] = [
+    const ingredients: ConstructorIngredient[] = [
       { ...fillingIngredient, id: "id1" },
       { ...fillingIngredient, id: "id2" },
       { ...fillingIngredient, id: "id3" },

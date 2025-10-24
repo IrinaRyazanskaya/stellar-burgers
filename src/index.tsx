@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import * as ReactDOMClient from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
-import App from "./components/app/app";
+import { App } from "./components/app";
 import store from "./services/store";
 
 const container = document.getElementById("root") as HTMLElement;

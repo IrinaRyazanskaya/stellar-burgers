@@ -14,9 +14,12 @@ import {
 import { selectBurgerIngredients } from "../../services/slices/burger-ingredients";
 import { useSelector, useDispatch } from "../../services/store";
 import type { Ingredient } from "../../utils/types";
-import type { OrderInfoProps } from "./type";
 
-export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
+type OrderInfoProps = {
+  onClose: () => void;
+};
+
+const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
   const dispatch = useDispatch();
   const routerParams = useParams<{ number: string }>();
 
@@ -82,3 +85,8 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
     </Modal>
   );
 };
+
+OrderInfo.displayName = "OrderInfo";
+
+export { OrderInfo };
+export type { OrderInfoProps };

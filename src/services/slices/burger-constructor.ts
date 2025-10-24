@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { generateStringId } from "../../utils/id-generator";
-import type { TConstructorIngredient, Ingredient } from "../../utils/types";
+import type { ConstructorIngredient, Ingredient } from "../../utils/types";
 import { createBurgerOrder } from "./burger-order";
 
 export type TBurgerConstructorState = {
-  bun: TConstructorIngredient | null;
-  ingredients: TConstructorIngredient[];
+  bun: ConstructorIngredient | null;
+  ingredients: ConstructorIngredient[];
 };
 
 export const burgerConstructorInitialState: TBurgerConstructorState = {

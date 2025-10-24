@@ -5,7 +5,7 @@ import { ProfileMenuUI } from "../../components/ui/profile-menu";
 import { logoutUser } from "../../services/slices/profile";
 import { useDispatch } from "../../services/store";
 
-export const ProfileMenu: FC = () => {
+const ProfileMenu: FC = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
@@ -15,3 +15,7 @@ export const ProfileMenu: FC = () => {
 
   return <ProfileMenuUI handleLogout={handleLogout} pathname={pathname} />;
 };
+
+ProfileMenu.displayName = "ProfileMenu";
+
+export { ProfileMenu };

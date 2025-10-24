@@ -2,7 +2,11 @@ import { memo } from "react";
 import type { FC } from "react";
 
 import { OrdersListUI } from "../../components/ui/orders-list";
-import { OrdersListProps } from "./type";
+import type { Order } from "../../utils/types";
+
+type OrdersListProps = {
+  orders: Order[];
+};
 
 const OrdersList: FC<OrdersListProps> = memo(({ orders }) => {
   const orderByDate = [...orders].sort(
@@ -15,3 +19,4 @@ const OrdersList: FC<OrdersListProps> = memo(({ orders }) => {
 OrdersList.displayName = "OrdersList";
 
 export { OrdersList };
+export type { OrdersListProps };

@@ -6,9 +6,12 @@ import { Preloader } from "../ui/preloader";
 import { IngredientDetailsUI } from "../ui/ingredient-details";
 import { selectIngredientById } from "../../services/slices/burger-ingredients";
 import { useSelector } from "../../services/store";
-import type { IngredientDetailsProps } from "./type";
 
-export const IngredientDetails: FC<IngredientDetailsProps> = ({ onClose }) => {
+type IngredientDetailsProps = {
+  onClose: () => void;
+};
+
+const IngredientDetails: FC<IngredientDetailsProps> = ({ onClose }) => {
   const routerParams = useParams<{ id: string }>();
   const ingredientData = useSelector((state) => selectIngredientById(state, routerParams.id!));
 
@@ -22,3 +25,8 @@ export const IngredientDetails: FC<IngredientDetailsProps> = ({ onClose }) => {
     </Modal>
   );
 };
+
+IngredientDetails.displayName = "IngredientDetails";
+
+export { IngredientDetails };
+export type { IngredientDetailsProps };

@@ -1,15 +1,15 @@
-import type { ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 import { Preloader } from "../../components/ui/preloader";
 import { selectUserStatus } from "../../services/slices/profile";
 import { useSelector } from "../../services/store";
 
-export type ProtectedRouteProps = {
+type ProtectedRouteProps = {
   children: ReactNode;
 };
 
-export function ProtectedRoute({ children }: ProtectedRouteProps) {
+const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
   const userStatus = useSelector(selectUserStatus);
 
   if (userStatus === "unknown") {
@@ -21,4 +21,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   return children;
-}
+};
+
+export { ProtectedRoute };
+export type { ProtectedRouteProps };

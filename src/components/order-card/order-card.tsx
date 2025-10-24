@@ -5,10 +5,13 @@ import { useLocation } from "react-router-dom";
 import { OrderCardUI } from "../ui/order-card";
 import { selectBurgerIngredients } from "../../services/slices/burger-ingredients";
 import { useSelector } from "../../services/store";
-import type { Ingredient } from "../../utils/types";
-import { OrderCardProps } from "./type";
+import type { Ingredient, Order } from "../../utils/types";
 
 const maxIngredients = 6;
+
+type OrderCardProps = {
+  order: Order;
+};
 
 const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
@@ -56,3 +59,4 @@ const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
 OrderCard.displayName = "OrderCard";
 
 export { OrderCard };
+export type { OrderCardProps };

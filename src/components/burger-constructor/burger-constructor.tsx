@@ -12,9 +12,9 @@ import {
 } from "../../services/slices/burger-order";
 import { selectUser } from "../../services/slices/profile";
 import { useDispatch, useSelector } from "../../services/store";
-import type { TConstructorIngredient } from "../../utils/types";
+import type { ConstructorIngredient } from "../../utils/types";
 
-export const BurgerConstructor: FC = () => {
+const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ export const BurgerConstructor: FC = () => {
   const price = useMemo(
     () =>
       (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +
-      constructorItems.ingredients.reduce((s: number, v: TConstructorIngredient) => s + v.price, 0),
+      constructorItems.ingredients.reduce((s: number, v: ConstructorIngredient) => s + v.price, 0),
     [constructorItems],
   );
 
@@ -62,3 +62,7 @@ export const BurgerConstructor: FC = () => {
     />
   );
 };
+
+BurgerConstructor.displayName = "BurgerConstructor";
+
+export { BurgerConstructor };

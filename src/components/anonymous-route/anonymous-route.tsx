@@ -1,14 +1,14 @@
-import type { ReactNode } from "react";
+import type { ReactNode, FC } from "react";
 import { Navigate } from "react-router-dom";
 
 import { selectUserStatus } from "../../services/slices/profile";
 import { useSelector } from "../../services/store";
 
-export type AnonymousRouteProps = {
+type AnonymousRouteProps = {
   children: ReactNode;
 };
 
-export function AnonymousRoute({ children }: AnonymousRouteProps) {
+const AnonymousRoute: FC<AnonymousRouteProps> = ({ children }) => {
   const userStatus = useSelector(selectUserStatus);
 
   if (userStatus === "authorized") {
@@ -16,4 +16,9 @@ export function AnonymousRoute({ children }: AnonymousRouteProps) {
   }
 
   return children;
-}
+};
+
+AnonymousRoute.displayName = "AnonymousRoute";
+
+export { AnonymousRoute };
+export type { AnonymousRouteProps };

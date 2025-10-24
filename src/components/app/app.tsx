@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -21,7 +22,7 @@ import { useRedirectOnLogout } from "../../utils/redirects";
 import "../../index.css";
 import styles from "./app.module.css";
 
-const App = () => {
+const App: FC = () => {
   const dispatch = useDispatch();
 
   useRedirectOnLogout();
@@ -91,4 +92,6 @@ const App = () => {
   );
 };
 
-export default App;
+App.displayName = "App";
+
+export { App };

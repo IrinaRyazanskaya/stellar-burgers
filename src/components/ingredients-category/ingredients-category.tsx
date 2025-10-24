@@ -4,9 +4,14 @@ import { IngredientsCategoryUI } from "../ui/ingredients-category";
 import { selectBurgerConstructorItems } from "../../services/slices/burger-constructor";
 import { useSelector } from "../../services/store";
 import type { Ingredient } from "../../utils/types";
-import { TIngredientsCategoryProps } from "./type";
 
-const IngredientsCategory = forwardRef<HTMLUListElement, TIngredientsCategoryProps>(
+type IngredientsCategoryProps = {
+  title: string;
+  titleRef: React.RefObject<HTMLHeadingElement>;
+  ingredients: Ingredient[];
+};
+
+const IngredientsCategory = forwardRef<HTMLUListElement, IngredientsCategoryProps>(
   ({ title, titleRef, ingredients }, ref) => {
     const burgerConstructor = useSelector(selectBurgerConstructorItems);
 
@@ -36,3 +41,4 @@ const IngredientsCategory = forwardRef<HTMLUListElement, TIngredientsCategoryPro
 IngredientsCategory.displayName = "IngredientsCategory";
 
 export { IngredientsCategory };
+export type { IngredientsCategoryProps };
