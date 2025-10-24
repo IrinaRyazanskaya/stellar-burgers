@@ -1,5 +1,5 @@
-import type { TOrder } from "../../../utils/types";
+import type { Order } from "../../../utils/types";
 
 export type OrdersListUIProps = {
-  orderByDate: TOrder[];
+  orderByDate: Order[];
 };

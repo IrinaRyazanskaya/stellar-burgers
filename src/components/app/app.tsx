@@ -29,7 +29,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getUser());
     dispatch(fetchBurgerIngredients());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>

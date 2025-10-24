@@ -23,7 +23,7 @@ export const ProfileOrders: FC = () => {
 
   useEffect(() => {
     dispatch(getProfileOrders());
-  }, []);
+  }, [dispatch]);
 
   if (requestStatus === "pending") {
     return <Preloader />;

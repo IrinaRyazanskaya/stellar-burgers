@@ -1,4 +1,4 @@
-export type TIngredient = {
+export type Ingredient = {
   _id: string;
   name: string;
   type: string;
@@ -12,11 +12,11 @@ export type TIngredient = {
   image_mobile: string;
 };
 
-export type TConstructorIngredient = TIngredient & {
+export type TConstructorIngredient = Ingredient & {
   id: string;
 };
 
-export type TOrder = {
+export type Order = {
   _id: string;
   status: string;
   name: string;
@@ -27,12 +27,12 @@ export type TOrder = {
 };
 
 export type TOrdersData = {
-  orders: TOrder[];
+  orders: Order[];
   total: number;
   totalToday: number;
 };
 
-export type TUser = {
+export type User = {
   email: string;
   name: string;
 };

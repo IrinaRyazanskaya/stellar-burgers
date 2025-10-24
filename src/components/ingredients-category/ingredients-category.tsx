@@ -3,7 +3,7 @@ import { forwardRef, useMemo } from "react";
 import { IngredientsCategoryUI } from "../ui/ingredients-category";
 import { selectBurgerConstructorItems } from "../../services/slices/burger-constructor";
 import { useSelector } from "../../services/store";
-import type { TIngredient } from "../../utils/types";
+import type { Ingredient } from "../../utils/types";
 import { TIngredientsCategoryProps } from "./type";
 
 export const IngredientsCategory = forwardRef<HTMLUListElement, TIngredientsCategoryProps>(
@@ -13,7 +13,7 @@ export const IngredientsCategory = forwardRef<HTMLUListElement, TIngredientsCate
     const ingredientsCounters = useMemo(() => {
       const { bun, ingredients } = burgerConstructor;
       const counters: { [key: string]: number } = {};
-      ingredients.forEach((ingredient: TIngredient) => {
+      ingredients.forEach((ingredient: Ingredient) => {
         if (!counters[ingredient._id]) counters[ingredient._id] = 0;
         counters[ingredient._id]++;
       });

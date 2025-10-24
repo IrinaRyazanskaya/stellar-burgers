@@ -1,8 +1,8 @@
-import type { TIngredient } from "../../../utils/types";
+import type { Ingredient } from "../../../utils/types";
 
 export type TIngredientsCategoryUIProps = {
   title: string;
   titleRef: React.RefObject<HTMLHeadingElement>;
-  ingredients: TIngredient[];
+  ingredients: Ingredient[];
   ingredientsCounters: Record<string, number>;
 };

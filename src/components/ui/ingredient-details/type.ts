@@ -1,5 +1,5 @@
-import type { TIngredient } from "../../../utils/types";
+import type { Ingredient } from "../../../utils/types";
 
 export type IngredientDetailsUIProps = {
-  ingredientData: TIngredient;
+  ingredientData: Ingredient;
 };

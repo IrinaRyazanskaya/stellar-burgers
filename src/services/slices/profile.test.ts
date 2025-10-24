@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
-import type { TAuthResponse, TLoginData, TRegisterData } from "../../clients/burger-api";
-import type { TUser } from "../../utils/types";
+import type { AuthResponse, LoginData, RegisterData } from "../../clients/burger-api";
+import type { User } from "../../utils/types";
 import {
   profileSlice,
   profileInitialState,
@@ -22,23 +22,23 @@ jest.mock("../../utils/cookie", () => ({
   deleteCookie: jest.fn(),
 }));
 
-const mockUser: TUser = {
+const mockUser: User = {
   name: "Test User",
   email: "test@example.com",
 };
 
-const mockLoginData: TLoginData = {
+const mockLoginData: LoginData = {
   email: "test@example.com",
   password: "password123",
 };
 
-const mockRegisterData: TRegisterData = {
+const mockRegisterData: RegisterData = {
   name: "Test User",
   email: "test@example.com",
   password: "password123",
 };
 
-const mockAuthResponse: TAuthResponse = {
+const mockAuthResponse: AuthResponse = {
   success: true,
   user: mockUser,
   accessToken: "mock-access-token",

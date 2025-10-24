@@ -1,16 +1,16 @@
 import { setCookie, getCookie } from "../../utils/cookie";
 import type {
   BurgerAPIClient,
-  TAuthResponse,
-  TEmptyServerResponse,
-  TForgotPasswordRequest,
-  TFeedsResponse,
-  TIngredientsResponse,
-  TNewOrderResponse,
-  TOrderResponse,
-  TRefreshResponse,
-  TResetPasswordRequest,
-  TUserResponse,
+  EmptyResponse,
+  AuthResponse,
+  ForgotPasswordRequest,
+  FeedsResponse,
+  IngredientsResponse,
+  NewOrderResponse,
+  OrderResponse,
+  RefreshResponse,
+  ResetPasswordRequest,
+  UserResponse,
 } from "./types";
 
 const API_URL = __BURGER_API_BASE_URL__;
@@ -66,7 +66,7 @@ const refreshToken: BurgerAPIClient["refreshToken"] = () =>
       token: localStorage.getItem("refreshToken"),
     }),
   })
-    .then((res) => checkResponse<TRefreshResponse>(res))
+    .then((res) => checkResponse<RefreshResponse>(res))
     .then((refreshData) => {
       if (!refreshData.success) {
         return Promise.reject(refreshData);
@@ -107,7 +107,7 @@ const fetchWithRefresh = async <T>(
 
 const getFeeds: BurgerAPIClient["getFeeds"] = async () => {
   const response = await fetch(`${API_URL}/orders/all`);
-  const data = await checkResponse<TFeedsResponse>(response);
+  const data = await checkResponse<FeedsResponse>(response);
 
   if (data?.success) {
     return data;
@@ -124,11 +124,11 @@ const getOrder: BurgerAPIClient["getOrder"] = async (orderNumber) => {
     },
   });
 
-  return checkResponse<TOrderResponse>(response);
+  return checkResponse<OrderResponse>(response);
 };
 
 const getOrders: BurgerAPIClient["getOrders"] = async () => {
-  const data = await fetchWithRefresh<TFeedsResponse>(`${API_URL}/orders`, {
+  const data = await fetchWithRefresh<FeedsResponse>(`${API_URL}/orders`, {
     method: "GET",
     headers: createAuthHeaders({
       "Content-Type": "application/json;charset=utf-8",
@@ -144,7 +144,7 @@ const getOrders: BurgerAPIClient["getOrders"] = async () => {
 
 const getIngredients: BurgerAPIClient["getIngredients"] = async () => {
   const response = await fetch(`${API_URL}/ingredients`);
-  const data = await checkResponse<TIngredientsResponse>(response);
+  const data = await checkResponse<IngredientsResponse>(response);
 
   if (data?.success) {
     return data.data;
@@ -154,7 +154,7 @@ const getIngredients: BurgerAPIClient["getIngredients"] = async () => {
 };
 
 const orderBurger: BurgerAPIClient["orderBurger"] = async (ingredients) => {
-  const data = await fetchWithRefresh<TNewOrderResponse>(`${API_URL}/orders`, {
+  const data = await fetchWithRefresh<NewOrderResponse>(`${API_URL}/orders`, {
     method: "POST",
     headers: createAuthHeaders({
       "Content-Type": "application/json;charset=utf-8",
@@ -178,7 +178,7 @@ const registerUser: BurgerAPIClient["registerUser"] = async (payload) => {
     body: JSON.stringify(payload),
   });
 
-  const data = await checkResponse<TAuthResponse>(response);
+  const data = await checkResponse<AuthResponse>(response);
 
   if (data?.success) {
     return data;
@@ -196,7 +196,7 @@ const loginUser: BurgerAPIClient["loginUser"] = async (payload) => {
     body: JSON.stringify(payload),
   });
 
-  const data = await checkResponse<TAuthResponse>(response);
+  const data = await checkResponse<AuthResponse>(response);
 
   if (data?.success) {
     return data;
@@ -206,7 +206,7 @@ const loginUser: BurgerAPIClient["loginUser"] = async (payload) => {
 };
 
 const forgotPassword: BurgerAPIClient["forgotPassword"] = async (
-  payload: TForgotPasswordRequest,
+  payload: ForgotPasswordRequest,
 ) => {
   const response = await fetch(`${API_URL}/password-reset`, {
     method: "POST",
@@ -216,7 +216,7 @@ const forgotPassword: BurgerAPIClient["forgotPassword"] = async (
     body: JSON.stringify(payload),
   });
 
-  const data = await checkResponse<TEmptyServerResponse>(response);
+  const data = await checkResponse<EmptyResponse>(response);
 
   if (data?.success) {
     return data;
@@ -225,7 +225,7 @@ const forgotPassword: BurgerAPIClient["forgotPassword"] = async (
   return Promise.reject(data);
 };
 
-const resetPassword: BurgerAPIClient["resetPassword"] = async (payload: TResetPasswordRequest) => {
+const resetPassword: BurgerAPIClient["resetPassword"] = async (payload: ResetPasswordRequest) => {
   const response = await fetch(`${API_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -234,7 +234,7 @@ const resetPassword: BurgerAPIClient["resetPassword"] = async (payload: TResetPa
     body: JSON.stringify(payload),
   });
 
-  const data = await checkResponse<TEmptyServerResponse>(response);
+  const data = await checkResponse<EmptyResponse>(response);
 
   if (data?.success) {
     return data;
@@ -244,13 +244,13 @@ const resetPassword: BurgerAPIClient["resetPassword"] = async (payload: TResetPa
 };
 
 const getUser: BurgerAPIClient["getUser"] = async () => {
-  return fetchWithRefresh<TUserResponse>(`${API_URL}/auth/user`, {
+  return fetchWithRefresh<UserResponse>(`${API_URL}/auth/user`, {
     headers: createAuthHeaders(),
   });
 };
 
 const updateUser: BurgerAPIClient["updateUser"] = async (userUpdate) => {
-  return fetchWithRefresh<TUserResponse>(`${API_URL}/auth/user`, {
+  return fetchWithRefresh<UserResponse>(`${API_URL}/auth/user`, {
     method: "PATCH",
     headers: createAuthHeaders({
       "Content-Type": "application/json;charset=utf-8",
@@ -270,7 +270,7 @@ const logoutUser: BurgerAPIClient["logoutUser"] = async () => {
     }),
   });
 
-  return checkResponse<TEmptyServerResponse>(response);
+  return checkResponse<EmptyResponse>(response);
 };
 
 export const realBurgerAPIClient: BurgerAPIClient = {

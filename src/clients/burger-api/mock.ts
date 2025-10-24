@@ -1,14 +1,14 @@
 import { setCookie, getCookie } from "../../utils/cookie";
-import type { TIngredient, TOrder, TUser } from "../../utils/types";
+import type { Ingredient, Order, User } from "../../utils/types";
 import type {
   BurgerAPIClient,
-  TAuthResponse,
-  TEmptyServerResponse,
-  TForgotPasswordRequest,
-  TFeedsResponse,
-  TRefreshResponse,
-  TResetPasswordRequest,
-  TUserResponse,
+  EmptyResponse,
+  AuthResponse,
+  ForgotPasswordRequest,
+  FeedsResponse,
+  RefreshResponse,
+  ResetPasswordRequest,
+  UserResponse,
 } from "./types";
 
 const MOCK_DELAY_MS = 250;
@@ -26,20 +26,20 @@ const withDelay = <T>(factory: () => T, ms = MOCK_DELAY_MS): Promise<T> =>
     }, ms);
   });
 
-const cloneIngredient = (ingredient: TIngredient): TIngredient => {
+const cloneIngredient = (ingredient: Ingredient): Ingredient => {
   return {
     ...ingredient,
   };
 };
 
-const cloneOrder = (order: TOrder): TOrder => {
+const cloneOrder = (order: Order): Order => {
   return {
     ...order,
     ingredients: [...order.ingredients],
   };
 };
 
-const mockIngredients: TIngredient[] = [
+const mockIngredients: Ingredient[] = [
   {
     _id: "bun-moon",
     name: "Moon Bun",
@@ -159,7 +159,7 @@ const mockIngredients: TIngredient[] = [
   },
 ];
 
-const initialOrders: TOrder[] = [
+const initialOrders: Order[] = [
   {
     _id: "order-10001",
     status: "done",
@@ -189,15 +189,15 @@ const initialOrders: TOrder[] = [
   },
 ];
 
-let ordersFeed: TOrder[] = [...initialOrders];
-let profileOrders: TOrder[] = initialOrders.slice(0, 2);
+let ordersFeed: Order[] = [...initialOrders];
+let profileOrders: Order[] = initialOrders.slice(0, 2);
 let lastOrderNumber = Math.max(...initialOrders.map((order) => order.number));
 const feedStats = {
   total: 5840,
   totalToday: 34,
 };
 
-type TStoredUser = TUser & { password: string };
+type TStoredUser = User & { password: string };
 
 const defaultUserEmail = "space.cook@example.com";
 const users = new Map<string, TStoredUser>([
@@ -234,12 +234,12 @@ const getActiveUser = (): TStoredUser | null => {
 };
 
 const refreshToken: BurgerAPIClient["refreshToken"] = () => {
-  return withDelay<TRefreshResponse>(() => {
+  return withDelay<RefreshResponse>(() => {
     if (!activeUserEmail) {
       throw new Error("Session expired");
     }
 
-    const refreshData: TRefreshResponse = {
+    const refreshData: RefreshResponse = {
       success: true,
       accessToken: MOCK_ACCESS_TOKEN,
       refreshToken: MOCK_REFRESH_TOKEN,
@@ -253,7 +253,7 @@ const refreshToken: BurgerAPIClient["refreshToken"] = () => {
 };
 
 const getFeeds: BurgerAPIClient["getFeeds"] = () => {
-  return withDelay<TFeedsResponse>(() => ({
+  return withDelay<FeedsResponse>(() => ({
     success: true,
     orders: ordersFeed.map(cloneOrder),
     total: feedStats.total,
@@ -301,7 +301,7 @@ const orderBurger: BurgerAPIClient["orderBurger"] = (data) => {
     lastOrderNumber += 1;
 
     const now = new Date().toISOString();
-    const order: TOrder = {
+    const order: Order = {
       _id: `order-${lastOrderNumber}`,
       status: "done",
       name: `Custom Stellar Burger #${lastOrderNumber}`,
@@ -329,12 +329,12 @@ const orderBurger: BurgerAPIClient["orderBurger"] = (data) => {
 };
 
 const registerUser: BurgerAPIClient["registerUser"] = (data) => {
-  return withDelay<TAuthResponse>(() => {
+  return withDelay<AuthResponse>(() => {
     if (users.has(data.email)) {
       throw new Error("User already exists");
     }
 
-    const user: TUser = {
+    const user: User = {
       email: data.email,
       name: data.name || deriveNameFromEmail(data.email),
     };
@@ -352,7 +352,7 @@ const registerUser: BurgerAPIClient["registerUser"] = (data) => {
 };
 
 const loginUser: BurgerAPIClient["loginUser"] = (data) => {
-  return withDelay<TAuthResponse>(() => {
+  return withDelay<AuthResponse>(() => {
     const existingUser = users.get(data.email);
 
     const userRecord: TStoredUser = existingUser
@@ -378,8 +378,8 @@ const loginUser: BurgerAPIClient["loginUser"] = (data) => {
   });
 };
 
-const forgotPassword: BurgerAPIClient["forgotPassword"] = (data: TForgotPasswordRequest) => {
-  return withDelay<TEmptyServerResponse>(() => {
+const forgotPassword: BurgerAPIClient["forgotPassword"] = (data: ForgotPasswordRequest) => {
+  return withDelay<EmptyResponse>(() => {
     if (data.email !== defaultUserEmail) {
       return { success: false };
     }
@@ -388,8 +388,8 @@ const forgotPassword: BurgerAPIClient["forgotPassword"] = (data: TForgotPassword
   });
 };
 
-const resetPassword: BurgerAPIClient["resetPassword"] = (data: TResetPasswordRequest) => {
-  return withDelay<TEmptyServerResponse>(() => {
+const resetPassword: BurgerAPIClient["resetPassword"] = (data: ResetPasswordRequest) => {
+  return withDelay<EmptyResponse>(() => {
     if (activeUserEmail) {
       const activeUser = users.get(activeUserEmail);
 
@@ -403,7 +403,7 @@ const resetPassword: BurgerAPIClient["resetPassword"] = (data: TResetPasswordReq
 };
 
 const getUser: BurgerAPIClient["getUser"] = () => {
-  return withDelay<TUserResponse>(() => {
+  return withDelay<UserResponse>(() => {
     if (!ensureAuthorized()) {
       throw new Error("Not authorized");
     }
@@ -425,7 +425,7 @@ const getUser: BurgerAPIClient["getUser"] = () => {
 };
 
 const updateUser: BurgerAPIClient["updateUser"] = (user) => {
-  return withDelay<TUserResponse>(() => {
+  return withDelay<UserResponse>(() => {
     if (!ensureAuthorized()) {
       throw new Error("Not authorized");
     }
@@ -461,7 +461,7 @@ const updateUser: BurgerAPIClient["updateUser"] = (user) => {
 };
 
 const logoutUser: BurgerAPIClient["logoutUser"] = () => {
-  return withDelay<TEmptyServerResponse>(() => {
+  return withDelay<EmptyResponse>(() => {
     activeUserEmail = null;
 
     return { success: true };

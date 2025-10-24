@@ -1,6 +1,5 @@
 const path = require("path");
 const { DefinePlugin } = require("webpack");
-const ESLintPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 /**
@@ -79,9 +78,6 @@ module.exports = (env, argv) => ({
   },
 
   plugins: [
-    new ESLintPlugin({
-      extensions: [".js", ".jsx", ".ts", ".tsx"],
-    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),

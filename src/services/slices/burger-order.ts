@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import type { TNewOrderData } from "../../clients/burger-api";
+import type { NewOrderData } from "../../clients/burger-api";
 import { burgerAPIClient } from "../../clients/burger-api";
-import type { TOrder } from "../../utils/types";
+import type { Order } from "../../utils/types";
 
 export type TBurgerOrderState = {
-  order: TOrder | null;
+  order: Order | null;
   orderRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   orderError: string | null;
 };
@@ -18,7 +18,7 @@ export const burgerOrderInitialState: TBurgerOrderState = {
 
 export const createBurgerOrder = createAsyncThunk(
   "burgerOrder/createBurgerOrder",
-  async (newOrderData: TNewOrderData, { rejectWithValue }) => {
+  async (newOrderData: NewOrderData, { rejectWithValue }) => {
     try {
       const data = await burgerAPIClient.orderBurger(newOrderData);
       return data;

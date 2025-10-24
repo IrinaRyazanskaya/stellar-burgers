@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
-import type { TIngredient } from "../../utils/types";
+import type { Ingredient } from "../../utils/types";
 import {
   burgerIngredientsSlice,
   fetchBurgerIngredients,
@@ -12,7 +12,7 @@ import {
 
 jest.mock("../../clients/burger-api");
 
-const mockIngredients: TIngredient[] = [
+const mockIngredients: Ingredient[] = [
   {
     _id: "1",
     name: "Bun A",

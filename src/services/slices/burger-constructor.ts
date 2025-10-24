@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { generateStringId } from "../../utils/id-generator";
-import type { TConstructorIngredient, TIngredient } from "../../utils/types";
+import type { TConstructorIngredient, Ingredient } from "../../utils/types";
 import { createBurgerOrder } from "./burger-order";
 
 export type TBurgerConstructorState = {
@@ -19,7 +19,7 @@ export const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
   initialState: burgerConstructorInitialState,
   reducers: {
-    addIngredientToConstructor: (state, action: PayloadAction<TIngredient>) => {
+    addIngredientToConstructor: (state, action: PayloadAction<Ingredient>) => {
       if (action.payload.type === "bun") {
         state.bun = { ...action.payload, id: generateStringId() };
       } else {

@@ -1,83 +1,84 @@
-import type { TIngredient, TOrder, TUser } from "../../utils/types";
+import type { Ingredient, Order, User } from "../../utils/types";
 
-export type TServerResponse<T> = {
+export type EmptyResponse = {
   success: boolean;
-} & T;
+};
 
-export type TRefreshResponse = TServerResponse<{
-  refreshToken: string;
+export type DataResponse<T> = EmptyResponse & T;
+
+export type RefreshResponse = DataResponse<{
   accessToken: string;
+  refreshToken: string;
 }>;
 
-export type TNewOrderData = string[];
+export type NewOrderData = string[];
 
-export type TIngredientsResponse = TServerResponse<{
-  data: TIngredient[];
+export type IngredientsResponse = DataResponse<{
+  data: Ingredient[];
 }>;
 
-export type TFeedsResponse = TServerResponse<{
-  orders: TOrder[];
+export type FeedsResponse = DataResponse<{
   total: number;
+  orders: Order[];
   totalToday: number;
 }>;
 
-export type TOrdersResponse = TServerResponse<{
-  data: TOrder[];
+export type OrdersResponse = DataResponse<{
+  data: Order[];
 }>;
 
-export type TNewOrderResponse = TServerResponse<{
-  order: TOrder;
+export type NewOrderResponse = DataResponse<{
   name: string;
+  order: Order;
 }>;
 
-export type TOrderResponse = TServerResponse<{
-  orders: TOrder[];
+export type OrderResponse = DataResponse<{
+  orders: Order[];
 }>;
 
-export type TRegisterData = {
+export type RegisterData = {
+  name: string;
   email: string;
-  name: string;
   password: string;
 };
 
-export type TAuthResponse = TServerResponse<{
-  refreshToken: string;
+export type AuthResponse = DataResponse<{
+  user: User;
   accessToken: string;
-  user: TUser;
+  refreshToken: string;
 }>;
 
-export type TLoginData = {
+export type LoginData = {
   email: string;
   password: string;
 };
 
-export type TForgotPasswordRequest = {
+export type ForgotPasswordRequest = {
   email: string;
 };
 
-export type TResetPasswordRequest = {
-  password: string;
+export type ResetPasswordRequest = {
   token: string;
+  password: string;
 };
 
-export type TUserResponse = TServerResponse<{
-  user: TUser;
+export type UserResponse = DataResponse<{
+  user: User;
 }>;
-
-export type TEmptyServerResponse = TServerResponse<{}>;
 
 export type BurgerAPIClient = {
-  refreshToken: () => Promise<TRefreshResponse>;
-  getIngredients: () => Promise<TIngredient[]>;
-  getFeeds: () => Promise<TFeedsResponse>;
-  getOrders: () => Promise<TOrder[]>;
-  orderBurger: (data: TNewOrderData) => Promise<TNewOrderResponse>;
-  getOrder: (number: number) => Promise<TOrderResponse>;
-  registerUser: (data: TRegisterData) => Promise<TAuthResponse>;
-  loginUser: (data: TLoginData) => Promise<TAuthResponse>;
-  forgotPassword: (data: TForgotPasswordRequest) => Promise<TEmptyServerResponse>;
-  resetPassword: (data: TResetPasswordRequest) => Promise<TEmptyServerResponse>;
-  getUser: () => Promise<TUserResponse>;
-  updateUser: (user: Partial<TRegisterData>) => Promise<TUserResponse>;
-  logoutUser: () => Promise<TEmptyServerResponse>;
+  getIngredients: () => Promise<Ingredient[]>;
+  getFeeds: () => Promise<FeedsResponse>;
+  getOrders: () => Promise<Order[]>;
+  getOrder: (number: number) => Promise<OrderResponse>;
+  orderBurger: (data: NewOrderData) => Promise<NewOrderResponse>;
+
+  getUser: () => Promise<UserResponse>;
+  loginUser: (data: LoginData) => Promise<AuthResponse>;
+  logoutUser: () => Promise<EmptyResponse>;
+  refreshToken: () => Promise<RefreshResponse>;
+  registerUser: (data: RegisterData) => Promise<AuthResponse>;
+  updateUser: (user: Partial<RegisterData>) => Promise<UserResponse>;
+  resetPassword: (data: ResetPasswordRequest) => Promise<EmptyResponse>;
+  forgotPassword: (data: ForgotPasswordRequest) => Promise<EmptyResponse>;
 };

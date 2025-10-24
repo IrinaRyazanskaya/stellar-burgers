@@ -2,10 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
-import type { TIngredient } from "../../utils/types";
+import type { Ingredient } from "../../utils/types";
 
 export type TBurgerIngredientsState = {
-  items: TIngredient[];
+  items: Ingredient[];
   loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
 };
@@ -47,7 +47,7 @@ export const burgerIngredientsSlice = createSlice({
         state.loading = "pending";
         state.error = null;
       })
-      .addCase(fetchBurgerIngredients.fulfilled, (state, action: PayloadAction<TIngredient[]>) => {
+      .addCase(fetchBurgerIngredients.fulfilled, (state, action: PayloadAction<Ingredient[]>) => {
         state.loading = "succeeded";
         state.items = action.payload;
       })

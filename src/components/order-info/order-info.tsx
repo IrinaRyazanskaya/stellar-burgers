@@ -13,7 +13,7 @@ import {
 } from "../../services/slices/order-info";
 import { selectBurgerIngredients } from "../../services/slices/burger-ingredients";
 import { useSelector, useDispatch } from "../../services/store";
-import type { TIngredient } from "../../utils/types";
+import type { Ingredient } from "../../utils/types";
 import type { OrderInfoProps } from "./type";
 
 export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
@@ -40,7 +40,7 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
     const date = new Date(orderData.createdAt);
 
     type TIngredientsWithCount = {
-      [key: string]: TIngredient & { count: number };
+      [key: string]: Ingredient & { count: number };
     };
 
     const ingredientsInfo = orderData.ingredients.reduce((acc: TIngredientsWithCount, item) => {

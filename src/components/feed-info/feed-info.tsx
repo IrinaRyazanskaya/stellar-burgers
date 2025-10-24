@@ -2,10 +2,10 @@ import type { FC } from "react";
 
 import { FeedInfoUI } from "../ui/feed-info";
 import { selectOrdersFeed, selectOrdersStats } from "../../services/slices/orders-feed";
-import type { TOrder } from "../../utils/types";
+import type { Order } from "../../utils/types";
 import { useSelector } from "../../services/store";
 
-const getOrders = (orders: TOrder[], status: string): number[] =>
+const getOrders = (orders: Order[], status: string): number[] =>
   orders
     .filter((item) => item.status === status)
     .map((item) => item.number)

@@ -24,7 +24,7 @@ export const Feed: FC = () => {
 
   useEffect(() => {
     dispatch(getOrdersFeed());
-  }, []);
+  }, [dispatch]);
 
   if (requestStatus === "pending") {
     return <Preloader />;

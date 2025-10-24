@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
-import type { TLoginData, TRegisterData } from "../../clients/burger-api";
+import type { LoginData, RegisterData } from "../../clients/burger-api";
 import { deleteCookie, setCookie } from "../../utils/cookie";
-import type { TUser } from "../../utils/types";
+import type { User } from "../../utils/types";
 
 export type TProfileState = {
-  user: TUser | null;
+  user: User | null;
   userStatus: "unknown" | "authorized" | "unauthorized";
 
   getUserRequestStatus: "idle" | "pending" | "succeeded" | "failed";
@@ -52,7 +52,7 @@ export const getUser = createAsyncThunk("profile/getUser", async (_, { rejectWit
 
 export const loginUser = createAsyncThunk(
   "profile/loginUser",
-  async (loginData: TLoginData, { rejectWithValue }) => {
+  async (loginData: LoginData, { rejectWithValue }) => {
     try {
       const data = await burgerAPIClient.loginUser(loginData);
       setCookie("accessToken", data.accessToken);
@@ -80,7 +80,7 @@ export const logoutUser = createAsyncThunk("profile/logoutUser", async (_, { rej
 
 export const registerUser = createAsyncThunk(
   "profile/registerUser",
-  async (registerData: TRegisterData, { rejectWithValue }) => {
+  async (registerData: RegisterData, { rejectWithValue }) => {
     try {
       const data = await burgerAPIClient.registerUser(registerData);
       return data;
@@ -94,7 +94,7 @@ export const registerUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   "profile/updateUser",
-  async (registerData: TRegisterData, { rejectWithValue }) => {
+  async (registerData: RegisterData, { rejectWithValue }) => {
     try {
       const data = await burgerAPIClient.updateUser(registerData);
       return data;

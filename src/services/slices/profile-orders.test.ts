@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
-import type { TOrder } from "../../utils/types";
+import type { Order } from "../../utils/types";
 import { profileOrdersSlice, getProfileOrders, profileOrdersInitialState } from "./profile-orders";
 
 jest.mock("../../clients/burger-api");
 
-const mockProfileOrders: TOrder[] = [
+const mockProfileOrders: Order[] = [
   {
     _id: "orderA",
     number: 111,

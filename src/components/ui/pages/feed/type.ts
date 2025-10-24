@@ -1,6 +1,6 @@
-import type { TOrder } from "../../../../utils/types";
+import type { Order } from "../../../../utils/types";
 
 export type FeedUIProps = {
-  orders: TOrder[];
+  orders: Order[];
   handleGetFeeds: () => void;
 };

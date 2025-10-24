@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
-import type { TOrder } from "../../utils/types";
+import type { Order } from "../../utils/types";
 
 export type TOrderInfoState = {
-  order: TOrder | null;
+  order: Order | null;
   orderRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   orderRequestError: string | null;
 };

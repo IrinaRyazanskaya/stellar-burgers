@@ -1,4 +1,4 @@
-import type { TIngredient, TConstructorIngredient } from "../../utils/types";
+import type { Ingredient, TConstructorIngredient } from "../../utils/types";
 import {
   burgerConstructorSlice,
   burgerConstructorInitialState,
@@ -10,7 +10,7 @@ import {
 import type { TBurgerConstructorState } from "./burger-constructor";
 
 describe("burgerConstructorSlice", () => {
-  const bunIngredient: TIngredient = {
+  const bunIngredient: Ingredient = {
     _id: "bun123",
     name: "Bun",
     type: "bun",
@@ -24,7 +24,7 @@ describe("burgerConstructorSlice", () => {
     image_mobile: "img-mobile",
   };
 
-  const fillingIngredient: TIngredient = {
+  const fillingIngredient: Ingredient = {
     _id: "filling123",
     name: "Filling",
     type: "filling",
