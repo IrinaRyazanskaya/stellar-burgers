@@ -4,19 +4,19 @@ import type { NewOrderData } from "../../clients/burger-api";
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { Order } from "../../utils/types";
 
-export type TBurgerOrderState = {
+type BurgerOrderState = {
   order: Order | null;
   orderRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   orderError: string | null;
 };
 
-export const burgerOrderInitialState: TBurgerOrderState = {
+const burgerOrderInitialState: BurgerOrderState = {
   order: null,
-  orderRequestStatus: "idle",
   orderError: null,
+  orderRequestStatus: "idle",
 };
 
-export const createBurgerOrder = createAsyncThunk(
+const createBurgerOrder = createAsyncThunk(
   "burgerOrder/createBurgerOrder",
   async (newOrderData: NewOrderData, { rejectWithValue }) => {
     try {
@@ -30,7 +30,7 @@ export const createBurgerOrder = createAsyncThunk(
   },
 );
 
-export const burgerOrderSlice = createSlice({
+const burgerOrderSlice = createSlice({
   name: "burgerOrder",
   initialState: burgerOrderInitialState,
   reducers: {
@@ -60,13 +60,31 @@ export const burgerOrderSlice = createSlice({
   },
 });
 
-export const selectBurgerOrder = (state: { burgerOrder: TBurgerOrderState }) =>
-  state.burgerOrder.order;
+const { clearBurgerOrderStatus } = burgerOrderSlice.actions;
 
-export const selectBurgerOrderError = (state: { burgerOrder: TBurgerOrderState }) =>
-  state.burgerOrder.orderError;
+const selectBurgerOrder = (state: { burgerOrder: BurgerOrderState }) => {
+  return state.burgerOrder.order;
+};
 
-export const selectBurgerOrderRequestStatus = (state: { burgerOrder: TBurgerOrderState }) =>
-  state.burgerOrder.orderRequestStatus;
+const selectBurgerOrderError = (state: { burgerOrder: BurgerOrderState }) => {
+  return state.burgerOrder.orderError;
+};
 
-export const { clearBurgerOrderStatus } = burgerOrderSlice.actions;
+const selectBurgerOrderRequestStatus = (state: { burgerOrder: BurgerOrderState }) => {
+  return state.burgerOrder.orderRequestStatus;
+};
+
+export {
+  // State
+  burgerOrderSlice,
+  burgerOrderInitialState,
+  // Actions
+  createBurgerOrder,
+  clearBurgerOrderStatus,
+  // Selectors
+  selectBurgerOrder,
+  selectBurgerOrderError,
+  selectBurgerOrderRequestStatus,
+};
+
+export type { BurgerOrderState };

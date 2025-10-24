@@ -7,7 +7,7 @@ import {
   clearLoginStatus,
   loginUser,
   selectLoginError,
-  selectLoginRequestStatus,
+  selectLoginStatus,
 } from "../../services/slices/profile";
 import { useDispatch, useSelector } from "../../services/store";
 
@@ -19,7 +19,7 @@ const Login: FC = () => {
   const [password, setPassword] = useState("");
 
   const loginError = useSelector(selectLoginError) || undefined;
-  const requestStatus = useSelector(selectLoginRequestStatus);
+  const requestStatus = useSelector(selectLoginStatus);
 
   useEffect(() => {
     if (requestStatus === "succeeded") {

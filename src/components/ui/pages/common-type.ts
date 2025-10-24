@@ -1,8 +1,10 @@
-import { Dispatch, FormEvent, SetStateAction } from "react";
+import type { Dispatch, FormEvent, SetStateAction } from "react";
 
-export type PageUIProps = {
-  errorText: string | undefined;
+type PageUIProps = {
   email: string;
+  errorText: string | undefined;
   setEmail: Dispatch<SetStateAction<string>>;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
 };
+
+export type { PageUIProps };

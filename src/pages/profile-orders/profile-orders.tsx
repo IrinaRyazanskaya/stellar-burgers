@@ -8,7 +8,7 @@ import { ProfileOrdersUI } from "../../components/ui/pages/profile-orders";
 import {
   getProfileOrders,
   selectProfileOrders,
-  selectProfileOrdersRequestStatus,
+  selectProfileOrdersStatus,
 } from "../../services/slices/profile-orders";
 import { useDispatch, useSelector } from "../../services/store";
 
@@ -17,7 +17,7 @@ const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
 
   const orders = useSelector(selectProfileOrders);
-  const requestStatus = useSelector(selectProfileOrdersRequestStatus);
+  const requestStatus = useSelector(selectProfileOrdersStatus);
 
   const goToProfileOrders = () => navigate("/profile/orders");
 

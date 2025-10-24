@@ -7,7 +7,7 @@ import {
   createBurgerOrder,
   clearBurgerOrderStatus,
   burgerOrderInitialState,
-  TBurgerOrderState,
+  BurgerOrderState,
 } from "./burger-order";
 
 jest.mock("../../clients/burger-api");
@@ -24,7 +24,7 @@ const mockOrder: Order = {
 
 describe("burgerOrderSlice", () => {
   it("should handle clearBurgerOrderStatus", () => {
-    const state: TBurgerOrderState = {
+    const state: BurgerOrderState = {
       order: mockOrder,
       orderRequestStatus: "succeeded",
       orderError: "Some error",

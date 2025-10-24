@@ -35,8 +35,8 @@ describe("ordersFeedSlice", () => {
 
     expect(nextState.orders).toEqual([]);
     expect(nextState.stats).toEqual({ total: 0, totalToday: 0 });
-    expect(nextState.requestStatus).toEqual("pending");
-    expect(nextState.requestError).toBeNull();
+    expect(nextState.status).toEqual("pending");
+    expect(nextState.error).toBeNull();
   });
 
   it("should handle getOrdersFeed fulfilled", async () => {
@@ -56,8 +56,8 @@ describe("ordersFeedSlice", () => {
 
     expect(state.orders).toEqual(mockOrders);
     expect(state.stats).toEqual({ total: 200, totalToday: 25 });
-    expect(state.requestStatus).toEqual("succeeded");
-    expect(state.requestError).toBeNull();
+    expect(state.status).toEqual("succeeded");
+    expect(state.error).toBeNull();
   });
 
   it("should handle getOrdersFeed rejected", async () => {
@@ -71,7 +71,7 @@ describe("ordersFeedSlice", () => {
 
     expect(state.orders).toEqual([]);
     expect(state.stats).toEqual({ total: 0, totalToday: 0 });
-    expect(state.requestStatus).toEqual("failed");
-    expect(state.requestError).toEqual("API Error");
+    expect(state.status).toEqual("failed");
+    expect(state.error).toEqual("API Error");
   });
 });

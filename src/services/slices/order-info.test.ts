@@ -7,7 +7,7 @@ import {
   getOrderInfo,
   clearOrderInfo,
   orderInfoInitialState,
-  TOrderInfoState,
+  OrderInfoState,
 } from "./order-info";
 
 jest.mock("../../clients/burger-api");
@@ -24,10 +24,10 @@ const mockOrder: Order = {
 
 describe("orderInfoSlice", () => {
   it("should handle clearOrderInfo", () => {
-    const state: TOrderInfoState = {
+    const state: OrderInfoState = {
       order: mockOrder,
-      orderRequestStatus: "succeeded",
-      orderRequestError: "Some Error",
+      status: "succeeded",
+      error: "Some Error",
     };
 
     const nextState = orderInfoSlice.reducer(state, clearOrderInfo());
@@ -40,9 +40,9 @@ describe("orderInfoSlice", () => {
 
     const nextState = orderInfoSlice.reducer(orderInfoInitialState, action);
 
-    expect(nextState.orderRequestStatus).toEqual("pending");
+    expect(nextState.status).toEqual("pending");
     expect(nextState.order).toBeNull();
-    expect(nextState.orderRequestError).toBeNull();
+    expect(nextState.error).toBeNull();
   });
 
   it("should handle getOrderInfo fulfilled", async () => {
@@ -56,9 +56,9 @@ describe("orderInfoSlice", () => {
 
     const state = store.getState();
 
-    expect(state.orderRequestStatus).toEqual("succeeded");
+    expect(state.status).toEqual("succeeded");
     expect(state.order).toEqual(mockOrder);
-    expect(state.orderRequestError).toBeNull();
+    expect(state.error).toBeNull();
   });
 
   it("should handle getOrderInfo rejected", async () => {
@@ -70,8 +70,8 @@ describe("orderInfoSlice", () => {
 
     const state = store.getState();
 
-    expect(state.orderRequestStatus).toEqual("failed");
+    expect(state.status).toEqual("failed");
     expect(state.order).toBeNull();
-    expect(state.orderRequestError).toEqual("API Error");
+    expect(state.error).toEqual("API Error");
   });
 });

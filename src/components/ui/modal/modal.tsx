@@ -1,13 +1,18 @@
 import { memo } from "react";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { CloseIcon } from "@zlden/react-developer-burger-ui-components";
 
 import { ModalOverlayUI } from "../modal-overlay";
-import { TModalUIProps } from "./type";
 
 import styles from "./modal.module.css";
 
-const ModalUI: FC<TModalUIProps> = memo(({ title, onClose, children }) => (
+type ModalUIProps = {
+  title: string;
+  onClose: () => void;
+  children?: ReactNode;
+};
+
+const ModalUI: FC<ModalUIProps> = memo(({ title, onClose, children }) => (
   <>
     <div className={styles.modal} data-cy="modal">
       <div className={styles.header}>
@@ -25,3 +30,4 @@ const ModalUI: FC<TModalUIProps> = memo(({ title, onClose, children }) => (
 ModalUI.displayName = "ModalUI";
 
 export { ModalUI };
+export type { ModalUIProps };

@@ -5,7 +5,7 @@ import { Preloader } from "../../components/ui/preloader";
 import { IngredientDetails } from "../../components/ingredient-details";
 import { BurgerConstructor } from "../../components/burger-constructor";
 import { BurgerIngredients } from "../../components/burger-ingredients";
-import { selectBurgerIngredientsIsLoading } from "../../services/slices/burger-ingredients";
+import { selectBurgerIngredientsStatus } from "../../services/slices/burger-ingredients";
 import { useSelector } from "../../services/store";
 
 import styles from "./constructor-page.module.css";
@@ -13,11 +13,11 @@ import styles from "./constructor-page.module.css";
 const ConstructorPage: FC = () => {
   const navigate = useNavigate();
   const goToConstructor = () => navigate("/");
-  const isIngredientsLoading = useSelector(selectBurgerIngredientsIsLoading);
+  const isIngredientsLoading = useSelector(selectBurgerIngredientsStatus);
 
   return (
     <>
-      {isIngredientsLoading ? (
+      {isIngredientsLoading === "pending" ? (
         <Preloader />
       ) : (
         <main className={styles.containerMain}>

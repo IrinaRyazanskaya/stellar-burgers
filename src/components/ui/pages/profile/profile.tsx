@@ -1,15 +1,27 @@
-import type { FC, SyntheticEvent } from "react";
+import type { FC, ChangeEvent, FormEvent, SyntheticEvent } from "react";
 import { Button, Input } from "@zlden/react-developer-burger-ui-components";
 
 import { ProfileMenu } from "../../../profile-menu";
-import { ProfileUIProps } from "./type";
 
 import commonStyles from "../common.module.css";
 import styles from "./profile.module.css";
 
+type ProfileUIProps = {
+  formValue: {
+    name: string;
+    email: string;
+    password: string;
+  };
+  isFormChanged: boolean;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  handleCancel: (e: FormEvent<HTMLFormElement>) => void;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  updateUserError?: string;
+};
+
 type ButtonClick = (e: SyntheticEvent) => void;
 
-export const ProfileUI: FC<ProfileUIProps> = ({
+const ProfileUI: FC<ProfileUIProps> = ({
   formValue,
   isFormChanged,
   updateUserError,
@@ -95,3 +107,8 @@ export const ProfileUI: FC<ProfileUIProps> = ({
     </form>
   </main>
 );
+
+ProfileUI.displayName = "ProfileUI";
+
+export { ProfileUI };
+export type { ProfileUIProps };

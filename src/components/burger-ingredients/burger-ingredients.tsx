@@ -8,7 +8,7 @@ import {
   selectBurgerMains,
   selectBurgerSauces,
 } from "../../services/slices/burger-ingredients";
-import type { TTabMode } from "../../utils/types";
+import type { TabMode } from "../../utils/types";
 import { useSelector } from "../../services/store";
 
 const BurgerIngredients: FC = () => {
@@ -16,7 +16,7 @@ const BurgerIngredients: FC = () => {
   const mains = useSelector(selectBurgerMains);
   const sauces = useSelector(selectBurgerSauces);
 
-  const [currentTab, setCurrentTab] = useState<TTabMode>("bun");
+  const [currentTab, setCurrentTab] = useState<TabMode>("bun");
   const titleBunRef = useRef<HTMLHeadingElement>(null);
   const titleMainRef = useRef<HTMLHeadingElement>(null);
   const titleSaucesRef = useRef<HTMLHeadingElement>(null);
@@ -44,7 +44,7 @@ const BurgerIngredients: FC = () => {
   }, [inViewBuns, inViewFilling, inViewSauces]);
 
   const onTabClick = (tab: string) => {
-    setCurrentTab(tab as TTabMode);
+    setCurrentTab(tab as TabMode);
     if (tab === "bun") titleBunRef.current?.scrollIntoView({ behavior: "smooth" });
     if (tab === "main") titleMainRef.current?.scrollIntoView({ behavior: "smooth" });
     if (tab === "sauce") titleSaucesRef.current?.scrollIntoView({ behavior: "smooth" });

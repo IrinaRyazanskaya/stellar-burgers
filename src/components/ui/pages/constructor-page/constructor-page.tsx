@@ -3,11 +3,14 @@ import type { FC } from "react";
 import { BurgerConstructor } from "../../../burger-constructor";
 import { BurgerIngredients } from "../../../burger-ingredients";
 import { Preloader } from "../../preloader";
-import { ConstructorPageUIProps } from "./type";
 
 import styles from "./constructor-page.module.css";
 
-export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({ isIngredientsLoading }) => (
+type ConstructorPageUIProps = {
+  isIngredientsLoading: boolean;
+};
+
+const ConstructorPageUI: FC<ConstructorPageUIProps> = ({ isIngredientsLoading }) => (
   <>
     {isIngredientsLoading ? (
       <Preloader />
@@ -24,3 +27,8 @@ export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({ isIngredientsLoa
     )}
   </>
 );
+
+ConstructorPageUI.displayName = "ConstructorPageUI";
+
+export { ConstructorPageUI };
+export type { ConstructorPageUIProps };

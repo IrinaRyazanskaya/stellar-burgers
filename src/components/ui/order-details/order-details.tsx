@@ -1,11 +1,13 @@
 import type { FC } from "react";
 
-import type { OrderDetailsUIProps } from "./type";
-
 import doneImg from "../../../images/done.svg";
 import styles from "./order-details.module.css";
 
-export const OrderDetailsUI: FC<OrderDetailsUIProps> = ({ orderNumber }) => (
+type OrderDetailsUIProps = {
+  orderNumber: number;
+};
+
+const OrderDetailsUI: FC<OrderDetailsUIProps> = ({ orderNumber }) => (
   <>
     <h2 className={`${styles.title} text text_type_digits-large mt-2 mb-4`}>{orderNumber}</h2>
     <p className="text text_type_main-medium">идентификатор заказа</p>
@@ -16,3 +18,8 @@ export const OrderDetailsUI: FC<OrderDetailsUIProps> = ({ orderNumber }) => (
     </p>
   </>
 );
+
+OrderDetailsUI.displayName = "OrderDetailsUI";
+
+export { OrderDetailsUI };
+export type { OrderDetailsUIProps };

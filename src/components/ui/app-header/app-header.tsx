@@ -7,11 +7,13 @@ import {
   ProfileIcon,
 } from "@zlden/react-developer-burger-ui-components";
 
-import { TAppHeaderUIProps } from "./type";
-
 import styles from "./app-header.module.css";
 
-export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
+type AppHeaderUIProps = {
+  userName: string | undefined;
+};
+
+const AppHeaderUI: FC<AppHeaderUIProps> = ({ userName }) => (
   <header className={styles.header}>
     <nav className={`${styles.menu} p-4`}>
       <div className={styles.menu_part_left}>
@@ -55,3 +57,8 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
     </nav>
   </header>
 );
+
+AppHeaderUI.displayName = "AppHeaderUI";
+
+export { AppHeaderUI };
+export type { AppHeaderUIProps };

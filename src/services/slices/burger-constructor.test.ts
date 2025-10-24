@@ -7,7 +7,7 @@ import {
   moveIngredientUpInConstructor,
   moveIngredientDownInConstructor,
 } from "./burger-constructor";
-import type { TBurgerConstructorState } from "./burger-constructor";
+import type { BurgerConstructorState } from "./burger-constructor";
 
 describe("burgerConstructorSlice", () => {
   const bunIngredient: Ingredient = {
@@ -61,7 +61,7 @@ describe("burgerConstructorSlice", () => {
 
   it("removes ingredient from constructor by id", () => {
     const ingredientWithId = { ...fillingIngredient, id: "test-id" };
-    const stateWithIngredient: TBurgerConstructorState = {
+    const stateWithIngredient: BurgerConstructorState = {
       bun: null,
       ingredients: [ingredientWithId],
     };
@@ -80,7 +80,7 @@ describe("burgerConstructorSlice", () => {
       { ...fillingIngredient, id: "id2" },
       { ...fillingIngredient, id: "id3" },
     ];
-    const stateWithIngredients: TBurgerConstructorState = {
+    const stateWithIngredients: BurgerConstructorState = {
       bun: null,
       ingredients,
     };
@@ -101,7 +101,7 @@ describe("burgerConstructorSlice", () => {
       { ...fillingIngredient, id: "id2" },
       { ...fillingIngredient, id: "id3" },
     ];
-    const stateWithIngredients: TBurgerConstructorState = {
+    const stateWithIngredients: BurgerConstructorState = {
       bun: null,
       ingredients,
     };

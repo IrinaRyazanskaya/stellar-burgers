@@ -7,7 +7,7 @@ import {
   clearRegisterStatus,
   registerUser,
   selectRegisterError,
-  selectRegisterRequestStatus,
+  selectRegisterStatus,
 } from "../../services/slices/profile";
 import { useDispatch, useSelector } from "../../services/store";
 
@@ -20,7 +20,7 @@ const Register: FC = () => {
   const [password, setPassword] = useState("");
 
   const registerError = useSelector(selectRegisterError) || undefined;
-  const requestStatus = useSelector(selectRegisterRequestStatus);
+  const requestStatus = useSelector(selectRegisterStatus);
 
   useEffect(() => {
     if (requestStatus === "succeeded") {

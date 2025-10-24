@@ -68,7 +68,7 @@ describe("burgerIngredientsSlice", () => {
     const action = { type: fetchBurgerIngredients.pending.type };
     const nextState = burgerIngredientsSlice.reducer(burgerIngredientsInitialState, action);
 
-    expect(nextState.loading).toEqual("pending");
+    expect(nextState.status).toEqual("pending");
     expect(nextState.error).toBeNull();
   });
 
@@ -82,7 +82,7 @@ describe("burgerIngredientsSlice", () => {
     const state = store.getState();
 
     expect(state.items).toEqual(mockIngredients);
-    expect(state.loading).toEqual("succeeded");
+    expect(state.status).toEqual("succeeded");
     expect(state.error).toBeNull();
   });
 
@@ -96,7 +96,7 @@ describe("burgerIngredientsSlice", () => {
     const state = store.getState();
 
     expect(state.items).toEqual([]);
-    expect(state.loading).toEqual("failed");
+    expect(state.status).toEqual("failed");
     expect(state.error).toEqual("API Error");
   });
 });

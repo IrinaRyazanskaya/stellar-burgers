@@ -5,41 +5,41 @@ import type { LoginData, RegisterData } from "../../clients/burger-api";
 import { deleteCookie, setCookie } from "../../utils/cookie";
 import type { User } from "../../utils/types";
 
-export type TProfileState = {
+type ProfileState = {
   user: User | null;
   userStatus: "unknown" | "authorized" | "unauthorized";
 
-  getUserRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   getUserError: string | null;
+  getUserStatus: "idle" | "pending" | "succeeded" | "failed";
 
-  loginRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   loginError: string | null;
+  loginStatus: "idle" | "pending" | "succeeded" | "failed";
 
-  registerRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   registerError: string | null;
+  registerStatus: "idle" | "pending" | "succeeded" | "failed";
 
-  updateRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   updateError: string | null;
+  updateStatus: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const profileInitialState: TProfileState = {
+const profileInitialState: ProfileState = {
   user: null,
   userStatus: "unknown",
 
-  getUserRequestStatus: "idle",
   getUserError: null,
+  getUserStatus: "idle",
 
-  loginRequestStatus: "idle",
   loginError: null,
+  loginStatus: "idle",
 
-  registerRequestStatus: "idle",
   registerError: null,
+  registerStatus: "idle",
 
-  updateRequestStatus: "idle",
   updateError: null,
+  updateStatus: "idle",
 };
 
-export const getUser = createAsyncThunk("profile/getUser", async (_, { rejectWithValue }) => {
+const getUser = createAsyncThunk("profile/getUser", async (_, { rejectWithValue }) => {
   try {
     const user = await burgerAPIClient.getUser();
     return user;
@@ -50,7 +50,7 @@ export const getUser = createAsyncThunk("profile/getUser", async (_, { rejectWit
   }
 });
 
-export const loginUser = createAsyncThunk(
+const loginUser = createAsyncThunk(
   "profile/loginUser",
   async (loginData: LoginData, { rejectWithValue }) => {
     try {
@@ -66,7 +66,7 @@ export const loginUser = createAsyncThunk(
   },
 );
 
-export const logoutUser = createAsyncThunk("profile/logoutUser", async (_, { rejectWithValue }) => {
+const logoutUser = createAsyncThunk("profile/logoutUser", async (_, { rejectWithValue }) => {
   try {
     await logoutUser();
     deleteCookie("accessToken");
@@ -78,21 +78,7 @@ export const logoutUser = createAsyncThunk("profile/logoutUser", async (_, { rej
   }
 });
 
-export const registerUser = createAsyncThunk(
-  "profile/registerUser",
-  async (registerData: RegisterData, { rejectWithValue }) => {
-    try {
-      const data = await burgerAPIClient.registerUser(registerData);
-      return data;
-    } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "Произошла ошибка при регистрации пользователя",
-      );
-    }
-  },
-);
-
-export const updateUser = createAsyncThunk(
+const updateUser = createAsyncThunk(
   "profile/updateUser",
   async (registerData: RegisterData, { rejectWithValue }) => {
     try {
@@ -108,55 +94,69 @@ export const updateUser = createAsyncThunk(
   },
 );
 
-export const profileSlice = createSlice({
+const registerUser = createAsyncThunk(
+  "profile/registerUser",
+  async (registerData: RegisterData, { rejectWithValue }) => {
+    try {
+      const data = await burgerAPIClient.registerUser(registerData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Произошла ошибка при регистрации пользователя",
+      );
+    }
+  },
+);
+
+const profileSlice = createSlice({
   name: "profile",
   initialState: profileInitialState,
   reducers: {
     clearLoginStatus(state) {
-      state.loginRequestStatus = "idle";
+      state.loginStatus = "idle";
       state.loginError = null;
     },
     clearRegisterStatus(state) {
-      state.registerRequestStatus = "idle";
+      state.registerStatus = "idle";
       state.registerError = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state) => {
-        state.getUserRequestStatus = "pending";
+        state.getUserStatus = "pending";
         state.getUserError = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.userStatus = "authorized";
 
-        state.getUserRequestStatus = "succeeded";
+        state.getUserStatus = "succeeded";
         state.getUserError = null;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.userStatus = "unauthorized";
 
-        state.getUserRequestStatus = "failed";
+        state.getUserStatus = "failed";
         state.getUserError = action.payload as string;
       });
 
     builder
       .addCase(loginUser.pending, (state) => {
-        state.loginRequestStatus = "pending";
+        state.loginStatus = "pending";
         state.loginError = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.userStatus = "authorized";
 
-        state.loginRequestStatus = "succeeded";
+        state.loginStatus = "succeeded";
         state.loginError = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.userStatus = "unauthorized";
 
-        state.loginRequestStatus = "failed";
+        state.loginStatus = "failed";
         state.loginError = action.payload as string;
       });
 
@@ -164,69 +164,111 @@ export const profileSlice = createSlice({
       state.user = null;
       state.userStatus = "unauthorized";
 
-      state.getUserRequestStatus = "idle";
+      state.getUserStatus = "idle";
     });
 
     builder
       .addCase(registerUser.pending, (state) => {
-        state.registerRequestStatus = "pending";
+        state.registerStatus = "pending";
         state.registerError = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.userStatus = "authorized";
 
-        state.registerRequestStatus = "succeeded";
+        state.registerStatus = "succeeded";
         state.registerError = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.userStatus = "unauthorized";
 
-        state.registerRequestStatus = "failed";
+        state.registerStatus = "failed";
         state.registerError = action.payload as string;
       });
 
     builder
       .addCase(updateUser.pending, (state) => {
-        state.updateRequestStatus = "pending";
+        state.updateStatus = "pending";
         state.updateError = null;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
 
-        state.updateRequestStatus = "succeeded";
+        state.updateStatus = "succeeded";
         state.updateError = null;
       })
       .addCase(updateUser.rejected, (state, action) => {
-        state.updateRequestStatus = "failed";
+        state.updateStatus = "failed";
         state.updateError = action.payload as string;
       });
   },
 });
 
-export const selectUser = (state: { profile: TProfileState }) => state.profile.user;
+const { clearLoginStatus, clearRegisterStatus } = profileSlice.actions;
 
-export const selectUserStatus = (state: { profile: TProfileState }) => state.profile.userStatus;
+const selectUser = (state: { profile: ProfileState }) => {
+  return state.profile.user;
+};
 
-export const selectGetUserError = (state: { profile: TProfileState }) => state.profile.getUserError;
+const selectUserStatus = (state: { profile: ProfileState }) => {
+  return state.profile.userStatus;
+};
 
-export const selectGetUserRequestStatus = (state: { profile: TProfileState }) =>
-  state.profile.getUserRequestStatus;
+const selectGetUserError = (state: { profile: ProfileState }) => {
+  return state.profile.getUserError;
+};
 
-export const selectLoginError = (state: { profile: TProfileState }) => state.profile.loginError;
+const selectGetUserStatus = (state: { profile: ProfileState }) => {
+  return state.profile.getUserStatus;
+};
 
-export const selectLoginRequestStatus = (state: { profile: TProfileState }) =>
-  state.profile.loginRequestStatus;
+const selectLoginError = (state: { profile: ProfileState }) => {
+  return state.profile.loginError;
+};
 
-export const selectRegisterError = (state: { profile: TProfileState }) =>
-  state.profile.registerError;
+const selectLoginStatus = (state: { profile: ProfileState }) => {
+  return state.profile.loginStatus;
+};
 
-export const selectRegisterRequestStatus = (state: { profile: TProfileState }) =>
-  state.profile.registerRequestStatus;
+const selectUpdateError = (state: { profile: ProfileState }) => {
+  return state.profile.updateError;
+};
 
-export const selectUpdateError = (state: { profile: TProfileState }) => state.profile.updateError;
+const selectUpdateStatus = (state: { profile: ProfileState }) => {
+  return state.profile.updateStatus;
+};
 
-export const selectUpdateRequestStatus = (state: { profile: TProfileState }) =>
-  state.profile.updateRequestStatus;
+const selectRegisterError = (state: { profile: ProfileState }) => {
+  return state.profile.registerError;
+};
 
-export const { clearLoginStatus, clearRegisterStatus } = profileSlice.actions;
+const selectRegisterStatus = (state: { profile: ProfileState }) => {
+  return state.profile.registerStatus;
+};
+
+export {
+  // State
+  profileSlice,
+  profileInitialState,
+  // Actions
+  getUser,
+  loginUser,
+  logoutUser,
+  updateUser,
+  registerUser,
+  clearLoginStatus,
+  clearRegisterStatus,
+  // Selectors
+  selectUser,
+  selectUserStatus,
+  selectGetUserError,
+  selectGetUserStatus,
+  selectLoginError,
+  selectLoginStatus,
+  selectUpdateError,
+  selectUpdateStatus,
+  selectRegisterError,
+  selectRegisterStatus,
+};
+
+export type { ProfileState };

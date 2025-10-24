@@ -7,14 +7,22 @@ import {
 
 import { Modal } from "../../modal";
 import { BurgerConstructorElement } from "../../burger-constructor-element";
-import type { ConstructorIngredient } from "../../../utils/types";
+import type { ConstructorIngredient, Order } from "../../../utils/types";
 import { OrderDetailsUI } from "../order-details";
 import { Preloader } from "../preloader";
-import { BurgerConstructorUIProps } from "./type";
 
 import styles from "./burger-constructor.module.css";
 
-export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
+type BurgerConstructorUIProps = {
+  constructorItems: any;
+  orderRequest: boolean;
+  price: number;
+  orderModalData: Order | null;
+  onOrderClick: () => void;
+  closeOrderModal: () => void;
+};
+
+const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   constructorItems,
   orderRequest,
   price,
@@ -100,3 +108,8 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
     )}
   </section>
 );
+
+BurgerConstructorUI.displayName = "BurgerConstructorUI";
+
+export { BurgerConstructorUI };
+export type { BurgerConstructorUIProps };

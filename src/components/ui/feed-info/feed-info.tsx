@@ -3,7 +3,11 @@ import type { FC } from "react";
 
 import styles from "./feed-info.module.css";
 
-import { FeedInfoUIProps, HalfColumnProps, TColumnProps } from "./type";
+type FeedInfoUIProps = {
+  feed: any;
+  readyOrders: number[];
+  pendingOrders: number[];
+};
 
 const FeedInfoUI: FC<FeedInfoUIProps> = memo(({ feed, readyOrders, pendingOrders }) => {
   const { total, totalToday } = feed;
@@ -21,6 +25,12 @@ const FeedInfoUI: FC<FeedInfoUIProps> = memo(({ feed, readyOrders, pendingOrders
 });
 
 FeedInfoUI.displayName = "FeedInfoUI";
+
+type HalfColumnProps = {
+  orders: number[];
+  title: string;
+  textColor?: string;
+};
 
 const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
   <div className={`pr-6 ${styles.column}`}>
@@ -41,7 +51,12 @@ const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
 
 HalfColumn.displayName = "HalfColumn";
 
-const Column: FC<TColumnProps> = ({ title, content }) => (
+type ColumnProps = {
+  title: string;
+  content: number;
+};
+
+const Column: FC<ColumnProps> = ({ title, content }) => (
   <>
     <h3 className={`pt-15 text text_type_main-medium ${styles.title}`}>{title}:</h3>
     <p className={`text text_type_digits-large ${styles.content}`}>{content}</p>
@@ -51,3 +66,4 @@ const Column: FC<TColumnProps> = ({ title, content }) => (
 Column.displayName = "Column";
 
 export { FeedInfoUI };
+export type { FeedInfoUIProps };

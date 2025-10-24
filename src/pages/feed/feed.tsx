@@ -8,7 +8,7 @@ import { FeedUI } from "../../components/ui/pages/feed";
 import {
   getOrdersFeed,
   selectOrdersFeed,
-  selectOrdersFeedRequestStatus,
+  selectOrdersFeedStatus,
 } from "../../services/slices/orders-feed";
 import { useDispatch, useSelector } from "../../services/store";
 
@@ -17,7 +17,7 @@ const Feed: FC = () => {
   const dispatch = useDispatch();
 
   const orders = useSelector(selectOrdersFeed);
-  const requestStatus = useSelector(selectOrdersFeedRequestStatus);
+  const requestStatus = useSelector(selectOrdersFeedStatus);
 
   const goToFeed = () => navigate("/feed");
   const refreshFeed = () => dispatch(getOrdersFeed());

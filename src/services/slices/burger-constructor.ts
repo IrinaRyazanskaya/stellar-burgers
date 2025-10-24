@@ -5,17 +5,17 @@ import { generateStringId } from "../../utils/id-generator";
 import type { ConstructorIngredient, Ingredient } from "../../utils/types";
 import { createBurgerOrder } from "./burger-order";
 
-export type TBurgerConstructorState = {
+type BurgerConstructorState = {
   bun: ConstructorIngredient | null;
   ingredients: ConstructorIngredient[];
 };
 
-export const burgerConstructorInitialState: TBurgerConstructorState = {
+const burgerConstructorInitialState: BurgerConstructorState = {
   bun: null,
   ingredients: [],
 };
 
-export const burgerConstructorSlice = createSlice({
+const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
   initialState: burgerConstructorInitialState,
   reducers: {
@@ -58,16 +58,29 @@ export const burgerConstructorSlice = createSlice({
   },
 });
 
-export const selectBurgerConstructorItems = (state: {
-  burgerConstructor: TBurgerConstructorState;
-}) => ({
-  bun: state.burgerConstructor.bun,
-  ingredients: state.burgerConstructor.ingredients,
-});
-
-export const {
+const {
   addIngredientToConstructor,
   removeIngredientFromConstructor,
   moveIngredientUpInConstructor,
   moveIngredientDownInConstructor,
 } = burgerConstructorSlice.actions;
+
+const selectBurgerConstructorItems = (state: { burgerConstructor: BurgerConstructorState }) => ({
+  bun: state.burgerConstructor.bun,
+  ingredients: state.burgerConstructor.ingredients,
+});
+
+export {
+  // State
+  burgerConstructorSlice,
+  burgerConstructorInitialState,
+  // Actions
+  addIngredientToConstructor,
+  removeIngredientFromConstructor,
+  moveIngredientUpInConstructor,
+  moveIngredientDownInConstructor,
+  // Selectors
+  selectBurgerConstructorItems,
+};
+
+export type { BurgerConstructorState };

@@ -4,19 +4,19 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { Ingredient } from "../../utils/types";
 
-export type TBurgerIngredientsState = {
+type BurgerIngredientsState = {
   items: Ingredient[];
-  loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
+  status: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const burgerIngredientsInitialState: TBurgerIngredientsState = {
+const burgerIngredientsInitialState: BurgerIngredientsState = {
   items: [],
-  loading: "idle",
   error: null,
+  status: "idle",
 };
 
-export const fetchBurgerIngredients = createAsyncThunk(
+const fetchBurgerIngredients = createAsyncThunk(
   "ingredients/fetchBurgerIngredients",
   async (_, { rejectWithValue }) => {
     try {
@@ -30,7 +30,7 @@ export const fetchBurgerIngredients = createAsyncThunk(
   },
 );
 
-export const burgerIngredientsSlice = createSlice({
+const burgerIngredientsSlice = createSlice({
   name: "burgerIngredients",
   initialState: burgerIngredientsInitialState,
   reducers: {
@@ -44,45 +44,66 @@ export const burgerIngredientsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchBurgerIngredients.pending, (state) => {
-        state.loading = "pending";
+        state.status = "pending";
         state.error = null;
       })
       .addCase(fetchBurgerIngredients.fulfilled, (state, action: PayloadAction<Ingredient[]>) => {
-        state.loading = "succeeded";
+        state.status = "succeeded";
         state.items = action.payload;
       })
       .addCase(fetchBurgerIngredients.rejected, (state, action) => {
-        state.loading = "failed";
+        state.status = "failed";
         state.error = action.payload as string;
       });
   },
 });
 
-export const { resetIngredientsError, clearIngredients } = burgerIngredientsSlice.actions;
+const { resetIngredientsError, clearIngredients } = burgerIngredientsSlice.actions;
 
-export const selectBurgerBuns = (state: { burgerIngredients: TBurgerIngredientsState }) =>
-  state.burgerIngredients.items.filter((item) => item.type === "bun");
+const selectBurgerBuns = (state: { burgerIngredients: BurgerIngredientsState }) => {
+  return state.burgerIngredients.items.filter((item) => item.type === "bun");
+};
 
-export const selectBurgerMains = (state: { burgerIngredients: TBurgerIngredientsState }) =>
-  state.burgerIngredients.items.filter((item) => item.type === "main");
+const selectBurgerMains = (state: { burgerIngredients: BurgerIngredientsState }) => {
+  return state.burgerIngredients.items.filter((item) => item.type === "main");
+};
 
-export const selectBurgerSauces = (state: { burgerIngredients: TBurgerIngredientsState }) =>
-  state.burgerIngredients.items.filter((item) => item.type === "sauce");
+const selectBurgerSauces = (state: { burgerIngredients: BurgerIngredientsState }) => {
+  return state.burgerIngredients.items.filter((item) => item.type === "sauce");
+};
 
-export const selectBurgerIngredients = (state: { burgerIngredients: TBurgerIngredientsState }) =>
-  state.burgerIngredients.items;
+const selectBurgerIngredients = (state: { burgerIngredients: BurgerIngredientsState }) => {
+  return state.burgerIngredients.items;
+};
 
-export const selectIngredientById = (
-  state: {
-    burgerIngredients: TBurgerIngredientsState;
-  },
-  id: string,
-) => state.burgerIngredients.items.find((item) => item._id === id) || null;
+const selectIngredientById = (state: { burgerIngredients: BurgerIngredientsState }, id: string) => {
+  return state.burgerIngredients.items.find((item) => item._id === id) || null;
+};
 
-export const selectBurgerIngredientsIsLoading = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.loading === "pending";
+const selectBurgerIngredientsError = (state: { burgerIngredients: BurgerIngredientsState }) => {
+  return state.burgerIngredients.error;
+};
 
-export const selectBurgerIngredientsRequestError = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.error;
+const selectBurgerIngredientsStatus = (state: { burgerIngredients: BurgerIngredientsState }) => {
+  return state.burgerIngredients.status;
+};
+
+export {
+  // State
+  burgerIngredientsSlice,
+  burgerIngredientsInitialState,
+  // Actions
+  fetchBurgerIngredients,
+  resetIngredientsError,
+  clearIngredients,
+  // Selectors
+  selectBurgerBuns,
+  selectBurgerMains,
+  selectBurgerSauces,
+  selectBurgerIngredients,
+  selectIngredientById,
+  selectBurgerIngredientsError,
+  selectBurgerIngredientsStatus,
+};
+
+export type { BurgerIngredientsState };

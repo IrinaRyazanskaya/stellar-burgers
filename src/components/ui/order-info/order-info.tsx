@@ -2,10 +2,29 @@ import { memo } from "react";
 import type { FC } from "react";
 import { CurrencyIcon, FormattedDate } from "@zlden/react-developer-burger-ui-components";
 
+import type { Ingredient } from "../../../utils/types";
 import { OrderStatus } from "../../order-status";
-import { OrderInfoUIProps } from "./type";
 
 import styles from "./order-info.module.css";
+
+type OrderInfoUIProps = {
+  orderInfo: OrderInfo;
+};
+
+type OrderInfo = {
+  ingredientsInfo: {
+    [key: string]: Ingredient & { count: number };
+  };
+  date: Date;
+  total: number;
+  _id: string;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  ingredients: string[];
+};
 
 const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
   <div className={styles.wrap}>
@@ -43,3 +62,4 @@ const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
 OrderInfoUI.displayName = "OrderInfoUI";
 
 export { OrderInfoUI };
+export type { OrderInfoUIProps };

@@ -34,8 +34,8 @@ describe("profileOrdersSlice", () => {
     const nextState = profileOrdersSlice.reducer(profileOrdersInitialState, action);
 
     expect(nextState.orders).toEqual([]);
-    expect(nextState.requestStatus).toBe("pending");
-    expect(nextState.requestError).toBeNull();
+    expect(nextState.status).toBe("pending");
+    expect(nextState.error).toBeNull();
   });
 
   it("should handle getProfileOrders fulfilled", async () => {
@@ -48,8 +48,8 @@ describe("profileOrdersSlice", () => {
     const state = store.getState();
 
     expect(state.orders).toEqual(mockProfileOrders);
-    expect(state.requestStatus).toBe("succeeded");
-    expect(state.requestError).toBeNull();
+    expect(state.status).toBe("succeeded");
+    expect(state.error).toBeNull();
   });
 
   it("should handle getProfileOrders rejected", async () => {
@@ -62,7 +62,7 @@ describe("profileOrdersSlice", () => {
     const state = store.getState();
 
     expect(state.orders).toEqual([]);
-    expect(state.requestStatus).toBe("failed");
-    expect(state.requestError).toBe("Profile API Error");
+    expect(state.status).toBe("failed");
+    expect(state.error).toBe("Profile API Error");
   });
 });

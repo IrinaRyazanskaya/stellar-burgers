@@ -3,19 +3,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { Order } from "../../utils/types";
 
-export type TProfileOrdersState = {
+type ProfileOrdersState = {
   orders: Order[];
-  requestStatus: "idle" | "pending" | "succeeded" | "failed";
-  requestError: string | null;
+  error: string | null;
+  status: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const profileOrdersInitialState: TProfileOrdersState = {
+const profileOrdersInitialState: ProfileOrdersState = {
   orders: [],
-  requestStatus: "idle",
-  requestError: null,
+  error: null,
+  status: "idle",
 };
 
-export const getProfileOrders = createAsyncThunk(
+const getProfileOrders = createAsyncThunk(
   "profileOrders/getProfileOrders",
   async (_, { rejectWithValue }) => {
     try {
@@ -31,7 +31,7 @@ export const getProfileOrders = createAsyncThunk(
   },
 );
 
-export const profileOrdersSlice = createSlice({
+const profileOrdersSlice = createSlice({
   name: "profileOrders",
   initialState: profileOrdersInitialState,
   reducers: {},
@@ -39,27 +39,44 @@ export const profileOrdersSlice = createSlice({
     builder
       .addCase(getProfileOrders.pending, (state) => {
         state.orders = [];
-        state.requestStatus = "pending";
-        state.requestError = null;
+        state.status = "pending";
+        state.error = null;
       })
       .addCase(getProfileOrders.fulfilled, (state, action) => {
         state.orders = action.payload;
-        state.requestStatus = "succeeded";
-        state.requestError = null;
+        state.status = "succeeded";
+        state.error = null;
       })
       .addCase(getProfileOrders.rejected, (state, action) => {
         state.orders = [];
-        state.requestStatus = "failed";
-        state.requestError = action.payload as string;
+        state.status = "failed";
+        state.error = action.payload as string;
       });
   },
 });
 
-export const selectProfileOrders = (state: { profileOrders: TProfileOrdersState }) =>
-  state.profileOrders.orders;
+const selectProfileOrders = (state: { profileOrders: ProfileOrdersState }) => {
+  return state.profileOrders.orders;
+};
 
-export const selectProfileOrdersRequestError = (state: { profileOrders: TProfileOrdersState }) =>
-  state.profileOrders.requestError;
+const selectProfileOrdersError = (state: { profileOrders: ProfileOrdersState }) => {
+  return state.profileOrders.error;
+};
 
-export const selectProfileOrdersRequestStatus = (state: { profileOrders: TProfileOrdersState }) =>
-  state.profileOrders.requestStatus;
+const selectProfileOrdersStatus = (state: { profileOrders: ProfileOrdersState }) => {
+  return state.profileOrders.status;
+};
+
+export {
+  // State
+  profileOrdersSlice,
+  profileOrdersInitialState,
+  // Actions
+  getProfileOrders,
+  // Selectors
+  selectProfileOrders,
+  selectProfileOrdersError,
+  selectProfileOrdersStatus,
+};
+
+export type { ProfileOrdersState };

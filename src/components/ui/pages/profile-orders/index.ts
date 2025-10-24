@@ -1,1 +1,1 @@
-export { ProfileOrdersUI } from "./profile-orders";
+export * from "./profile-orders";

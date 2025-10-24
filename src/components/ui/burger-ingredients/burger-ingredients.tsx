@@ -1,11 +1,25 @@
 import { memo } from "react";
-import type { FC } from "react";
+import type { FC, RefObject } from "react";
 import { Tab } from "@zlden/react-developer-burger-ui-components";
 
 import { IngredientsCategory } from "../../ingredients-category";
-import { BurgerIngredientsUIProps } from "./type";
+import type { Ingredient, TabMode } from "../../../utils/types";
 
 import styles from "./burger-ingredients.module.css";
+
+type BurgerIngredientsUIProps = {
+  currentTab: TabMode;
+  buns: Ingredient[];
+  mains: Ingredient[];
+  sauces: Ingredient[];
+  titleBunRef: RefObject<HTMLHeadingElement>;
+  titleMainRef: RefObject<HTMLHeadingElement>;
+  titleSaucesRef: RefObject<HTMLHeadingElement>;
+  bunsRef: (node?: Element | null | undefined) => void;
+  mainsRef: (node?: Element | null | undefined) => void;
+  saucesRef: (node?: Element | null | undefined) => void;
+  onTabClick: (val: string) => void;
+};
 
 const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
   ({
@@ -64,3 +78,4 @@ const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
 BurgerIngredientsUI.displayName = "BurgerIngredientsUI";
 
 export { BurgerIngredientsUI };
+export type { BurgerIngredientsUIProps };

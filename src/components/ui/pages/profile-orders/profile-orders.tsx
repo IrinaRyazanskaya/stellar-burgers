@@ -1,12 +1,16 @@
 import type { FC } from "react";
 
+import type { Order } from "../../../../utils/types";
 import { ProfileMenu } from "../../../profile-menu";
 import { OrdersList } from "../../../orders-list";
-import { ProfileOrdersUIProps } from "./type";
 
 import styles from "./profile-orders.module.css";
 
-export const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({ orders }) => (
+type ProfileOrdersUIProps = {
+  orders: Order[];
+};
+
+const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({ orders }) => (
   <main className={`${styles.main}`}>
     <div className={`mt-30 mr-15 ${styles.menu}`}>
       <ProfileMenu />
@@ -16,3 +20,8 @@ export const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({ orders }) => (
     </div>
   </main>
 );
+
+ProfileOrdersUI.displayName = "ProfileOrdersUI";
+
+export { ProfileOrdersUI };
+export type { ProfileOrdersUIProps };

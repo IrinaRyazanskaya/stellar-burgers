@@ -6,7 +6,7 @@ import { PageUIProps } from "../common-type";
 
 import styles from "../common.module.css";
 
-export const ForgotPasswordUI: FC<PageUIProps> = ({ errorText, email, setEmail, handleSubmit }) => (
+const ForgotPasswordUI: FC<PageUIProps> = ({ errorText, email, setEmail, handleSubmit }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
       <h3 className="pb-6 text text_type_main-medium">Восстановление пароля</h3>
@@ -44,3 +44,7 @@ export const ForgotPasswordUI: FC<PageUIProps> = ({ errorText, email, setEmail, 
     </div>
   </main>
 );
+
+ForgotPasswordUI.displayName = "ForgotPasswordUI";
+
+export { ForgotPasswordUI };

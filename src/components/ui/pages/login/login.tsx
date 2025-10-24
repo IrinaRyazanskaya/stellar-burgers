@@ -1,12 +1,17 @@
-import type { FC } from "react";
+import type { FC, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { Input, Button, PasswordInput } from "@zlden/react-developer-burger-ui-components";
 
-import { LoginUIProps } from "./type";
+import { PageUIProps } from "../common-type";
 
 import styles from "../common.module.css";
 
-export const LoginUI: FC<LoginUIProps> = ({
+type LoginUIProps = PageUIProps & {
+  password: string;
+  setPassword: Dispatch<SetStateAction<string>>;
+};
+
+const LoginUI: FC<LoginUIProps> = ({
   email,
   setEmail,
   errorText,
@@ -67,3 +72,8 @@ export const LoginUI: FC<LoginUIProps> = ({
     </div>
   </main>
 );
+
+LoginUI.displayName = "LoginUI";
+
+export { LoginUI };
+export type { LoginUIProps };

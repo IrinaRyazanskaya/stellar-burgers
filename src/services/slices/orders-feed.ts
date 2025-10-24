@@ -3,27 +3,27 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { Order } from "../../utils/types";
 
-export type TOrdersFeedState = {
+type OrdersFeedState = {
   orders: Order[];
   stats: {
     total: number;
     totalToday: number;
   };
-  requestStatus: "idle" | "pending" | "succeeded" | "failed";
-  requestError: string | null;
+  error: string | null;
+  status: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const ordersFeedInitialState: TOrdersFeedState = {
+const ordersFeedInitialState: OrdersFeedState = {
   orders: [],
   stats: {
     total: 0,
     totalToday: 0,
   },
-  requestStatus: "idle",
-  requestError: null,
+  error: null,
+  status: "idle",
 };
 
-export const getOrdersFeed = createAsyncThunk(
+const getOrdersFeed = createAsyncThunk(
   "ordersFeed/getOrdersFeed",
   async (_, { rejectWithValue }) => {
     try {
@@ -37,7 +37,7 @@ export const getOrdersFeed = createAsyncThunk(
   },
 );
 
-export const ordersFeedSlice = createSlice({
+const ordersFeedSlice = createSlice({
   name: "ordersFeed",
   initialState: ordersFeedInitialState,
   reducers: {},
@@ -46,8 +46,8 @@ export const ordersFeedSlice = createSlice({
       .addCase(getOrdersFeed.pending, (state) => {
         state.orders = [];
         state.stats = { total: 0, totalToday: 0 };
-        state.requestStatus = "pending";
-        state.requestError = null;
+        state.status = "pending";
+        state.error = null;
       })
       .addCase(getOrdersFeed.fulfilled, (state, action) => {
         state.orders = action.payload.orders;
@@ -55,26 +55,45 @@ export const ordersFeedSlice = createSlice({
           total: action.payload.total,
           totalToday: action.payload.totalToday,
         };
-        state.requestStatus = "succeeded";
-        state.requestError = null;
+        state.status = "succeeded";
+        state.error = null;
       })
       .addCase(getOrdersFeed.rejected, (state, action) => {
         state.orders = [];
         state.stats = { total: 0, totalToday: 0 };
-        state.requestStatus = "failed";
-        state.requestError = action.payload as string;
+        state.status = "failed";
+        state.error = action.payload as string;
       });
   },
 });
 
-export const selectOrdersFeed = (state: { ordersFeed: TOrdersFeedState }) =>
-  state.ordersFeed.orders;
+const selectOrdersFeed = (state: { ordersFeed: OrdersFeedState }) => {
+  return state.ordersFeed.orders;
+};
 
-export const selectOrdersStats = (state: { ordersFeed: TOrdersFeedState }) =>
-  state.ordersFeed.stats;
+const selectOrdersStats = (state: { ordersFeed: OrdersFeedState }) => {
+  return state.ordersFeed.stats;
+};
 
-export const selectOrdersFeedRequestError = (state: { ordersFeed: TOrdersFeedState }) =>
-  state.ordersFeed.requestError;
+const selectOrdersFeedError = (state: { ordersFeed: OrdersFeedState }) => {
+  return state.ordersFeed.error;
+};
 
-export const selectOrdersFeedRequestStatus = (state: { ordersFeed: TOrdersFeedState }) =>
-  state.ordersFeed.requestStatus;
+const selectOrdersFeedStatus = (state: { ordersFeed: OrdersFeedState }) => {
+  return state.ordersFeed.status;
+};
+
+export {
+  // State
+  ordersFeedSlice,
+  ordersFeedInitialState,
+  // Actions
+  getOrdersFeed,
+  // Selectors
+  selectOrdersFeed,
+  selectOrdersStats,
+  selectOrdersFeedError,
+  selectOrdersFeedStatus,
+};
+
+export type { OrdersFeedState };

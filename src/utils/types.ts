@@ -1,4 +1,6 @@
-export type Ingredient = {
+type TabMode = "bun" | "sauce" | "main";
+
+type Ingredient = {
   _id: string;
   name: string;
   type: string;
@@ -12,11 +14,11 @@ export type Ingredient = {
   image_mobile: string;
 };
 
-export type ConstructorIngredient = Ingredient & {
+type ConstructorIngredient = Ingredient & {
   id: string;
 };
 
-export type Order = {
+type Order = {
   _id: string;
   status: string;
   name: string;
@@ -26,15 +28,9 @@ export type Order = {
   ingredients: string[];
 };
 
-export type TOrdersData = {
-  orders: Order[];
-  total: number;
-  totalToday: number;
-};
-
-export type User = {
-  email: string;
+type User = {
   name: string;
+  email: string;
 };
 
-export type TTabMode = "bun" | "sauce" | "main";
+export type { TabMode, Ingredient, ConstructorIngredient, Order, User };

@@ -1,13 +1,21 @@
 import { memo } from "react";
 import type { FC } from "react";
 import { Link } from "react-router-dom";
+import type { Location } from "react-router-dom";
 import { Counter, CurrencyIcon, AddButton } from "@zlden/react-developer-burger-ui-components";
 
-import { TBurgerIngredientUIProps } from "./type";
+import type { Ingredient } from "../../../utils/types";
 
 import styles from "./burger-ingredient.module.css";
 
-const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
+type BurgerIngredientUIProps = {
+  count: number;
+  ingredient: Ingredient;
+  handleAdd: () => void;
+  locationState: { background: Location };
+};
+
+const BurgerIngredientUI: FC<BurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
     const { image, price, name, _id } = ingredient;
 
@@ -31,3 +39,4 @@ const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
 BurgerIngredientUI.displayName = "BurgerIngredientUI";
 
 export { BurgerIngredientUI };
+export type { BurgerIngredientUIProps };

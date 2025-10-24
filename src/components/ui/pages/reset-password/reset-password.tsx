@@ -1,12 +1,19 @@
-import type { FC } from "react";
+import type { FC, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { Input, Button, PasswordInput } from "@zlden/react-developer-burger-ui-components";
 
-import { ResetPasswordUIProps } from "./type";
+import { PageUIProps } from "../common-type";
 
 import styles from "../common.module.css";
 
-export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
+type ResetPasswordUIProps = Omit<PageUIProps, "email" | "setEmail"> & {
+  password: string;
+  token: string;
+  setPassword: Dispatch<SetStateAction<string>>;
+  setToken: Dispatch<SetStateAction<string>>;
+};
+
+const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
   errorText,
   password,
   setPassword,
@@ -59,3 +66,8 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
     </div>
   </main>
 );
+
+ResetPasswordUI.displayName = "ResetPasswordUI";
+
+export { ResetPasswordUI };
+export type { ResetPasswordUIProps };

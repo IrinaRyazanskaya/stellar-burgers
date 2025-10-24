@@ -9,7 +9,7 @@ import {
   clearOrderInfo,
   getOrderInfo,
   selectOrderInfo,
-  selectOrderInfoRequestStatus,
+  selectOrderInfoStatus,
 } from "../../services/slices/order-info";
 import { selectBurgerIngredients } from "../../services/slices/burger-ingredients";
 import { useSelector, useDispatch } from "../../services/store";
@@ -25,7 +25,7 @@ const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
 
   const orderData = useSelector(selectOrderInfo);
   const ingredients = useSelector(selectBurgerIngredients);
-  const orderRequestStatus = useSelector(selectOrderInfoRequestStatus);
+  const orderRequestStatus = useSelector(selectOrderInfoStatus);
 
   const cleanAndClose = () => {
     dispatch(clearOrderInfo());

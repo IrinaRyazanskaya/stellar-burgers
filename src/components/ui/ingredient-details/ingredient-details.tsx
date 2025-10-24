@@ -1,9 +1,13 @@
 import { memo } from "react";
 import type { FC } from "react";
 
-import { IngredientDetailsUIProps } from "./type";
+import type { Ingredient } from "../../../utils/types";
 
 import styles from "./ingredient-details.module.css";
+
+type IngredientDetailsUIProps = {
+  ingredientData: Ingredient;
+};
 
 const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(({ ingredientData }) => {
   const { name, image_large, calories, proteins, fat, carbohydrates } = ingredientData;
@@ -37,3 +41,4 @@ const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(({ ingredientData
 IngredientDetailsUI.displayName = "IngredientDetailsUI";
 
 export { IngredientDetailsUI };
+export type { IngredientDetailsUIProps };

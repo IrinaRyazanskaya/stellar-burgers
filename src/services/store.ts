@@ -13,7 +13,7 @@ import { profileOrdersSlice } from "./slices/profile-orders";
 import { ordersFeedSlice } from "./slices/orders-feed";
 import { orderInfoSlice } from "./slices/order-info";
 
-export const rootReducer = combineSlices(
+const rootReducer = combineSlices(
   burgerConstructorSlice,
   burgerIngredientsSlice,
   burgerOrderSlice,
@@ -28,11 +28,11 @@ const store = configureStore({
   devTools: __MODE__ === "development",
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+type AppDispatch = typeof store.dispatch;
+type RootState = ReturnType<typeof rootReducer>;
 
-export type AppDispatch = typeof store.dispatch;
+const useDispatch: () => AppDispatch = () => dispatchHook();
+const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
-export const useDispatch: () => AppDispatch = () => dispatchHook();
-export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
-
-export default store;
+export { store, rootReducer, useDispatch, useSelector };
+export type { AppDispatch, RootState };

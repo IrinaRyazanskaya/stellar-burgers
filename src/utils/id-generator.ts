@@ -1,4 +1,4 @@
-export function generateStringId(length: number = 32): string {
+function generateStringId(length: number = 32): string {
   const characters: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result: string = "";
 
@@ -9,3 +9,5 @@ export function generateStringId(length: number = 32): string {
 
   return result;
 }
+
+export { generateStringId };

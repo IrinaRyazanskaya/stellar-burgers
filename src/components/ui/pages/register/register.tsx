@@ -1,12 +1,19 @@
-import type { FC } from "react";
+import type { FC, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { Input, Button, PasswordInput } from "@zlden/react-developer-burger-ui-components";
 
-import { RegisterUIProps } from "./type";
+import { PageUIProps } from "../common-type";
 
 import styles from "../common.module.css";
 
-export const RegisterUI: FC<RegisterUIProps> = ({
+type RegisterUIProps = PageUIProps & {
+  password: string;
+  userName: string;
+  setPassword: Dispatch<SetStateAction<string>>;
+  setUserName: Dispatch<SetStateAction<string>>;
+};
+
+const RegisterUI: FC<RegisterUIProps> = ({
   errorText,
   email,
   setEmail,
@@ -78,3 +85,8 @@ export const RegisterUI: FC<RegisterUIProps> = ({
     </div>
   </main>
 );
+
+RegisterUI.displayName = "RegisterUI";
+
+export { RegisterUI };
+export type { RegisterUIProps };

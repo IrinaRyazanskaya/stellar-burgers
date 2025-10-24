@@ -14,7 +14,7 @@ import {
   clearLoginStatus,
   clearRegisterStatus,
 } from "./profile";
-import type { TProfileState } from "./profile";
+import type { ProfileState } from "./profile";
 
 jest.mock("../../clients/burger-api");
 jest.mock("../../utils/cookie", () => ({
@@ -47,30 +47,30 @@ const mockAuthResponse: AuthResponse = {
 
 describe("profileSlice", () => {
   it("should handle clearLoginStatus", () => {
-    const state: TProfileState = {
+    const state: ProfileState = {
       ...profileInitialState,
-      loginRequestStatus: "failed",
+      loginStatus: "failed",
       loginError: "Some error",
     };
 
     const nextState = profileSlice.reducer(state, clearLoginStatus());
 
-    expect(nextState.loginRequestStatus).toEqual("idle");
+    expect(nextState.loginStatus).toEqual("idle");
     expect(nextState.loginError).toBeNull();
     expect(nextState.user).toEqual(state.user);
     expect(nextState.userStatus).toEqual(state.userStatus);
   });
 
   it("should handle clearRegisterStatus", () => {
-    const state: TProfileState = {
+    const state: ProfileState = {
       ...profileInitialState,
-      registerRequestStatus: "failed",
+      registerStatus: "failed",
       registerError: "Registration error",
     };
 
     const nextState = profileSlice.reducer(state, clearRegisterStatus());
 
-    expect(nextState.registerRequestStatus).toEqual("idle");
+    expect(nextState.registerStatus).toEqual("idle");
     expect(nextState.registerError).toBeNull();
     expect(nextState.user).toEqual(state.user);
     expect(nextState.userStatus).toEqual(state.userStatus);
@@ -81,7 +81,7 @@ describe("profileSlice", () => {
       const action = { type: getUser.pending.type };
       const nextState = profileSlice.reducer(profileInitialState, action);
 
-      expect(nextState.getUserRequestStatus).toEqual("pending");
+      expect(nextState.getUserStatus).toEqual("pending");
       expect(nextState.getUserError).toBeNull();
     });
 
@@ -97,7 +97,7 @@ describe("profileSlice", () => {
 
       expect(state.user).toEqual(mockUser);
       expect(state.userStatus).toEqual("authorized");
-      expect(state.getUserRequestStatus).toEqual("succeeded");
+      expect(state.getUserStatus).toEqual("succeeded");
       expect(state.getUserError).toBeNull();
     });
 
@@ -110,7 +110,7 @@ describe("profileSlice", () => {
       const state = store.getState();
 
       expect(state.userStatus).toEqual("unauthorized");
-      expect(state.getUserRequestStatus).toEqual("failed");
+      expect(state.getUserStatus).toEqual("failed");
       expect(state.getUserError).toEqual("API Error");
     });
   });
@@ -120,7 +120,7 @@ describe("profileSlice", () => {
       const action = { type: loginUser.pending.type };
       const nextState = profileSlice.reducer(profileInitialState, action);
 
-      expect(nextState.loginRequestStatus).toEqual("pending");
+      expect(nextState.loginStatus).toEqual("pending");
       expect(nextState.loginError).toBeNull();
     });
 
@@ -134,7 +134,7 @@ describe("profileSlice", () => {
 
       expect(state.user).toEqual(mockUser);
       expect(state.userStatus).toEqual("authorized");
-      expect(state.loginRequestStatus).toEqual("succeeded");
+      expect(state.loginStatus).toEqual("succeeded");
       expect(state.loginError).toBeNull();
     });
 
@@ -147,7 +147,7 @@ describe("profileSlice", () => {
       const state = store.getState();
 
       expect(state.userStatus).toEqual("unauthorized");
-      expect(state.loginRequestStatus).toEqual("failed");
+      expect(state.loginStatus).toEqual("failed");
       expect(state.loginError).toEqual("Login Error");
     });
   });
@@ -156,7 +156,7 @@ describe("profileSlice", () => {
     it("should handle logoutUser fulfilled", async () => {
       (burgerAPIClient.logoutUser as jest.Mock).mockResolvedValue(undefined);
 
-      const initialState: TProfileState = {
+      const initialState: ProfileState = {
         ...profileInitialState,
         user: mockUser,
         userStatus: "authorized",
@@ -173,7 +173,7 @@ describe("profileSlice", () => {
 
       expect(state.user).toBeNull();
       expect(state.userStatus).toEqual("unauthorized");
-      expect(state.getUserRequestStatus).toEqual("idle");
+      expect(state.getUserStatus).toEqual("idle");
     });
   });
 
@@ -182,7 +182,7 @@ describe("profileSlice", () => {
       const action = { type: registerUser.pending.type };
       const nextState = profileSlice.reducer(profileInitialState, action);
 
-      expect(nextState.registerRequestStatus).toEqual("pending");
+      expect(nextState.registerStatus).toEqual("pending");
       expect(nextState.registerError).toBeNull();
     });
 
@@ -198,7 +198,7 @@ describe("profileSlice", () => {
 
       expect(state.user).toEqual(mockUser);
       expect(state.userStatus).toEqual("authorized");
-      expect(state.registerRequestStatus).toEqual("succeeded");
+      expect(state.registerStatus).toEqual("succeeded");
       expect(state.registerError).toBeNull();
     });
 
@@ -211,7 +211,7 @@ describe("profileSlice", () => {
       const state = store.getState();
 
       expect(state.userStatus).toEqual("unauthorized");
-      expect(state.registerRequestStatus).toEqual("failed");
+      expect(state.registerStatus).toEqual("failed");
       expect(state.registerError).toEqual("Register Error");
     });
   });
@@ -221,7 +221,7 @@ describe("profileSlice", () => {
       const action = { type: updateUser.pending.type };
       const nextState = profileSlice.reducer(profileInitialState, action);
 
-      expect(nextState.updateRequestStatus).toEqual("pending");
+      expect(nextState.updateStatus).toEqual("pending");
       expect(nextState.updateError).toBeNull();
     });
 
@@ -231,7 +231,7 @@ describe("profileSlice", () => {
         user: updatedUser,
       });
 
-      const initialState: TProfileState = {
+      const initialState: ProfileState = {
         ...profileInitialState,
         user: mockUser,
       };
@@ -246,7 +246,7 @@ describe("profileSlice", () => {
       const state = store.getState();
 
       expect(state.user).toEqual(updatedUser);
-      expect(state.updateRequestStatus).toEqual("succeeded");
+      expect(state.updateStatus).toEqual("succeeded");
       expect(state.updateError).toBeNull();
     });
 
@@ -258,7 +258,7 @@ describe("profileSlice", () => {
 
       const state = store.getState();
 
-      expect(state.updateRequestStatus).toEqual("failed");
+      expect(state.updateStatus).toEqual("failed");
       expect(state.updateError).toEqual("Update Error");
     });
   });

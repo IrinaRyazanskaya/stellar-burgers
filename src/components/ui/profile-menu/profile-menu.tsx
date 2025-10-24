@@ -1,11 +1,14 @@
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-import { ProfileMenuUIProps } from "./type";
-
 import styles from "./profile-menu.module.css";
 
-export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({ pathname, handleLogout }) => (
+type ProfileMenuUIProps = {
+  pathname: string;
+  handleLogout: () => void;
+};
+
+const ProfileMenuUI: FC<ProfileMenuUIProps> = ({ pathname, handleLogout }) => (
   <>
     <NavLink
       to={"/profile"}
@@ -41,3 +44,8 @@ export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({ pathname, handleLogout }
     </p>
   </>
 );
+
+ProfileMenuUI.displayName = "ProfileMenuUI";
+
+export { ProfileMenuUI };
+export type { ProfileMenuUIProps };

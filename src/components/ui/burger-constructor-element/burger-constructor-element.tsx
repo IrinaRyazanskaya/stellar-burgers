@@ -3,9 +3,18 @@ import type { FC } from "react";
 import { MoveButton } from "@zlden/react-developer-burger-ui-components";
 import { ConstructorElement } from "@zlden/react-developer-burger-ui-components";
 
-import { BurgerConstructorElementUIProps } from "./type";
+import type { ConstructorIngredient } from "../../../utils/types";
 
 import styles from "./burger-constructor-element.module.css";
+
+type BurgerConstructorElementUIProps = {
+  ingredient: ConstructorIngredient;
+  index: number;
+  totalItems: number;
+  handleMoveUp: () => void;
+  handleMoveDown: () => void;
+  handleClose: () => void;
+};
 
 const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> = memo(
   ({ ingredient, index, totalItems, handleMoveUp, handleMoveDown, handleClose }) => (
@@ -31,3 +40,4 @@ const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> = memo(
 BurgerConstructorElementUI.displayName = "BurgerConstructorElementUI";
 
 export { BurgerConstructorElementUI };
+export type { BurgerConstructorElementUIProps };

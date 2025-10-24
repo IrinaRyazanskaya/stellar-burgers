@@ -2,11 +2,16 @@ import { memo } from "react";
 import type { FC } from "react";
 import { RefreshButton } from "@zlden/react-developer-burger-ui-components";
 
+import type { Order } from "../../../../utils/types";
 import { FeedInfo } from "../../../feed-info";
 import { OrdersList } from "../../../orders-list";
-import { FeedUIProps } from "./type";
 
 import styles from "./feed.module.css";
+
+type FeedUIProps = {
+  orders: Order[];
+  handleGetFeeds: () => void;
+};
 
 const FeedUI: FC<FeedUIProps> = memo(({ orders, handleGetFeeds }) => (
   <main className={styles.containerMain}>
@@ -28,3 +33,4 @@ const FeedUI: FC<FeedUIProps> = memo(({ orders, handleGetFeeds }) => (
 FeedUI.displayName = "FeedUI";
 
 export { FeedUI };
+export type { FeedUIProps };
