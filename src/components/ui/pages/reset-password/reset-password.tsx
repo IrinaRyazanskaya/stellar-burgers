@@ -1,7 +1,8 @@
 import type { FC, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
-import { Input, Button, PasswordInput } from "@zlden/react-developer-burger-ui-components";
+import { Button, PasswordInput } from "@zlden/react-developer-burger-ui-components";
 
+import { Input } from "../../input";
 import { PageUIProps } from "../common-type";
 
 import styles from "../common.module.css";
@@ -43,8 +44,6 @@ const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
             errorText=""
             size="default"
             autoComplete="off"
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
             onChange={(e) => setToken(e.target.value)}
           />
         </div>

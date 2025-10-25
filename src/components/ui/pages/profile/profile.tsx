@@ -1,6 +1,7 @@
 import type { FC, ChangeEvent, FormEvent, SyntheticEvent } from "react";
-import { Button, Input } from "@zlden/react-developer-burger-ui-components";
+import { Button } from "@zlden/react-developer-burger-ui-components";
 
+import { Input } from "../../input";
 import { ProfileMenu } from "../../../profile-menu";
 
 import commonStyles from "../common.module.css";
@@ -46,8 +47,6 @@ const ProfileUI: FC<ProfileUIProps> = ({
             size={"default"}
             icon={"EditIcon"}
             autoComplete="name"
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
             onChange={handleInputChange}
           />
         </div>
@@ -62,8 +61,6 @@ const ProfileUI: FC<ProfileUIProps> = ({
             size={"default"}
             icon={"EditIcon"}
             autoComplete="email"
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
             onChange={handleInputChange}
           />
         </div>
@@ -78,8 +75,6 @@ const ProfileUI: FC<ProfileUIProps> = ({
             size={"default"}
             icon={"EditIcon"}
             autoComplete="new-password"
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
             onChange={handleInputChange}
           />
         </div>

@@ -1,7 +1,8 @@
 import type { FC, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
-import { Input, Button, PasswordInput } from "@zlden/react-developer-burger-ui-components";
+import { Button, PasswordInput } from "@zlden/react-developer-burger-ui-components";
 
+import { Input } from "../../input";
 import { PageUIProps } from "../common-type";
 
 import styles from "../common.module.css";
@@ -38,8 +39,6 @@ const RegisterUI: FC<RegisterUIProps> = ({
               errorText=""
               size="default"
               autoComplete="name"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
@@ -53,8 +52,6 @@ const RegisterUI: FC<RegisterUIProps> = ({
               errorText=""
               size={"default"}
               autoComplete="email"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
