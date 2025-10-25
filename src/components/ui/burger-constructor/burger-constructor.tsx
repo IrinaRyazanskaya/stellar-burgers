@@ -14,19 +14,24 @@ import { Preloader } from "../preloader";
 import styles from "./burger-constructor.module.css";
 
 type BurgerConstructorUIProps = {
-  constructorItems: any;
-  orderRequest: boolean;
   price: number;
+  orderRequest: boolean;
   orderModalData: Order | null;
+  constructorItems: ConstructorItems;
   onOrderClick: () => void;
   closeOrderModal: () => void;
 };
 
+type ConstructorItems = {
+  bun: ConstructorIngredient | null;
+  ingredients: ConstructorIngredient[];
+};
+
 const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
-  constructorItems,
-  orderRequest,
   price,
+  orderRequest,
   orderModalData,
+  constructorItems,
   onOrderClick,
   closeOrderModal,
 }) => (
