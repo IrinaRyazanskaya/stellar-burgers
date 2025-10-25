@@ -1,18 +1,21 @@
 .burger_constructor {
-  width: 600px;
-  color: #f2f2f3;
   display: flex;
   flex-direction: column;
+
+  width: 600px;
   padding-bottom: 20px;
+
+  color: #f2f2f3;
 }
 
 .elements {
-  min-height: 100px;
-
   overflow-y: scroll;
-  list-style-type: none;
+
+  min-height: 100px;
   margin: 0;
   padding: 0;
+
+  list-style-type: none;
 }
 
 .total {
@@ -27,27 +30,30 @@
 }
 
 .text {
-  font-family: Iceland;
-  font-style: normal;
-  font-weight: normal;
+  font-family: Iceland, sans-serif;
   font-size: 48px;
+  font-weight: normal;
+  font-style: normal;
   line-height: 36px;
 }
 
 .noBuns {
-  box-sizing: border-box;
-  padding: 16px 24px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  border-radius: var(--common-border-radius-s);
-  background: var(--background-element);
+  justify-content: center;
+
+  box-sizing: border-box;
   min-height: 80px;
-  font-family: "Jet Brains Mono";
+  margin-left: 44px;
+  padding: 16px 24px;
+  border-radius: var(--common-border-radius-s);
+
+  font-family: "Jet Brains Mono", monospace;
   font-size: 16px;
   line-height: 24px;
   color: #f2f2f3;
-  margin-left: 44px;
+
+  background: var(--background-element);
 }
 
 .noBunsTop {

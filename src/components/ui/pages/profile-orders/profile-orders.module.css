@@ -3,10 +3,11 @@
 }
 
 .main {
-  display: flex;
-  height: 100%;
-  width: 1240px;
   overflow: hidden;
+  display: flex;
+
+  width: 1240px;
+  height: 100%;
   margin: 0 auto;
 }
 
