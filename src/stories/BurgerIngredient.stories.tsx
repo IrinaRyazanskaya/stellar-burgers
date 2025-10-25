@@ -5,17 +5,7 @@ import { BurgerIngredientUI } from "../components/ui/burger-ingredient";
 const meta = {
   title: "Example/BurgerIngredient",
   component: BurgerIngredientUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
-  decorators: [
-    (Story) => (
-      <div style={{ width: "fit-content", margin: 20 }}>
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof BurgerIngredientUI>;
 
 export default meta;
@@ -33,9 +23,9 @@ export const DefaultIngredient: Story = {
       carbohydrates: 22,
       calories: 33,
       price: 123,
-      image: "",
-      image_large: "",
-      image_mobile: "",
+      image: "https://code.s3.yandex.net/react/code/bun-01.png",
+      image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
+      image_mobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
     },
     count: 2,
     locationState: {

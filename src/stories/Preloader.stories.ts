@@ -5,10 +5,7 @@ import { Preloader } from "../components/ui/preloader";
 const meta = {
   title: "Example/Preloader",
   component: Preloader,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof Preloader>;
 
 export default meta;

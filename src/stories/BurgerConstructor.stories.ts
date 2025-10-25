@@ -5,10 +5,7 @@ import { BurgerConstructorUI } from "../components/ui/burger-constructor";
 const meta = {
   title: "Example/BurgerConstructor",
   component: BurgerConstructorUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof BurgerConstructorUI>;
 
 export default meta;

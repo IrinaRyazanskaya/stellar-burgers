@@ -5,10 +5,7 @@ import { IngredientDetailsUI } from "../components/ui/ingredient-details";
 const meta = {
   title: "Example/IngredientDetails",
   component: IngredientDetailsUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof IngredientDetailsUI>;
 
 export default meta;
@@ -26,9 +23,9 @@ export const DefaultIngredientDetails: Story = {
       carbohydrates: 45,
       calories: 56,
       price: 67,
-      image: "",
-      image_large: "",
-      image_mobile: "",
+      image: "https://code.s3.yandex.net/react/code/meat-01.png",
+      image_large: "https://code.s3.yandex.net/react/code/meat-01-large.png",
+      image_mobile: "https://code.s3.yandex.net/react/code/meat-01-mobile.png",
     },
   },
 };

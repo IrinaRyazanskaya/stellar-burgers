@@ -5,10 +5,7 @@ import { OrderInfoUI } from "../components/ui/order-info";
 const meta = {
   title: "Example/OrderInfo",
   component: OrderInfoUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof OrderInfoUI>;
 
 export default meta;
@@ -28,10 +25,10 @@ export const DefaultOrderInfo: Story = {
           carbohydrates: 45,
           calories: 56,
           price: 67,
-          image: "",
-          image_large: "",
-          image_mobile: "",
           count: 2,
+          image: "https://code.s3.yandex.net/react/code/bun-01.png",
+          image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
+          image_mobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
         },
       },
       date: new Date("2024-01-25"),

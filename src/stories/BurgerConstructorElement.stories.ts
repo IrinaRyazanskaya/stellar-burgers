@@ -5,10 +5,7 @@ import { BurgerConstructorElementUI } from "../components/ui/burger-constructor-
 const meta = {
   title: "Example/BurgerConstructorElement",
   component: BurgerConstructorElementUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof BurgerConstructorElementUI>;
 
 export default meta;
@@ -27,9 +24,9 @@ export const DefaultElement: Story = {
       carbohydrates: 22,
       calories: 33,
       price: 123,
-      image: "",
-      image_large: "",
-      image_mobile: "",
+      image: "https://code.s3.yandex.net/react/code/bun-01.png",
+      image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
+      image_mobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
     },
     index: 0,
     totalItems: 1,

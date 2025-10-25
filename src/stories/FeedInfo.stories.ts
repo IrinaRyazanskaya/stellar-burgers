@@ -5,10 +5,7 @@ import { FeedInfoUI } from "../components/ui/feed-info";
 const meta = {
   title: "Example/FeedInfo",
   component: FeedInfoUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof FeedInfoUI>;
 
 export default meta;

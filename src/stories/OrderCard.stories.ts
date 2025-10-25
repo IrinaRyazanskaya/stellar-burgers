@@ -5,10 +5,7 @@ import { OrderCardUI } from "../components/ui/order-card";
 const meta = {
   title: "Example/OrderCard",
   component: OrderCardUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof OrderCardUI>;
 
 export default meta;
@@ -28,9 +25,9 @@ export const DefaultOrderCard: Story = {
           carbohydrates: 22,
           calories: 33,
           price: 123,
-          image: "",
-          image_large: "",
-          image_mobile: "",
+          image: "https://code.s3.yandex.net/react/code/bun-01.png",
+          image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
+          image_mobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
         },
       ],
       ingredientsToShow: [
@@ -43,9 +40,9 @@ export const DefaultOrderCard: Story = {
           carbohydrates: 22,
           calories: 33,
           price: 123,
-          image: "",
-          image_large: "",
-          image_mobile: "",
+          image: "https://code.s3.yandex.net/react/code/bun-02.png",
+          image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+          image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
         },
         {
           _id: "111",
@@ -56,9 +53,9 @@ export const DefaultOrderCard: Story = {
           carbohydrates: 22,
           calories: 33,
           price: 123,
-          image: "",
-          image_large: "",
-          image_mobile: "",
+          image: "https://code.s3.yandex.net/react/code/meat-01.png",
+          image_large: "https://code.s3.yandex.net/react/code/meat-01-large.png",
+          image_mobile: "https://code.s3.yandex.net/react/code/meat-01-mobile.png",
         },
       ],
       remains: 2,

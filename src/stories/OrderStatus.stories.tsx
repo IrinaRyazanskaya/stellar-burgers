@@ -5,17 +5,7 @@ import { OrderStatusUI } from "../components/ui/order-status";
 const meta = {
   title: "Example/OrderStatus",
   component: OrderStatusUI,
-  tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-  },
-  decorators: [
-    (Story) => (
-      <div style={{ width: "fit-content", margin: 20 }}>
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof OrderStatusUI>;
 
 export default meta;

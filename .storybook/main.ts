@@ -5,33 +5,12 @@ const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
+    "@storybook/addon-webpack5-compiler-swc",
   ],
   framework: {
     name: "@storybook/react-webpack5",
-    options: {
-      builder: {
-        useSWC: true,
-      },
-    },
+    options: {},
   },
-  docs: {
-    autodocs: "tag",
-  },
-  swc: (config) => ({
-    ...config,
-    jsc: {
-      ...config.jsc,
-      transform: {
-        ...config.jsc?.transform,
-        react: {
-          ...config.jsc?.transform?.react,
-          runtime: "automatic",
-        },
-      },
-    },
-  }),
   webpackFinal: async (webpackConfig) => {
     webpackConfig.plugins = webpackConfig.plugins ?? [];
 
