@@ -19,6 +19,10 @@ module.exports = (env, argv) => ({
     path: path.resolve(__dirname, "./dist"),
   },
 
+  performance: {
+    hints: false,
+  },
+
   module: {
     rules: [
       {
@@ -69,11 +73,18 @@ module.exports = (env, argv) => ({
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    new DefinePlugin({
-      __MODE__: JSON.stringify(argv.mode),
-      __BURGER_API_CLIENT__: JSON.stringify("mock"),
-      __BURGER_API_BASE_URL__: JSON.stringify(""),
-    }),
+    argv.mode === "development" &&
+      new DefinePlugin({
+        __MODE__: JSON.stringify(argv.mode),
+        __BURGER_API_CLIENT__: JSON.stringify("mock"),
+        __BURGER_API_BASE_URL__: JSON.stringify(""),
+      }),
+    argv.mode === "production" &&
+      new DefinePlugin({
+        __MODE__: JSON.stringify(argv.mode),
+        __BURGER_API_CLIENT__: JSON.stringify("real"),
+        __BURGER_API_BASE_URL__: JSON.stringify("http://localhost:5000"),
+      }),
   ],
 
   devServer: {
