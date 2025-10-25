@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 import { BurgerIngredientsUI } from "../../components/ui/burger-ingredients";
@@ -17,9 +17,21 @@ const BurgerIngredients: FC = () => {
   const sauces = useSelector(selectBurgerSauces);
 
   const [currentTab, setCurrentTab] = useState<TabMode>("bun");
+  const hasUserScrolledRef = useRef(false);
   const titleBunRef = useRef<HTMLHeadingElement>(null);
   const titleMainRef = useRef<HTMLHeadingElement>(null);
   const titleSaucesRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      hasUserScrolledRef.current = true;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const [bunsRef] = useInView({
     threshold: 0,
@@ -33,7 +45,7 @@ const BurgerIngredients: FC = () => {
   const [mainsRef] = useInView({
     threshold: 0,
     onChange(inView) {
-      if (inView) {
+      if (inView && hasUserScrolledRef.current) {
         setCurrentTab("main");
       }
     },
@@ -42,7 +54,7 @@ const BurgerIngredients: FC = () => {
   const [saucesRef] = useInView({
     threshold: 0,
     onChange(inView) {
-      if (inView) {
+      if (inView && hasUserScrolledRef.current) {
         setCurrentTab("sauce");
       }
     },
