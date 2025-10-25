@@ -24,7 +24,7 @@
     "react-dom": "^18.0.0",
     "react-intersection-observer": "^9.0.0",
     "react-redux": "^9.0.0",
-    "react-router-dom": "^6.30.0"
+    "react-router-dom": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.6",
@@ -67,7 +67,6 @@
     "prettier": "^3.0.0",
     "react-test-renderer": "^18.0.0",
     "storybook": "^7.6.10",
-    "storybook-addon-react-router-v6": "^2.0.10",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.0.0",
     "ts-loader": "^9.0.0",
