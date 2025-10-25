@@ -1,68 +1,87 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
-import { getOrdersApi } from '@api';
-import type { TOrder } from '@utils-types';
+import { burgerAPIClient } from "../../clients/burger-api";
+import type { Order } from "../../utils/types";
+import type { RootState } from "../store";
 
-export type TProfileOrdersState = {
-  orders: TOrder[];
-  requestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
-  requestError: string | null;
+type ProfileOrdersState = {
+  orders: Order[];
+  error: string | null;
+  status: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const profileOrdersInitialState: TProfileOrdersState = {
+const profileOrdersInitialState: ProfileOrdersState = {
   orders: [],
-  requestStatus: 'idle',
-  requestError: null
+  error: null,
+  status: "idle",
 };
 
-export const getProfileOrders = createAsyncThunk(
-  'profileOrders/getProfileOrders',
+const getProfileOrders = createAsyncThunk(
+  "profileOrders/getProfileOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const orders = await getOrdersApi();
+      const orders = await burgerAPIClient.getOrders();
       return orders;
     } catch (error) {
       return rejectWithValue(
         error instanceof Error
           ? error.message
-          : 'Произошла ошибка при получении списка заказов пользователя'
+          : "Произошла ошибка при получении списка заказов пользователя",
       );
     }
-  }
+  },
 );
 
-export const profileOrdersSlice = createSlice({
-  name: 'profileOrders',
+const profileOrdersSlice = createSlice({
+  name: "profileOrders",
   initialState: profileOrdersInitialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getProfileOrders.pending, (state) => {
         state.orders = [];
-        state.requestStatus = 'pending';
-        state.requestError = null;
+        state.status = "pending";
+        state.error = null;
       })
       .addCase(getProfileOrders.fulfilled, (state, action) => {
         state.orders = action.payload;
-        state.requestStatus = 'succeeded';
-        state.requestError = null;
+        state.status = "succeeded";
+        state.error = null;
       })
       .addCase(getProfileOrders.rejected, (state, action) => {
         state.orders = [];
-        state.requestStatus = 'failed';
-        state.requestError = action.payload as string;
+        state.status = "failed";
+        state.error = action.payload as string;
       });
-  }
+  },
 });
 
-export const selectProfileOrders = (state: {
-  profileOrders: TProfileOrdersState;
-}) => state.profileOrders.orders;
+const selectProfileOrdersState = (state: RootState) => {
+  return state.profileOrders;
+};
 
-export const selectProfileOrdersRequestError = (state: {
-  profileOrders: TProfileOrdersState;
-}) => state.profileOrders.requestError;
+const selectProfileOrders = createSelector(selectProfileOrdersState, (profileOrdersState) => {
+  return profileOrdersState.orders;
+});
 
-export const selectProfileOrdersRequestStatus = (state: {
-  profileOrders: TProfileOrdersState;
-}) => state.profileOrders.requestStatus;
+const selectProfileOrdersError = createSelector(selectProfileOrdersState, (profileOrdersState) => {
+  return profileOrdersState.error;
+});
+
+const selectProfileOrdersStatus = createSelector(selectProfileOrdersState, (profileOrdersState) => {
+  return profileOrdersState.status;
+});
+
+export {
+  // State
+  profileOrdersSlice,
+  profileOrdersInitialState,
+  // Actions
+  getProfileOrders,
+  // Selectors
+  selectProfileOrders,
+  selectProfileOrdersError,
+  selectProfileOrdersStatus,
+};
+
+export type { ProfileOrdersState };

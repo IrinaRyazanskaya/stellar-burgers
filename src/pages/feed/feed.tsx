@@ -1,32 +1,32 @@
-import { useEffect } from 'react';
-import { type FC } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import type { FC } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
-import { OrderInfo } from '@components';
-import { Preloader } from '@ui';
-import { FeedUI } from '@ui-pages';
+import { Preloader } from "../../components/ui/preloader";
+import { OrderInfo } from "../../components/order-info";
+import { FeedUI } from "../../components/ui/pages/feed";
 import {
   getOrdersFeed,
   selectOrdersFeed,
-  selectOrdersFeedRequestStatus
-} from '@slices';
-import { useDispatch, useSelector } from '../../services/store';
+  selectOrdersFeedStatus,
+} from "../../services/slices/orders-feed";
+import { useDispatch, useSelector } from "../../services/store";
 
-export const Feed: FC = () => {
+const Feed: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const orders = useSelector(selectOrdersFeed);
-  const requestStatus = useSelector(selectOrdersFeedRequestStatus);
+  const requestStatus = useSelector(selectOrdersFeedStatus);
 
-  const goToFeed = () => navigate('/feed');
+  const goToFeed = () => navigate("/feed");
   const refreshFeed = () => dispatch(getOrdersFeed());
 
   useEffect(() => {
     dispatch(getOrdersFeed());
-  }, []);
+  }, [dispatch]);
 
-  if (requestStatus === 'pending') {
+  if (requestStatus === "pending") {
     return <Preloader />;
   }
 
@@ -34,8 +34,12 @@ export const Feed: FC = () => {
     <>
       <FeedUI orders={orders} handleGetFeeds={refreshFeed} />
       <Routes>
-        <Route path=':number' element={<OrderInfo onClose={goToFeed} />} />
+        <Route path=":number" element={<OrderInfo onClose={goToFeed} />} />
       </Routes>
     </>
   );
 };
+
+Feed.displayName = "Feed";
+
+export { Feed };

@@ -1,55 +1,79 @@
-import { useState, useRef, useEffect, FC } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { useSelector } from '../../services/store';
+import type { FC } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
+import { BurgerIngredientsUI } from "../../components/ui/burger-ingredients";
 import {
   selectBurgerBuns,
   selectBurgerMains,
-  selectBurgerSauces
-} from '@slices';
-import { TTabMode } from '@utils-types';
-import { BurgerIngredientsUI } from '@ui';
+  selectBurgerSauces,
+} from "../../services/slices/burger-ingredients";
+import type { TabMode } from "../../utils/types";
+import { useSelector } from "../../services/store";
 
-export const BurgerIngredients: FC = () => {
+const BurgerIngredients: FC = () => {
   const buns = useSelector(selectBurgerBuns);
   const mains = useSelector(selectBurgerMains);
   const sauces = useSelector(selectBurgerSauces);
 
-  const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
+  const [currentTab, setCurrentTab] = useState<TabMode>("bun");
+  const hasUserScrolledRef = useRef(false);
   const titleBunRef = useRef<HTMLHeadingElement>(null);
   const titleMainRef = useRef<HTMLHeadingElement>(null);
   const titleSaucesRef = useRef<HTMLHeadingElement>(null);
 
-  const [bunsRef, inViewBuns] = useInView({
-    threshold: 0
-  });
-
-  const [mainsRef, inViewFilling] = useInView({
-    threshold: 0
-  });
-
-  const [saucesRef, inViewSauces] = useInView({
-    threshold: 0
-  });
-
   useEffect(() => {
-    if (inViewBuns) {
-      setCurrentTab('bun');
-    } else if (inViewSauces) {
-      setCurrentTab('sauce');
-    } else if (inViewFilling) {
-      setCurrentTab('main');
-    }
-  }, [inViewBuns, inViewFilling, inViewSauces]);
+    const handleScroll = () => {
+      hasUserScrolledRef.current = true;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const [bunsRef] = useInView({
+    threshold: 0,
+    onChange(inView) {
+      if (inView) {
+        setCurrentTab("bun");
+      }
+    },
+  });
+
+  const [mainsRef] = useInView({
+    threshold: 0,
+    onChange(inView) {
+      if (inView && hasUserScrolledRef.current) {
+        setCurrentTab("main");
+      }
+    },
+  });
+
+  const [saucesRef] = useInView({
+    threshold: 0,
+    onChange(inView) {
+      if (inView && hasUserScrolledRef.current) {
+        setCurrentTab("sauce");
+      }
+    },
+  });
 
   const onTabClick = (tab: string) => {
-    setCurrentTab(tab as TTabMode);
-    if (tab === 'bun')
-      titleBunRef.current?.scrollIntoView({ behavior: 'smooth' });
-    if (tab === 'main')
-      titleMainRef.current?.scrollIntoView({ behavior: 'smooth' });
-    if (tab === 'sauce')
-      titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setCurrentTab(tab as TabMode);
+
+    if (tab === "bun") {
+      titleBunRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (tab === "main") {
+      titleMainRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (tab === "sauce") {
+      titleSaucesRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -68,3 +92,7 @@ export const BurgerIngredients: FC = () => {
     />
   );
 };
+
+BurgerIngredients.displayName = "BurgerIngredients";
+
+export { BurgerIngredients };

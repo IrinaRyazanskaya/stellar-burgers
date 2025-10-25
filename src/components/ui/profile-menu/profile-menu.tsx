@@ -1,30 +1,32 @@
-import React, { FC } from 'react';
-import styles from './profile-menu.module.css';
-import { NavLink } from 'react-router-dom';
-import { ProfileMenuUIProps } from './type';
+import type { FC } from "react";
+import { NavLink } from "react-router-dom";
 
-export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
-  pathname,
-  handleLogout
-}) => (
+import styles from "./profile-menu.module.css";
+
+type ProfileMenuUIProps = {
+  pathname: string;
+  handleLogout: () => void;
+};
+
+const ProfileMenuUI: FC<ProfileMenuUIProps> = ({ pathname, handleLogout }) => (
   <>
     <NavLink
-      to={'/profile'}
+      to={"/profile"}
       className={({ isActive }) =>
         `text text_type_main-medium text_color_inactive pt-4 pb-4 ${
           styles.link
-        } ${isActive ? styles.link_active : ''}`
+        } ${isActive ? styles.link_active : ""}`
       }
       end
     >
       Профиль
     </NavLink>
     <NavLink
-      to={'/profile/orders'}
+      to={"/profile/orders"}
       className={({ isActive }) =>
         `text text_type_main-medium text_color_inactive pt-4 pb-4 ${
           styles.link
-        } ${isActive ? styles.link_active : ''}`
+        } ${isActive ? styles.link_active : ""}`
       }
     >
       История заказов
@@ -35,10 +37,15 @@ export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
     >
       Выход
     </button>
-    <p className='pt-20 text text_type_main-default text_color_inactive'>
-      {pathname === '/profile'
-        ? 'В этом разделе вы можете изменить свои персональные данные'
-        : 'В этом разделе вы можете просмотреть свою историю заказов'}
+    <p className="pt-20 text text_type_main-default text_color_inactive">
+      {pathname === "/profile"
+        ? "В этом разделе вы можете изменить свои персональные данные"
+        : "В этом разделе вы можете просмотреть свою историю заказов"}
     </p>
   </>
 );
+
+ProfileMenuUI.displayName = "ProfileMenuUI";
+
+export { ProfileMenuUI };
+export type { ProfileMenuUIProps };

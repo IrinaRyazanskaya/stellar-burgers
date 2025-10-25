@@ -1,7 +1,3 @@
 {
-  "semi": true,
-  "singleQuote": true,
-  "jsxSingleQuote": true,
-  "trailingComma": "none",
-  "endOfLine": "auto"
+  "proseWrap": "always"
 }

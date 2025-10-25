@@ -1,20 +1,28 @@
-import { FC, memo, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
+import { memo, useEffect } from "react";
+import type { FC, ReactNode } from "react";
 
-import { TModalProps } from './type';
-import { ModalUI } from '@ui';
+import { ModalUI } from "../../components/ui/modal";
 
-const modalRoot = document.getElementById('modals');
+const modalRoot = document.getElementById("modals");
 
-export const Modal: FC<TModalProps> = memo(({ title, onClose, children }) => {
+type ModalProps = {
+  title: string;
+  onClose: () => void;
+  children?: ReactNode;
+};
+
+const Modal: FC<ModalProps> = memo(({ title, onClose, children }) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      e.key === 'Escape' && onClose();
+      if (e.key === "Escape") {
+        onClose();
+      }
     };
 
-    document.addEventListener('keydown', handleEsc);
+    document.addEventListener("keydown", handleEsc);
     return () => {
-      document.removeEventListener('keydown', handleEsc);
+      document.removeEventListener("keydown", handleEsc);
     };
   }, [onClose]);
 
@@ -22,6 +30,11 @@ export const Modal: FC<TModalProps> = memo(({ title, onClose, children }) => {
     <ModalUI title={title} onClose={onClose}>
       {children}
     </ModalUI>,
-    modalRoot as HTMLDivElement
+    modalRoot as HTMLDivElement,
   );
 });
+
+Modal.displayName = "Modal";
+
+export { Modal };
+export type { ModalProps };

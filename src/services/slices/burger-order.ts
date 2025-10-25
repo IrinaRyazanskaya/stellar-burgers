@@ -1,76 +1,98 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
-import type { TNewOrderData } from '@api';
-import { orderBurgerApi } from '@api';
-import type { TOrder } from '@utils-types';
+import type { NewOrderData } from "../../clients/burger-api";
+import { burgerAPIClient } from "../../clients/burger-api";
+import type { Order } from "../../utils/types";
+import type { RootState } from "../store";
 
-export type TBurgerOrderState = {
-  order: TOrder | null;
-  orderRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
+type BurgerOrderState = {
+  order: Order | null;
   orderError: string | null;
+  orderStatus: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const burgerOrderInitialState: TBurgerOrderState = {
+const burgerOrderInitialState: BurgerOrderState = {
   order: null,
-  orderRequestStatus: 'idle',
-  orderError: null
+  orderError: null,
+  orderStatus: "idle",
 };
 
-export const createBurgerOrder = createAsyncThunk(
-  'burgerOrder/createBurgerOrder',
-  async (newOrderData: TNewOrderData, { rejectWithValue }) => {
+const createBurgerOrder = createAsyncThunk(
+  "burgerOrder/createBurgerOrder",
+  async (newOrderData: NewOrderData, { rejectWithValue }) => {
     try {
-      const data = await orderBurgerApi(newOrderData);
+      const data = await burgerAPIClient.orderBurger(newOrderData);
       return data;
     } catch (error) {
       return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : 'Произошла ошибка при создании заказа'
+        error instanceof Error ? error.message : "Произошла ошибка при создании заказа",
       );
     }
-  }
+  },
 );
 
-export const burgerOrderSlice = createSlice({
-  name: 'burgerOrder',
+const burgerOrderSlice = createSlice({
+  name: "burgerOrder",
   initialState: burgerOrderInitialState,
   reducers: {
     clearBurgerOrderStatus(state) {
       state.order = null;
-      state.orderRequestStatus = 'idle';
+      state.orderStatus = "idle";
       state.orderError = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createBurgerOrder.pending, (state) => {
         state.order = null;
-        state.orderRequestStatus = 'pending';
+        state.orderStatus = "pending";
         state.orderError = null;
       })
       .addCase(createBurgerOrder.fulfilled, (state, action) => {
         state.order = action.payload.order;
-        state.orderRequestStatus = 'succeeded';
+        state.orderStatus = "succeeded";
         state.orderError = null;
       })
       .addCase(createBurgerOrder.rejected, (state, action) => {
         state.order = null;
-        state.orderRequestStatus = 'failed';
+        state.orderStatus = "failed";
         state.orderError = action.payload as string;
       });
-  }
+  },
 });
 
-export const selectBurgerOrder = (state: { burgerOrder: TBurgerOrderState }) =>
-  state.burgerOrder.order;
+const { clearBurgerOrderStatus } = burgerOrderSlice.actions;
 
-export const selectBurgerOrderError = (state: {
-  burgerOrder: TBurgerOrderState;
-}) => state.burgerOrder.orderError;
+const selectBurgerOrderState = (state: RootState) => {
+  return state.burgerOrder;
+};
 
-export const selectBurgerOrderRequestStatus = (state: {
-  burgerOrder: TBurgerOrderState;
-}) => state.burgerOrder.orderRequestStatus;
+const selectBurgerOrder = createSelector(
+  selectBurgerOrderState,
+  (burgerOrderState) => burgerOrderState.order,
+);
 
-export const { clearBurgerOrderStatus } = burgerOrderSlice.actions;
+const selectBurgerOrderError = createSelector(
+  selectBurgerOrderState,
+  (burgerOrderState) => burgerOrderState.orderError,
+);
+
+const selectBurgerOrderStatus = createSelector(
+  selectBurgerOrderState,
+  (burgerOrderState) => burgerOrderState.orderStatus,
+);
+
+export {
+  // State
+  burgerOrderSlice,
+  burgerOrderInitialState,
+  // Actions
+  createBurgerOrder,
+  clearBurgerOrderStatus,
+  // Selectors
+  selectBurgerOrder,
+  selectBurgerOrderError,
+  selectBurgerOrderStatus,
+};
+
+export type { BurgerOrderState };

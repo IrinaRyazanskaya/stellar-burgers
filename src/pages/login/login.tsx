@@ -1,28 +1,29 @@
-import { FC, FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import type { FC, FormEvent } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { LoginUI } from '@ui-pages';
+import { LoginUI } from "../../components/ui/pages/login";
 import {
   clearLoginStatus,
   loginUser,
   selectLoginError,
-  selectLoginRequestStatus
-} from '@slices';
-import { useDispatch, useSelector } from '../../services/store';
+  selectLoginStatus,
+} from "../../services/slices/profile";
+import { useDispatch, useSelector } from "../../services/store";
 
-export const Login: FC = () => {
+const Login: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const loginError = useSelector(selectLoginError) || undefined;
-  const requestStatus = useSelector(selectLoginRequestStatus);
+  const requestStatus = useSelector(selectLoginStatus);
 
   useEffect(() => {
-    if (requestStatus === 'succeeded') {
-      navigate('/');
+    if (requestStatus === "succeeded") {
+      navigate("/");
       dispatch(clearLoginStatus());
     }
   }, [requestStatus, navigate, dispatch]);
@@ -32,8 +33,8 @@ export const Login: FC = () => {
     dispatch(
       loginUser({
         email,
-        password
-      })
+        password,
+      }),
     );
   };
 
@@ -48,3 +49,7 @@ export const Login: FC = () => {
     />
   );
 };
+
+Login.displayName = "Login";
+
+export { Login };

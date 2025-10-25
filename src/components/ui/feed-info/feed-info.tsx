@@ -1,29 +1,41 @@
-import React, { FC, memo } from 'react';
+import { memo } from "react";
+import type { FC } from "react";
 
-import styles from './feed-info.module.css';
+import styles from "./feed-info.module.css";
 
-import { FeedInfoUIProps, HalfColumnProps, TColumnProps } from './type';
+type FeedStats = {
+  total: number;
+  totalToday: number;
+};
 
-export const FeedInfoUI: FC<FeedInfoUIProps> = memo(
-  ({ feed, readyOrders, pendingOrders }) => {
-    const { total, totalToday } = feed;
+type FeedInfoUIProps = {
+  feed: FeedStats;
+  readyOrders: number[];
+  pendingOrders: number[];
+};
 
-    return (
-      <section>
-        <div className={styles.columns}>
-          <HalfColumn
-            orders={readyOrders}
-            title={'Готовы'}
-            textColor={'blue'}
-          />
-          <HalfColumn orders={pendingOrders} title={'В работе'} />
-        </div>
-        <Column title={'Выполнено за все время'} content={total} />
-        <Column title={'Выполнено за сегодня'} content={totalToday} />
-      </section>
-    );
-  }
-);
+const FeedInfoUI: FC<FeedInfoUIProps> = memo(({ feed, readyOrders, pendingOrders }) => {
+  const { total, totalToday } = feed;
+
+  return (
+    <section>
+      <div className={styles.columns}>
+        <HalfColumn orders={readyOrders} title={"Готовы"} textColor={"blue"} />
+        <HalfColumn orders={pendingOrders} title={"В работе"} />
+      </div>
+      <Column title={"Выполнено за все время"} content={total} />
+      <Column title={"Выполнено за сегодня"} content={totalToday} />
+    </section>
+  );
+});
+
+FeedInfoUI.displayName = "FeedInfoUI";
+
+type HalfColumnProps = {
+  orders: number[];
+  title: string;
+  textColor?: string;
+};
 
 const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
   <div className={`pr-6 ${styles.column}`}>
@@ -32,7 +44,7 @@ const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
       {orders.map((item, index) => (
         <li
           className={`text text_type_digits-default ${styles.list_item}`}
-          style={{ color: textColor === 'blue' ? '#00cccc' : '#F2F2F3' }}
+          style={{ color: textColor === "blue" ? "#00cccc" : "#F2F2F3" }}
           key={index}
         >
           {item}
@@ -42,11 +54,21 @@ const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
   </div>
 );
 
-const Column: FC<TColumnProps> = ({ title, content }) => (
+HalfColumn.displayName = "HalfColumn";
+
+type ColumnProps = {
+  title: string;
+  content: number;
+};
+
+const Column: FC<ColumnProps> = ({ title, content }) => (
   <>
-    <h3 className={`pt-15 text text_type_main-medium ${styles.title}`}>
-      {title}:
-    </h3>
+    <h3 className={`pt-15 text text_type_main-medium ${styles.title}`}>{title}:</h3>
     <p className={`text text_type_digits-large ${styles.content}`}>{content}</p>
   </>
 );
+
+Column.displayName = "Column";
+
+export { FeedInfoUI };
+export type { FeedInfoUIProps };

@@ -1,46 +1,45 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
-import { getFeedsApi } from '@api';
-import type { TOrder } from '@utils-types';
+import { burgerAPIClient } from "../../clients/burger-api";
+import type { Order } from "../../utils/types";
+import type { RootState } from "../store";
 
-export type TOrdersFeedState = {
-  orders: TOrder[];
+type OrdersFeedState = {
+  orders: Order[];
   stats: {
     total: number;
     totalToday: number;
   };
-  requestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
-  requestError: string | null;
+  error: string | null;
+  status: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const ordersFeedInitialState: TOrdersFeedState = {
+const ordersFeedInitialState: OrdersFeedState = {
   orders: [],
   stats: {
     total: 0,
-    totalToday: 0
+    totalToday: 0,
   },
-  requestStatus: 'idle',
-  requestError: null
+  error: null,
+  status: "idle",
 };
 
-export const getOrdersFeed = createAsyncThunk(
-  'ordersFeed/getOrdersFeed',
+const getOrdersFeed = createAsyncThunk(
+  "ordersFeed/getOrdersFeed",
   async (_, { rejectWithValue }) => {
     try {
-      const orders = await getFeedsApi();
+      const orders = await burgerAPIClient.getFeeds();
       return orders;
     } catch (error) {
       return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : 'Произошла ошибка при получении списка заказов'
+        error instanceof Error ? error.message : "Произошла ошибка при получении списка заказов",
       );
     }
-  }
+  },
 );
 
-export const ordersFeedSlice = createSlice({
-  name: 'ordersFeed',
+const ordersFeedSlice = createSlice({
+  name: "ordersFeed",
   initialState: ordersFeedInitialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -48,37 +47,58 @@ export const ordersFeedSlice = createSlice({
       .addCase(getOrdersFeed.pending, (state) => {
         state.orders = [];
         state.stats = { total: 0, totalToday: 0 };
-        state.requestStatus = 'pending';
-        state.requestError = null;
+        state.status = "pending";
+        state.error = null;
       })
       .addCase(getOrdersFeed.fulfilled, (state, action) => {
         state.orders = action.payload.orders;
         state.stats = {
           total: action.payload.total,
-          totalToday: action.payload.totalToday
+          totalToday: action.payload.totalToday,
         };
-        state.requestStatus = 'succeeded';
-        state.requestError = null;
+        state.status = "succeeded";
+        state.error = null;
       })
       .addCase(getOrdersFeed.rejected, (state, action) => {
         state.orders = [];
         state.stats = { total: 0, totalToday: 0 };
-        state.requestStatus = 'failed';
-        state.requestError = action.payload as string;
+        state.status = "failed";
+        state.error = action.payload as string;
       });
-  }
+  },
 });
 
-export const selectOrdersFeed = (state: { ordersFeed: TOrdersFeedState }) =>
-  state.ordersFeed.orders;
+const selectOrdersFeedState = (state: RootState) => {
+  return state.ordersFeed;
+};
 
-export const selectOrdersStats = (state: { ordersFeed: TOrdersFeedState }) =>
-  state.ordersFeed.stats;
+const selectOrdersFeed = createSelector(selectOrdersFeedState, (state) => {
+  return state.orders;
+});
 
-export const selectOrdersFeedRequestError = (state: {
-  ordersFeed: TOrdersFeedState;
-}) => state.ordersFeed.requestError;
+const selectOrdersStats = createSelector(selectOrdersFeedState, (state) => {
+  return state.stats;
+});
 
-export const selectOrdersFeedRequestStatus = (state: {
-  ordersFeed: TOrdersFeedState;
-}) => state.ordersFeed.requestStatus;
+const selectOrdersFeedError = createSelector(selectOrdersFeedState, (state) => {
+  return state.error;
+});
+
+const selectOrdersFeedStatus = createSelector(selectOrdersFeedState, (state) => {
+  return state.status;
+});
+
+export {
+  // State
+  ordersFeedSlice,
+  ordersFeedInitialState,
+  // Actions
+  getOrdersFeed,
+  // Selectors
+  selectOrdersFeed,
+  selectOrdersStats,
+  selectOrdersFeedError,
+  selectOrdersFeedStatus,
+};
+
+export type { OrdersFeedState };

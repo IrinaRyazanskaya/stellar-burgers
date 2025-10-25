@@ -1,11 +1,27 @@
-import React, { FC, memo } from 'react';
-import { Tab } from '@zlden/react-developer-burger-ui-components';
+import { memo } from "react";
+import type { FC, RefObject } from "react";
+import { Tab } from "@zlden/react-developer-burger-ui-components";
 
-import styles from './burger-ingredients.module.css';
-import { BurgerIngredientsUIProps } from './type';
-import { IngredientsCategory } from '@components';
+import { IngredientsCategory } from "../../ingredients-category";
+import type { Ingredient, TabMode } from "../../../utils/types";
 
-export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
+import styles from "./burger-ingredients.module.css";
+
+type BurgerIngredientsUIProps = {
+  currentTab: TabMode;
+  buns: Ingredient[];
+  mains: Ingredient[];
+  sauces: Ingredient[];
+  titleBunRef: RefObject<HTMLHeadingElement>;
+  titleMainRef: RefObject<HTMLHeadingElement>;
+  titleSaucesRef: RefObject<HTMLHeadingElement>;
+  bunsRef: (node?: Element | null | undefined) => void;
+  mainsRef: (node?: Element | null | undefined) => void;
+  saucesRef: (node?: Element | null | undefined) => void;
+  onTabClick: (val: string) => void;
+};
+
+const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
   ({
     currentTab,
     buns,
@@ -17,49 +33,38 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
     bunsRef,
     mainsRef,
     saucesRef,
-    onTabClick
+    onTabClick,
   }) => (
     <>
-      <section
-        className={styles.burger_ingredients}
-        data-cy='burger-ingredients'
-      >
+      <section className={styles.burger_ingredients} data-cy="burger-ingredients">
         <nav>
           <ul className={styles.menu}>
-            <Tab value='bun' active={currentTab === 'bun'} onClick={onTabClick}>
+            <Tab value="bun" active={currentTab === "bun"} onClick={onTabClick}>
               Булки
             </Tab>
-            <Tab
-              value='main'
-              active={currentTab === 'main'}
-              onClick={onTabClick}
-            >
+            <Tab value="main" active={currentTab === "main"} onClick={onTabClick}>
               Начинки
             </Tab>
-            <Tab
-              value='sauce'
-              active={currentTab === 'sauce'}
-              onClick={onTabClick}
-            >
+            <Tab value="sauce" active={currentTab === "sauce"} onClick={onTabClick}>
               Соусы
             </Tab>
           </ul>
         </nav>
         <div className={styles.content}>
           <IngredientsCategory
-            title='Булки'
+            title="Булки"
             titleRef={titleBunRef}
             ingredients={buns}
             ref={bunsRef}
           />
           <IngredientsCategory
-            title='Начинки'
+            title="Начинки"
             titleRef={titleMainRef}
             ingredients={mains}
             ref={mainsRef}
           />
           <IngredientsCategory
-            title='Соусы'
+            title="Соусы"
             titleRef={titleSaucesRef}
             ingredients={sauces}
             ref={saucesRef}
@@ -67,5 +72,10 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
         </div>
       </section>
     </>
-  )
+  ),
 );
+
+BurgerIngredientsUI.displayName = "BurgerIngredientsUI";
+
+export { BurgerIngredientsUI };
+export type { BurgerIngredientsUIProps };

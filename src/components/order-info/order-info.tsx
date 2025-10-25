@@ -1,27 +1,31 @@
-import { FC, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import type { FC } from "react";
+import { useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
 
+import { Modal } from "../modal";
+import { Preloader } from "../ui/preloader";
+import { OrderInfoUI } from "../ui/order-info";
 import {
   clearOrderInfo,
   getOrderInfo,
-  selectBurgerIngredients,
   selectOrderInfo,
-  selectOrderInfoRequestStatus
-} from '@slices';
-import { TIngredient } from '@utils-types';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
-import { useSelector, useDispatch } from '../../services/store';
-import type { OrderInfoProps } from './type';
-import { Modal } from '../modal';
+  selectOrderInfoStatus,
+} from "../../services/slices/order-info";
+import { selectBurgerIngredients } from "../../services/slices/burger-ingredients";
+import { useSelector, useDispatch } from "../../services/store";
+import type { Ingredient } from "../../utils/types";
 
-export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
+type OrderInfoProps = {
+  onClose: () => void;
+};
+
+const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
   const dispatch = useDispatch();
   const routerParams = useParams<{ number: string }>();
 
   const orderData = useSelector(selectOrderInfo);
   const ingredients = useSelector(selectBurgerIngredients);
-  const orderRequestStatus = useSelector(selectOrderInfoRequestStatus);
+  const orderRequestStatus = useSelector(selectOrderInfoStatus);
 
   const cleanAndClose = () => {
     dispatch(clearOrderInfo());
@@ -31,7 +35,7 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
   useEffect(() => {
     const orderNumber = Number(routerParams.number);
     dispatch(getOrderInfo(orderNumber));
-  }, [routerParams.number]);
+  }, [dispatch, routerParams.number]);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
@@ -39,46 +43,41 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
     const date = new Date(orderData.createdAt);
 
     type TIngredientsWithCount = {
-      [key: string]: TIngredient & { count: number };
+      [key: string]: Ingredient & { count: number };
     };
 
-    const ingredientsInfo = orderData.ingredients.reduce(
-      (acc: TIngredientsWithCount, item) => {
-        if (!acc[item]) {
-          const ingredient = ingredients.find((ing) => ing._id === item);
-          if (ingredient) {
-            acc[item] = {
-              ...ingredient,
-              count: 1
-            };
-          }
-        } else {
-          acc[item].count++;
+    const ingredientsInfo = orderData.ingredients.reduce((acc: TIngredientsWithCount, item) => {
+      if (!acc[item]) {
+        const ingredient = ingredients.find((ing) => ing._id === item);
+        if (ingredient) {
+          acc[item] = {
+            ...ingredient,
+            count: 1,
+          };
         }
+      } else {
+        acc[item].count++;
+      }
 
-        return acc;
-      },
-      {}
-    );
+      return acc;
+    }, {});
 
     const total = Object.values(ingredientsInfo).reduce(
       (acc, item) => acc + item.price * item.count,
-      0
+      0,
     );
 
     return {
       ...orderData,
       ingredientsInfo,
       date,
-      total
+      total,
     };
   }, [orderData, ingredients]);
 
-  const isLoading = !orderInfo || orderRequestStatus === 'pending';
+  const isLoading = !orderInfo || orderRequestStatus === "pending";
 
-  const modalTitle = isLoading
-    ? 'Идёт загрузка данных'
-    : `#${orderInfo.number}`;
+  const modalTitle = isLoading ? "Идёт загрузка данных" : `#${orderInfo.number}`;
 
   return (
     <Modal title={modalTitle} onClose={cleanAndClose}>
@@ -86,3 +85,8 @@ export const OrderInfo: FC<OrderInfoProps> = ({ onClose }) => {
     </Modal>
   );
 };
+
+OrderInfo.displayName = "OrderInfo";
+
+export { OrderInfo };
+export type { OrderInfoProps };

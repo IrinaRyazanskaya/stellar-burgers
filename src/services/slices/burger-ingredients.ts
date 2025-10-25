@@ -1,39 +1,38 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { getIngredientsApi } from '@api';
-import type { TIngredient } from '@utils-types';
+import { burgerAPIClient } from "../../clients/burger-api";
+import type { Ingredient } from "../../utils/types";
+import type { RootState } from "../store";
 
-export type TBurgerIngredientsState = {
-  items: TIngredient[];
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+type BurgerIngredientsState = {
+  items: Ingredient[];
   error: string | null;
+  status: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const burgerIngredientsInitialState: TBurgerIngredientsState = {
+const burgerIngredientsInitialState: BurgerIngredientsState = {
   items: [],
-  loading: 'idle',
-  error: null
+  error: null,
+  status: "idle",
 };
 
-export const fetchBurgerIngredients = createAsyncThunk(
-  'ingredients/fetchBurgerIngredients',
+const fetchBurgerIngredients = createAsyncThunk(
+  "ingredients/fetchBurgerIngredients",
   async (_, { rejectWithValue }) => {
     try {
-      const data = await getIngredientsApi();
+      const data = await burgerAPIClient.getIngredients();
       return data;
     } catch (error) {
       return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : 'Произошла ошибка при загрузке ингредиентов'
+        error instanceof Error ? error.message : "Произошла ошибка при загрузке ингредиентов",
       );
     }
-  }
+  },
 );
 
-export const burgerIngredientsSlice = createSlice({
-  name: 'burgerIngredients',
+const burgerIngredientsSlice = createSlice({
+  name: "burgerIngredients",
   initialState: burgerIngredientsInitialState,
   reducers: {
     resetIngredientsError: (state) => {
@@ -41,58 +40,83 @@ export const burgerIngredientsSlice = createSlice({
     },
     clearIngredients: (state) => {
       state.items = [];
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchBurgerIngredients.pending, (state) => {
-        state.loading = 'pending';
+        state.status = "pending";
         state.error = null;
       })
-      .addCase(
-        fetchBurgerIngredients.fulfilled,
-        (state, action: PayloadAction<TIngredient[]>) => {
-          state.loading = 'succeeded';
-          state.items = action.payload;
-        }
-      )
+      .addCase(fetchBurgerIngredients.fulfilled, (state, action: PayloadAction<Ingredient[]>) => {
+        state.status = "succeeded";
+        state.items = action.payload;
+      })
       .addCase(fetchBurgerIngredients.rejected, (state, action) => {
-        state.loading = 'failed';
+        state.status = "failed";
         state.error = action.payload as string;
       });
-  }
+  },
 });
 
-export const { resetIngredientsError, clearIngredients } =
-  burgerIngredientsSlice.actions;
+const { resetIngredientsError, clearIngredients } = burgerIngredientsSlice.actions;
 
-export const selectBurgerBuns = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.items.filter((item) => item.type === 'bun');
+const selectSelectedIngredientId = (_: RootState, id: string) => id;
 
-export const selectBurgerMains = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.items.filter((item) => item.type === 'main');
+const selectBurgerIngredientsState = (state: RootState) => {
+  return state.burgerIngredients;
+};
 
-export const selectBurgerSauces = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.items.filter((item) => item.type === 'sauce');
-
-export const selectBurgerIngredients = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.items;
-
-export const selectIngredientById = (
-  state: {
-    burgerIngredients: TBurgerIngredientsState;
+const selectBurgerIngredients = createSelector(
+  [selectBurgerIngredientsState],
+  (burgerIngredients) => {
+    return burgerIngredients.items;
   },
-  id: string
-) => state.burgerIngredients.items.find((item) => item._id === id) || null;
+);
 
-export const selectBurgerIngredientsIsLoading = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.loading === 'pending';
+const selectBurgerBuns = createSelector(selectBurgerIngredients, (items) => {
+  return items.filter((item) => item.type === "bun");
+});
 
-export const selectBurgerIngredientsRequestError = (state: {
-  burgerIngredients: TBurgerIngredientsState;
-}) => state.burgerIngredients.error;
+const selectBurgerMains = createSelector(selectBurgerIngredients, (items) => {
+  return items.filter((item) => item.type === "main");
+});
+
+const selectBurgerSauces = createSelector(selectBurgerIngredients, (items) => {
+  return items.filter((item) => item.type === "sauce");
+});
+
+const selectIngredientById = createSelector(
+  [selectBurgerIngredients, selectSelectedIngredientId],
+  (items, id) => items.find((item) => item._id === id) ?? null,
+);
+
+const selectBurgerIngredientsError = createSelector(
+  selectBurgerIngredientsState,
+  (burgerIngredients) => burgerIngredients.error,
+);
+
+const selectBurgerIngredientsStatus = createSelector(
+  selectBurgerIngredientsState,
+  (burgerIngredients) => burgerIngredients.status,
+);
+
+export {
+  // State
+  burgerIngredientsSlice,
+  burgerIngredientsInitialState,
+  // Actions
+  fetchBurgerIngredients,
+  resetIngredientsError,
+  clearIngredients,
+  // Selectors
+  selectBurgerBuns,
+  selectBurgerMains,
+  selectBurgerSauces,
+  selectBurgerIngredients,
+  selectIngredientById,
+  selectBurgerIngredientsError,
+  selectBurgerIngredientsStatus,
+};
+
+export type { BurgerIngredientsState };

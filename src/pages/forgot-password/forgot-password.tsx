@@ -1,11 +1,12 @@
-import { FC, useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import type { FC } from "react";
+import { useState, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { forgotPasswordApi } from '@api';
-import { ForgotPasswordUI } from '@ui-pages';
+import { burgerAPIClient } from "../../clients/burger-api";
+import { ForgotPasswordUI } from "../../components/ui/pages/forgot-password";
 
-export const ForgotPassword: FC = () => {
-  const [email, setEmail] = useState('');
+const ForgotPassword: FC = () => {
+  const [email, setEmail] = useState("");
   const [error, setError] = useState<Error | null>(null);
 
   const navigate = useNavigate();
@@ -14,10 +15,11 @@ export const ForgotPassword: FC = () => {
     e.preventDefault();
 
     setError(null);
-    forgotPasswordApi({ email })
+    burgerAPIClient
+      .forgotPassword({ email })
       .then(() => {
-        localStorage.setItem('resetPassword', 'true');
-        navigate('/reset-password', { replace: true });
+        localStorage.setItem("resetPassword", "true");
+        navigate("/reset-password", { replace: true });
       })
       .catch((err) => setError(err));
   };
@@ -31,3 +33,7 @@ export const ForgotPassword: FC = () => {
     />
   );
 };
+
+ForgotPassword.displayName = "ForgotPassword";
+
+export { ForgotPassword };

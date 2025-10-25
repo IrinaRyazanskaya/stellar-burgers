@@ -1,65 +1,62 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import { getIngredientsApi } from '@api';
-import type { TIngredient } from '@utils-types';
+import { burgerAPIClient } from "../../clients/burger-api";
+import type { Ingredient } from "../../utils/types";
 import {
   burgerIngredientsSlice,
   fetchBurgerIngredients,
   resetIngredientsError,
   clearIngredients,
-  burgerIngredientsInitialState
-} from './burger-ingredients';
+  burgerIngredientsInitialState,
+} from "./burger-ingredients";
 
-jest.mock('@api');
+jest.mock("../../clients/burger-api");
 
-const mockIngredients: TIngredient[] = [
+const mockIngredients: Ingredient[] = [
   {
-    _id: '1',
-    name: 'Bun A',
-    type: 'bun',
+    _id: "1",
+    name: "Bun A",
+    type: "bun",
     proteins: 10,
     fat: 5,
     carbohydrates: 20,
     calories: 250,
     price: 2,
-    image: 'img',
-    image_large: 'img_large',
-    image_mobile: 'img_mobile'
+    image: "img",
+    image_large: "img_large",
+    image_mobile: "img_mobile",
   },
   {
-    _id: '2',
-    name: 'Main A',
-    type: 'main',
+    _id: "2",
+    name: "Main A",
+    type: "main",
     proteins: 20,
     fat: 10,
     carbohydrates: 5,
     calories: 350,
     price: 5,
-    image: 'img',
-    image_large: 'img_large',
-    image_mobile: 'img_mobile'
-  }
+    image: "img",
+    image_large: "img_large",
+    image_mobile: "img_mobile",
+  },
 ];
 
-describe('burgerIngredientsSlice', () => {
-  it('should handle resetIngredientsError', () => {
+describe("burgerIngredientsSlice", () => {
+  it("should handle resetIngredientsError", () => {
     const state = {
       ...burgerIngredientsInitialState,
-      error: 'Error'
+      error: "Error",
     };
 
-    const nextState = burgerIngredientsSlice.reducer(
-      state,
-      resetIngredientsError()
-    );
+    const nextState = burgerIngredientsSlice.reducer(state, resetIngredientsError());
 
     expect(nextState.error).toBeNull();
   });
 
-  it('should handle clearIngredients', () => {
+  it("should handle clearIngredients", () => {
     const state = {
       ...burgerIngredientsInitialState,
-      items: mockIngredients
+      items: mockIngredients,
     };
 
     const nextState = burgerIngredientsSlice.reducer(state, clearIngredients());
@@ -67,19 +64,16 @@ describe('burgerIngredientsSlice', () => {
     expect(nextState.items).toEqual([]);
   });
 
-  it('should handle fetchBurgerIngredients pending', () => {
+  it("should handle fetchBurgerIngredients pending", () => {
     const action = { type: fetchBurgerIngredients.pending.type };
-    const nextState = burgerIngredientsSlice.reducer(
-      burgerIngredientsInitialState,
-      action
-    );
+    const nextState = burgerIngredientsSlice.reducer(burgerIngredientsInitialState, action);
 
-    expect(nextState.loading).toEqual('pending');
+    expect(nextState.status).toEqual("pending");
     expect(nextState.error).toBeNull();
   });
 
-  it('should handle fetchBurgerIngredients fulfilled', async () => {
-    (getIngredientsApi as jest.Mock).mockResolvedValue(mockIngredients);
+  it("should handle fetchBurgerIngredients fulfilled", async () => {
+    (burgerAPIClient.getIngredients as jest.Mock).mockResolvedValue(mockIngredients);
 
     const store = configureStore({ reducer: burgerIngredientsSlice.reducer });
 
@@ -88,12 +82,12 @@ describe('burgerIngredientsSlice', () => {
     const state = store.getState();
 
     expect(state.items).toEqual(mockIngredients);
-    expect(state.loading).toEqual('succeeded');
+    expect(state.status).toEqual("succeeded");
     expect(state.error).toBeNull();
   });
 
-  it('should handle fetchBurgerIngredients rejected', async () => {
-    (getIngredientsApi as jest.Mock).mockRejectedValue(new Error('API Error'));
+  it("should handle fetchBurgerIngredients rejected", async () => {
+    (burgerAPIClient.getIngredients as jest.Mock).mockRejectedValue(new Error("API Error"));
 
     const store = configureStore({ reducer: burgerIngredientsSlice.reducer });
 
@@ -102,7 +96,7 @@ describe('burgerIngredientsSlice', () => {
     const state = store.getState();
 
     expect(state.items).toEqual([]);
-    expect(state.loading).toEqual('failed');
-    expect(state.error).toEqual('API Error');
+    expect(state.status).toEqual("failed");
+    expect(state.error).toEqual("API Error");
   });
 });

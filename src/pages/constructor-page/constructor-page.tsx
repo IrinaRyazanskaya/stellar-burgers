@@ -1,33 +1,27 @@
-import { FC } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import type { FC } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
-import {
-  BurgerIngredients,
-  IngredientDetails,
-  BurgerConstructor
-} from '@components';
-import { Preloader } from '@ui';
-import { selectBurgerIngredientsIsLoading } from '@slices';
-import { useSelector } from '../../services/store';
+import { Preloader } from "../../components/ui/preloader";
+import { IngredientDetails } from "../../components/ingredient-details";
+import { BurgerConstructor } from "../../components/burger-constructor";
+import { BurgerIngredients } from "../../components/burger-ingredients";
+import { selectBurgerIngredientsStatus } from "../../services/slices/burger-ingredients";
+import { useSelector } from "../../services/store";
 
-import styles from './constructor-page.module.css';
+import styles from "./constructor-page.module.css";
 
-export const ConstructorPage: FC = () => {
+const ConstructorPage: FC = () => {
   const navigate = useNavigate();
-
-  const goToConstructor = () => navigate('/');
-
-  const isIngredientsLoading = useSelector(selectBurgerIngredientsIsLoading);
+  const goToConstructor = () => navigate("/");
+  const isIngredientsLoading = useSelector(selectBurgerIngredientsStatus);
 
   return (
     <>
-      {isIngredientsLoading ? (
+      {isIngredientsLoading === "pending" ? (
         <Preloader />
       ) : (
         <main className={styles.containerMain}>
-          <h1
-            className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}
-          >
+          <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}>
             Соберите бургер
           </h1>
           <div className={`${styles.main} pl-5 pr-5`}>
@@ -36,7 +30,7 @@ export const ConstructorPage: FC = () => {
           </div>
           <Routes>
             <Route
-              path='ingredients/:id'
+              path="ingredients/:id"
               element={<IngredientDetails onClose={goToConstructor} />}
             />
           </Routes>
@@ -45,3 +39,7 @@ export const ConstructorPage: FC = () => {
     </>
   );
 };
+
+ConstructorPage.displayName = "ConstructorPage";
+
+export { ConstructorPage };

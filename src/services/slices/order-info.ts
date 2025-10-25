@@ -1,75 +1,96 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
-import { getOrderByNumberApi } from '@api';
-import type { TOrder } from '@utils-types';
+import { burgerAPIClient } from "../../clients/burger-api";
+import type { RootState } from "../store";
+import type { Order } from "../../utils/types";
 
-export type TOrderInfoState = {
-  order: TOrder | null;
-  orderRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
-  orderRequestError: string | null;
+type OrderInfoState = {
+  order: Order | null;
+  error: string | null;
+  status: "idle" | "pending" | "succeeded" | "failed";
 };
 
-export const orderInfoInitialState: TOrderInfoState = {
+const orderInfoInitialState: OrderInfoState = {
   order: null,
-  orderRequestStatus: 'idle',
-  orderRequestError: null
+  error: null,
+  status: "idle",
 };
 
-export const getOrderInfo = createAsyncThunk(
-  'orderInfo/getOrderInfo',
+const getOrderInfo = createAsyncThunk(
+  "orderInfo/getOrderInfo",
   async (number: number, { rejectWithValue }) => {
     try {
-      const data = await getOrderByNumberApi(number);
+      const data = await burgerAPIClient.getOrder(number);
       return data;
     } catch (error) {
       return rejectWithValue(
         error instanceof Error
           ? error.message
-          : 'Произошла ошибка при получении информации о заказе'
+          : "Произошла ошибка при получении информации о заказе",
       );
     }
-  }
+  },
 );
 
-export const orderInfoSlice = createSlice({
-  name: 'orderInfo',
+const orderInfoSlice = createSlice({
+  name: "orderInfo",
   initialState: orderInfoInitialState,
   reducers: {
     clearOrderInfo(state) {
       state.order = null;
-      state.orderRequestStatus = 'idle';
-      state.orderRequestError = null;
-    }
+      state.status = "idle";
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getOrderInfo.pending, (state) => {
         state.order = null;
-        state.orderRequestStatus = 'pending';
-        state.orderRequestError = null;
+        state.status = "pending";
+        state.error = null;
       })
       .addCase(getOrderInfo.fulfilled, (state, action) => {
         state.order = action.payload.orders[0];
-        state.orderRequestStatus = 'succeeded';
-        state.orderRequestError = null;
+        state.status = "succeeded";
+        state.error = null;
       })
       .addCase(getOrderInfo.rejected, (state, action) => {
         state.order = null;
-        state.orderRequestStatus = 'failed';
-        state.orderRequestError = action.payload as string;
+        state.status = "failed";
+        state.error = action.payload as string;
       });
-  }
+  },
 });
 
-export const selectOrderInfo = (state: { orderInfo: TOrderInfoState }) =>
-  state.orderInfo.order;
+const { clearOrderInfo } = orderInfoSlice.actions;
 
-export const selectOrderInfoRequestError = (state: {
-  orderInfo: TOrderInfoState;
-}) => state.orderInfo.orderRequestError;
+const selectOrderInfoState = (state: RootState) => {
+  return state.orderInfo;
+};
 
-export const selectOrderInfoRequestStatus = (state: {
-  orderInfo: TOrderInfoState;
-}) => state.orderInfo.orderRequestStatus;
+const selectOrderInfo = createSelector(selectOrderInfoState, (orderInfoState) => {
+  return orderInfoState.order;
+});
 
-export const { clearOrderInfo } = orderInfoSlice.actions;
+const selectOrderInfoError = createSelector(selectOrderInfoState, (orderInfoState) => {
+  return orderInfoState.error;
+});
+
+const selectOrderInfoStatus = createSelector(selectOrderInfoState, (orderInfoState) => {
+  return orderInfoState.status;
+});
+
+export {
+  // State
+  orderInfoSlice,
+  orderInfoInitialState,
+  // Actions
+  getOrderInfo,
+  clearOrderInfo,
+  // Selectors
+  selectOrderInfo,
+  selectOrderInfoError,
+  selectOrderInfoStatus,
+};
+
+export type { OrderInfoState };

@@ -1,11 +1,17 @@
-import React, { FC } from 'react';
-import { OrderStatusUIProps } from './type';
+import type { FC } from "react";
 
-export const OrderStatusUI: FC<OrderStatusUIProps> = ({ textStyle, text }) => (
-  <span
-    className='text text_type_main-default pt-2'
-    style={{ color: textStyle }}
-  >
+type OrderStatusUIProps = {
+  text: string;
+  textStyle: string;
+};
+
+const OrderStatusUI: FC<OrderStatusUIProps> = ({ textStyle, text }) => (
+  <span className="text text_type_main-default pt-2" style={{ color: textStyle }}>
     {text}
   </span>
 );
+
+OrderStatusUI.displayName = "OrderStatusUI";
+
+export { OrderStatusUI };
+export type { OrderStatusUIProps };

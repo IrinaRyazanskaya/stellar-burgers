@@ -1,40 +1,29 @@
-import type { StorybookConfig } from '@storybook/react-webpack5';
-import path from 'path';
+import { DefinePlugin } from "webpack";
+import type { StorybookConfig } from "@storybook/react-webpack5";
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-onboarding',
-    '@storybook/addon-interactions'
+    "@storybook/addon-links",
+    "@storybook/addon-webpack5-compiler-swc",
   ],
-  webpackFinal: async (config) => {
-    config.resolve
-      ? (config.resolve.alias = {
-          ...config.resolve.alias,
-          '@pages': path.resolve(__dirname, '../src/pages'),
-          '@components': path.resolve(__dirname, '../src/components'),
-          '@ui': path.resolve(__dirname, '../src/components/ui'),
-          '@ui-pages': path.resolve(__dirname, '../src/components/ui/pages'),
-          '@utils-types': path.resolve(__dirname, '../src/utils/types'),
-          '@api': path.resolve(__dirname, '../src/utils/burger-api.ts'),
-          '@slices': path.resolve(__dirname, '../src/services/slices'),
-          '@selectors': path.resolve(__dirname, '../src/services/selectors')
-        })
-      : null;
-    return config;
-  },
   framework: {
-    name: '@storybook/react-webpack5',
-    options: {
-      builder: {
-        useSWC: true
-      }
-    }
+    name: "@storybook/react-webpack5",
+    options: {},
   },
-  docs: {
-    autodocs: 'tag'
-  }
+  webpackFinal: async (webpackConfig) => {
+    webpackConfig.plugins = webpackConfig.plugins ?? [];
+
+    webpackConfig.plugins.push(
+      new DefinePlugin({
+        __MODE__: JSON.stringify(webpackConfig.mode),
+        __BURGER_API_CLIENT__: JSON.stringify("mock"),
+        __BURGER_API_BASE_URL__: JSON.stringify(""),
+      }),
+    );
+
+    return webpackConfig;
+  },
 };
+
 export default config;

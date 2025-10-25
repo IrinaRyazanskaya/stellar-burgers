@@ -1,29 +1,31 @@
-import { FC, FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import type { FC, FormEvent } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { resetPasswordApi } from '@api';
-import { ResetPasswordUI } from '@ui-pages';
+import { burgerAPIClient } from "../../clients/burger-api";
+import { ResetPasswordUI } from "../../components/ui/pages/reset-password";
 
-export const ResetPassword: FC = () => {
+const ResetPassword: FC = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
+  const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
   const [error, setError] = useState<Error | null>(null);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    resetPasswordApi({ password, token })
+    burgerAPIClient
+      .resetPassword({ password, token })
       .then(() => {
-        localStorage.removeItem('resetPassword');
-        navigate('/login');
+        localStorage.removeItem("resetPassword");
+        navigate("/login");
       })
       .catch((err) => setError(err));
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('resetPassword')) {
-      navigate('/forgot-password', { replace: true });
+    if (!localStorage.getItem("resetPassword")) {
+      navigate("/forgot-password", { replace: true });
     }
   }, [navigate]);
 
@@ -38,3 +40,7 @@ export const ResetPassword: FC = () => {
     />
   );
 };
+
+ResetPassword.displayName = "ResetPassword";
+
+export { ResetPassword };
