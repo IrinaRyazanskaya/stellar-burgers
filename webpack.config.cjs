@@ -11,19 +11,7 @@ module.exports = (env, argv) => ({
   entry: path.resolve(__dirname, "./src/index.tsx"),
 
   resolve: {
-    extensions: [
-      "*",
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx",
-      ".json",
-      ".css",
-      ".scss",
-      ".png",
-      ".svg",
-      ".jpg",
-    ],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".css", ".scss", ".png", ".svg", ".jpg"],
   },
 
   output: {
