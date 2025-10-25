@@ -1,19 +1,20 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
 import type { NewOrderData } from "../../clients/burger-api";
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { Order } from "../../utils/types";
+import type { RootState } from "../store";
 
 type BurgerOrderState = {
   order: Order | null;
-  orderRequestStatus: "idle" | "pending" | "succeeded" | "failed";
   orderError: string | null;
+  orderStatus: "idle" | "pending" | "succeeded" | "failed";
 };
 
 const burgerOrderInitialState: BurgerOrderState = {
   order: null,
   orderError: null,
-  orderRequestStatus: "idle",
+  orderStatus: "idle",
 };
 
 const createBurgerOrder = createAsyncThunk(
@@ -36,7 +37,7 @@ const burgerOrderSlice = createSlice({
   reducers: {
     clearBurgerOrderStatus(state) {
       state.order = null;
-      state.orderRequestStatus = "idle";
+      state.orderStatus = "idle";
       state.orderError = null;
     },
   },
@@ -44,17 +45,17 @@ const burgerOrderSlice = createSlice({
     builder
       .addCase(createBurgerOrder.pending, (state) => {
         state.order = null;
-        state.orderRequestStatus = "pending";
+        state.orderStatus = "pending";
         state.orderError = null;
       })
       .addCase(createBurgerOrder.fulfilled, (state, action) => {
         state.order = action.payload.order;
-        state.orderRequestStatus = "succeeded";
+        state.orderStatus = "succeeded";
         state.orderError = null;
       })
       .addCase(createBurgerOrder.rejected, (state, action) => {
         state.order = null;
-        state.orderRequestStatus = "failed";
+        state.orderStatus = "failed";
         state.orderError = action.payload as string;
       });
   },
@@ -62,17 +63,24 @@ const burgerOrderSlice = createSlice({
 
 const { clearBurgerOrderStatus } = burgerOrderSlice.actions;
 
-const selectBurgerOrder = (state: { burgerOrder: BurgerOrderState }) => {
-  return state.burgerOrder.order;
+const selectBurgerOrderState = (state: RootState) => {
+  return state.burgerOrder;
 };
 
-const selectBurgerOrderError = (state: { burgerOrder: BurgerOrderState }) => {
-  return state.burgerOrder.orderError;
-};
+const selectBurgerOrder = createSelector(
+  selectBurgerOrderState,
+  (burgerOrderState) => burgerOrderState.order,
+);
 
-const selectBurgerOrderRequestStatus = (state: { burgerOrder: BurgerOrderState }) => {
-  return state.burgerOrder.orderRequestStatus;
-};
+const selectBurgerOrderError = createSelector(
+  selectBurgerOrderState,
+  (burgerOrderState) => burgerOrderState.orderError,
+);
+
+const selectBurgerOrderStatus = createSelector(
+  selectBurgerOrderState,
+  (burgerOrderState) => burgerOrderState.orderStatus,
+);
 
 export {
   // State
@@ -84,7 +92,7 @@ export {
   // Selectors
   selectBurgerOrder,
   selectBurgerOrderError,
-  selectBurgerOrderRequestStatus,
+  selectBurgerOrderStatus,
 };
 
 export type { BurgerOrderState };

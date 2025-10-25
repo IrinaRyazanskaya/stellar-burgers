@@ -8,7 +8,7 @@ import {
   clearBurgerOrderStatus,
   createBurgerOrder,
   selectBurgerOrder,
-  selectBurgerOrderRequestStatus,
+  selectBurgerOrderStatus,
 } from "../../services/slices/burger-order";
 import { selectUser } from "../../services/slices/profile";
 import { useDispatch, useSelector } from "../../services/store";
@@ -19,7 +19,7 @@ const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
 
   const constructorItems = useSelector(selectBurgerConstructorItems);
-  const orderRequestStatus = useSelector(selectBurgerOrderRequestStatus);
+  const orderRequestStatus = useSelector(selectBurgerOrderStatus);
   const orderModalData = useSelector(selectBurgerOrder);
   const user = useSelector(selectUser);
 

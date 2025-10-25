@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { LoginData, RegisterData } from "../../clients/burger-api";
 import { deleteCookie, setCookie } from "../../utils/cookie";
 import type { User } from "../../utils/types";
+import type { RootState } from "../store";
 
 type ProfileState = {
   user: User | null;
@@ -206,45 +207,50 @@ const profileSlice = createSlice({
 
 const { clearLoginStatus, clearRegisterStatus } = profileSlice.actions;
 
-const selectUser = (state: { profile: ProfileState }) => {
-  return state.profile.user;
+const selectProfileState = (state: RootState) => {
+  return state.profile;
 };
 
-const selectUserStatus = (state: { profile: ProfileState }) => {
-  return state.profile.userStatus;
-};
+const selectUser = createSelector(selectProfileState, (profile) => {
+  return profile.user;
+});
 
-const selectGetUserError = (state: { profile: ProfileState }) => {
-  return state.profile.getUserError;
-};
+const selectUserStatus = createSelector(selectProfileState, (profile) => {
+  return profile.userStatus;
+});
 
-const selectGetUserStatus = (state: { profile: ProfileState }) => {
-  return state.profile.getUserStatus;
-};
+const selectGetUserError = createSelector(selectProfileState, (profile) => {
+  return profile.getUserError;
+});
 
-const selectLoginError = (state: { profile: ProfileState }) => {
-  return state.profile.loginError;
-};
+const selectGetUserStatus = createSelector(selectProfileState, (profile) => {
+  return profile.getUserStatus;
+});
 
-const selectLoginStatus = (state: { profile: ProfileState }) => {
-  return state.profile.loginStatus;
-};
+const selectLoginError = createSelector(selectProfileState, (profile) => {
+  return profile.loginError;
+});
 
-const selectUpdateError = (state: { profile: ProfileState }) => {
-  return state.profile.updateError;
-};
+const selectLoginStatus = createSelector(selectProfileState, (profile) => {
+  return profile.loginStatus;
+});
 
-const selectUpdateStatus = (state: { profile: ProfileState }) => {
-  return state.profile.updateStatus;
-};
+const selectUpdateError = createSelector(selectProfileState, (profile) => {
+  return profile.updateError;
+});
 
-const selectRegisterError = (state: { profile: ProfileState }) => {
-  return state.profile.registerError;
-};
+const selectUpdateStatus = createSelector(selectProfileState, (profile) => {
+  return profile.updateStatus;
+});
 
-const selectRegisterStatus = (state: { profile: ProfileState }) => {
-  return state.profile.registerStatus;
-};
+const selectRegisterError = createSelector(selectProfileState, (profile) => {
+  return profile.registerError;
+});
+
+const selectRegisterStatus = createSelector(
+  selectProfileState,
+  (profile) => profile.registerStatus,
+);
 
 export {
   // State

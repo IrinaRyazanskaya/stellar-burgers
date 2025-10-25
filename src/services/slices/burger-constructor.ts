@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { generateStringId } from "../../utils/id-generator";
 import type { ConstructorIngredient, Ingredient } from "../../utils/types";
 import { createBurgerOrder } from "./burger-order";
+import type { RootState } from "../store";
 
 type BurgerConstructorState = {
   bun: ConstructorIngredient | null;
@@ -65,10 +66,17 @@ const {
   moveIngredientDownInConstructor,
 } = burgerConstructorSlice.actions;
 
-const selectBurgerConstructorItems = (state: { burgerConstructor: BurgerConstructorState }) => ({
-  bun: state.burgerConstructor.bun,
-  ingredients: state.burgerConstructor.ingredients,
-});
+const selectBurgerConstructorState = (state: RootState) => {
+  return state.burgerConstructor;
+};
+
+const selectBurgerConstructorItems = createSelector(
+  selectBurgerConstructorState,
+  (burgerConstructor) => ({
+    bun: burgerConstructor.bun,
+    ingredients: burgerConstructor.ingredients,
+  }),
+);
 
 export {
   // State

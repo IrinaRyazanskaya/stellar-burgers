@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { Order } from "../../utils/types";
+import type { RootState } from "../store";
 
 type ProfileOrdersState = {
   orders: Order[];
@@ -55,17 +56,21 @@ const profileOrdersSlice = createSlice({
   },
 });
 
-const selectProfileOrders = (state: { profileOrders: ProfileOrdersState }) => {
-  return state.profileOrders.orders;
+const selectProfileOrdersState = (state: RootState) => {
+  return state.profileOrders;
 };
 
-const selectProfileOrdersError = (state: { profileOrders: ProfileOrdersState }) => {
-  return state.profileOrders.error;
-};
+const selectProfileOrders = createSelector(selectProfileOrdersState, (profileOrdersState) => {
+  return profileOrdersState.orders;
+});
 
-const selectProfileOrdersStatus = (state: { profileOrders: ProfileOrdersState }) => {
-  return state.profileOrders.status;
-};
+const selectProfileOrdersError = createSelector(selectProfileOrdersState, (profileOrdersState) => {
+  return profileOrdersState.error;
+});
+
+const selectProfileOrdersStatus = createSelector(selectProfileOrdersState, (profileOrdersState) => {
+  return profileOrdersState.status;
+});
 
 export {
   // State

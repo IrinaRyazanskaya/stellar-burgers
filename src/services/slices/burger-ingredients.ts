@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
 import type { Ingredient } from "../../utils/types";
+import type { RootState } from "../store";
 
 type BurgerIngredientsState = {
   items: Ingredient[];
@@ -60,33 +61,45 @@ const burgerIngredientsSlice = createSlice({
 
 const { resetIngredientsError, clearIngredients } = burgerIngredientsSlice.actions;
 
-const selectBurgerBuns = (state: { burgerIngredients: BurgerIngredientsState }) => {
-  return state.burgerIngredients.items.filter((item) => item.type === "bun");
+const selectSelectedIngredientId = (_: RootState, id: string) => id;
+
+const selectBurgerIngredientsState = (state: RootState) => {
+  return state.burgerIngredients;
 };
 
-const selectBurgerMains = (state: { burgerIngredients: BurgerIngredientsState }) => {
-  return state.burgerIngredients.items.filter((item) => item.type === "main");
-};
+const selectBurgerIngredients = createSelector(
+  [selectBurgerIngredientsState],
+  (burgerIngredients) => {
+    return burgerIngredients.items;
+  },
+);
 
-const selectBurgerSauces = (state: { burgerIngredients: BurgerIngredientsState }) => {
-  return state.burgerIngredients.items.filter((item) => item.type === "sauce");
-};
+const selectBurgerBuns = createSelector(selectBurgerIngredients, (items) => {
+  return items.filter((item) => item.type === "bun");
+});
 
-const selectBurgerIngredients = (state: { burgerIngredients: BurgerIngredientsState }) => {
-  return state.burgerIngredients.items;
-};
+const selectBurgerMains = createSelector(selectBurgerIngredients, (items) => {
+  return items.filter((item) => item.type === "main");
+});
 
-const selectIngredientById = (state: { burgerIngredients: BurgerIngredientsState }, id: string) => {
-  return state.burgerIngredients.items.find((item) => item._id === id) || null;
-};
+const selectBurgerSauces = createSelector(selectBurgerIngredients, (items) => {
+  return items.filter((item) => item.type === "sauce");
+});
 
-const selectBurgerIngredientsError = (state: { burgerIngredients: BurgerIngredientsState }) => {
-  return state.burgerIngredients.error;
-};
+const selectIngredientById = createSelector(
+  [selectBurgerIngredients, selectSelectedIngredientId],
+  (items, id) => items.find((item) => item._id === id) ?? null,
+);
 
-const selectBurgerIngredientsStatus = (state: { burgerIngredients: BurgerIngredientsState }) => {
-  return state.burgerIngredients.status;
-};
+const selectBurgerIngredientsError = createSelector(
+  selectBurgerIngredientsState,
+  (burgerIngredients) => burgerIngredients.error,
+);
+
+const selectBurgerIngredientsStatus = createSelector(
+  selectBurgerIngredientsState,
+  (burgerIngredients) => burgerIngredients.status,
+);
 
 export {
   // State

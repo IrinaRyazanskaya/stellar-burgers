@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
 import { burgerAPIClient } from "../../clients/burger-api";
+import type { RootState } from "../store";
 import type { Order } from "../../utils/types";
 
 type OrderInfoState = {
@@ -63,17 +64,21 @@ const orderInfoSlice = createSlice({
 
 const { clearOrderInfo } = orderInfoSlice.actions;
 
-const selectOrderInfo = (state: { orderInfo: OrderInfoState }) => {
-  return state.orderInfo.order;
+const selectOrderInfoState = (state: RootState) => {
+  return state.orderInfo;
 };
 
-const selectOrderInfoError = (state: { orderInfo: OrderInfoState }) => {
-  return state.orderInfo.error;
-};
+const selectOrderInfo = createSelector(selectOrderInfoState, (orderInfoState) => {
+  return orderInfoState.order;
+});
 
-const selectOrderInfoStatus = (state: { orderInfo: OrderInfoState }) => {
-  return state.orderInfo.status;
-};
+const selectOrderInfoError = createSelector(selectOrderInfoState, (orderInfoState) => {
+  return orderInfoState.error;
+});
+
+const selectOrderInfoStatus = createSelector(selectOrderInfoState, (orderInfoState) => {
+  return orderInfoState.status;
+});
 
 export {
   // State

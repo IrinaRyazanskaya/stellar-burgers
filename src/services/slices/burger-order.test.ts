@@ -26,7 +26,7 @@ describe("burgerOrderSlice", () => {
   it("should handle clearBurgerOrderStatus", () => {
     const state: BurgerOrderState = {
       order: mockOrder,
-      orderRequestStatus: "succeeded",
+      orderStatus: "succeeded",
       orderError: "Some error",
     };
 
@@ -40,7 +40,7 @@ describe("burgerOrderSlice", () => {
 
     const nextState = burgerOrderSlice.reducer(burgerOrderInitialState, action);
 
-    expect(nextState.orderRequestStatus).toEqual("pending");
+    expect(nextState.orderStatus).toEqual("pending");
     expect(nextState.order).toBeNull();
     expect(nextState.orderError).toBeNull();
   });
@@ -55,7 +55,7 @@ describe("burgerOrderSlice", () => {
     const state = store.getState();
 
     expect(state.order).toEqual(mockOrder);
-    expect(state.orderRequestStatus).toEqual("succeeded");
+    expect(state.orderStatus).toEqual("succeeded");
     expect(state.orderError).toBeNull();
   });
 
@@ -69,7 +69,7 @@ describe("burgerOrderSlice", () => {
     const state = store.getState();
 
     expect(state.order).toBeNull();
-    expect(state.orderRequestStatus).toEqual("failed");
+    expect(state.orderStatus).toEqual("failed");
     expect(state.orderError).toEqual("API Error");
   });
 });
