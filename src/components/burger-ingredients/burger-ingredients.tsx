@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
 import { BurgerIngredientsUI } from "../../components/ui/burger-ingredients";
@@ -21,33 +21,47 @@ const BurgerIngredients: FC = () => {
   const titleMainRef = useRef<HTMLHeadingElement>(null);
   const titleSaucesRef = useRef<HTMLHeadingElement>(null);
 
-  const [bunsRef, inViewBuns] = useInView({
+  const [bunsRef] = useInView({
     threshold: 0,
+    onChange(inView) {
+      if (inView) {
+        setCurrentTab("bun");
+      }
+    },
   });
 
-  const [mainsRef, inViewFilling] = useInView({
+  const [mainsRef] = useInView({
     threshold: 0,
+    onChange(inView) {
+      if (inView) {
+        setCurrentTab("main");
+      }
+    },
   });
 
-  const [saucesRef, inViewSauces] = useInView({
+  const [saucesRef] = useInView({
     threshold: 0,
+    onChange(inView) {
+      if (inView) {
+        setCurrentTab("sauce");
+      }
+    },
   });
-
-  useEffect(() => {
-    if (inViewBuns) {
-      setCurrentTab("bun");
-    } else if (inViewSauces) {
-      setCurrentTab("sauce");
-    } else if (inViewFilling) {
-      setCurrentTab("main");
-    }
-  }, [inViewBuns, inViewFilling, inViewSauces]);
 
   const onTabClick = (tab: string) => {
     setCurrentTab(tab as TabMode);
-    if (tab === "bun") titleBunRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (tab === "main") titleMainRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (tab === "sauce") titleSaucesRef.current?.scrollIntoView({ behavior: "smooth" });
+
+    if (tab === "bun") {
+      titleBunRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (tab === "main") {
+      titleMainRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (tab === "sauce") {
+      titleSaucesRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (

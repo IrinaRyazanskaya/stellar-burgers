@@ -3,8 +3,13 @@ import type { FC } from "react";
 
 import styles from "./feed-info.module.css";
 
+type FeedStats = {
+  total: number;
+  totalToday: number;
+};
+
 type FeedInfoUIProps = {
-  feed: any;
+  feed: FeedStats;
   readyOrders: number[];
   pendingOrders: number[];
 };

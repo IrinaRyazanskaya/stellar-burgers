@@ -13,6 +13,11 @@ import { Preloader } from "../preloader";
 
 import styles from "./burger-constructor.module.css";
 
+type ConstructorItems = {
+  bun: ConstructorIngredient | null;
+  ingredients: ConstructorIngredient[];
+};
+
 type BurgerConstructorUIProps = {
   price: number;
   orderRequest: boolean;
@@ -20,11 +25,6 @@ type BurgerConstructorUIProps = {
   constructorItems: ConstructorItems;
   onOrderClick: () => void;
   closeOrderModal: () => void;
-};
-
-type ConstructorItems = {
-  bun: ConstructorIngredient | null;
-  ingredients: ConstructorIngredient[];
 };
 
 const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
