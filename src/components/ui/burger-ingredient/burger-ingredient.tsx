@@ -23,7 +23,7 @@ const BurgerIngredientUI: FC<BurgerIngredientUIProps> = memo(
       <li className={styles.container}>
         <Link className={styles.article} to={`/ingredients/${_id}`} state={locationState}>
           {count && <Counter count={count} />}
-          <img className={styles.img} src={image} alt="картинка ингредиента." />
+          <img className={styles.img} src={image} alt="Изображение ингредиента" />
           <div className={`${styles.cost} mt-2 mb-2`}>
             <p className="text text_type_digits-default mr-2">{price}</p>
             <CurrencyIcon type="primary" />
