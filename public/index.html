@@ -4,12 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <title>React App</title>
+    <title>Stellar Burgers</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="modals"></div>
+    <script>
+      if (window.location.pathname === "/") {
+        const pathPrefix = "/stellar-burgers";
+        const { search, hash } = window.location;
+        const newUrl = `${pathPrefix}${search}${hash}`;
+        window.location.replace(newUrl);
+      }
+    </script>
     <script src="/bundle.js"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
