@@ -6,9 +6,9 @@ export const TOKENS = {
 };
 
 export const UI_ROUTES = {
-  HOME: "/",
-  LOGIN: "/login",
-  INGREDIENT_DETAILS: "/ingredients/643d69a5c3f7b9001cfa093d",
+  HOME: "/stellar-burgers",
+  LOGIN: "/stellar-burgers/login",
+  INGREDIENT_DETAILS: "/stellar-burgers/ingredients/643d69a5c3f7b9001cfa093d",
 };
 
 export const API_ENDPOINTS = {
