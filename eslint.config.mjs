@@ -7,7 +7,7 @@ import reactHooksPlugin from "eslint-plugin-react-hooks";
 
 export default defineConfig([
   {
-    ignores: ["dist/**", "storybook-static/**", "*.config.js", "webpack/webpack.*.js"],
+    ignores: ["dist/**", "coverage/**", "storybook-static/**", "*.config.js"],
   },
   {
     files: ["**/*.{js,cjs,mjs}"],
