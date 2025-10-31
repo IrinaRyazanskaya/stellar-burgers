@@ -95,8 +95,7 @@ stellar-burgers/
 ├── .gitignore              # Игнорируемые Git-ом файлы
 ├── .prettierignore         # Исключения для Prettier
 ├── .prettierrc.json        # Конфигурация Prettier
-├── .stylelintrc.json       # Правила линтинга стилей
-└── .prettierrc.json        # Настройки автоформатирования
+└── .stylelintrc.json       # Правила линтинга стилей
 ```
 
 ## 💡 Что реализовано / изучено
